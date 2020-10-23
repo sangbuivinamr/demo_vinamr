@@ -14,7 +14,7 @@ import React from "react";
 import "./styles/QuotaManagementStyles.css";
 
 
-const QuotaManagement =()=>{
+const QuotaManagement = (props)=>{
     return(
             <div className="quota-page">
                 <h2 className="h2">
