@@ -1,0 +1,13 @@
+.quota-page{
+    background-color: rgb(143, 119, 75);
+    display:flex;
+}
+.h2{
+    margin-top: 10px;
+    color: rgb(230, 180, 88);
+    margin-right:50px;
+}
+.quota-page >p{
+    margin-right:10px;
+    border:1px solid red ;
+}
