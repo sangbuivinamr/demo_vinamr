@@ -1,3 +1,3 @@
 @echo off
-npm init react-app demo_apps
+cmd.exe
 pause
