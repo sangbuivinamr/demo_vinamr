@@ -1,27 +1,42 @@
+@import '../../styles/GlobalStyles.css';
+
 #title {
     text-align: center;
   }
   
   #quota-overview-table {
     border-collapse: collapse;
-    border: 3px solid #ddd;
+    border: 1px solid var(--global-color-1);
   }
   
   #quota-overview-table td,
   #quota-overview-table th {
-    border: 1px solid #ddd;
+    border: 1px solid var(--global-background-color);
     padding: 12px;
+  }
+
+  .quota-overview-table--body{
+    background-color: white;
   }
   
   #quota-overview-table tr:hover {
     background-color: #ddd;
   }
+
+  #quota-overview-table tr{
+
+    border: 1px solid var(--global-color-1);
+  }
+
+  #quota-overview-table td{
+    border: 1px solid var(--global-color-1);
+  }
   
   #quota-overview-table th {
     padding: 10px;
     text-align: center;
-    background-color: #4caf50;
-    color: white;
+    background-color: var(--global-background-color);
+    color: var(--global-color-2);
   }
   
   .opration {

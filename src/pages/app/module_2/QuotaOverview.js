@@ -26,7 +26,7 @@ const QuotaOverview = (props)=>{
                 <thead>
                     <tr>{renderHeader()}</tr>
                 </thead>
-                <tbody>
+                <tbody className="quota-overview-table--body">
                     <QuotaRow
                         quotaData={quotaData}
                     />
