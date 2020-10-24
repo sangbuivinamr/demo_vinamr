@@ -23,15 +23,14 @@ const QuotaManagement =()=>{
                 <p> UP</p>
                 <p> down</p>
                 <p> delete</p>
-                <p>Testing</p>
-                <p> UP</p>
-                <p> down</p>
-                <p> delete</p>
-                <p>Testing</p>
-                <p> UP</p>
-                <p> down</p>
-                <p> delete</p>
-                <p>Testing</p>
+                <p>SAVE</p>
+                <select
+                    className="select"
+                >
+                    <option>
+
+                    </option>
+                </select>
             </div>
     );
 };

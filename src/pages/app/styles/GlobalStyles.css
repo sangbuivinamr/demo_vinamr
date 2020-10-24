@@ -1,0 +1,15 @@
+/*
+
+    *Contributor:
+        *Tien 24/10/2020
+    *Create global style
+*/
+:root{
+    --global-background-color:#F9E5AD;
+    --global-title-1:#FCC216;
+    --global-title-2:#4F3C06;
+    --global-title-3:#972E33;
+    --global-title-4:#7B2025;
+    --global-title-5:#FF0000;
+
+}
