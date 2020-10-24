@@ -14,6 +14,7 @@ import { IoIosArrowRoundUp } from "react-icons/io";
 import {IoIosArrowRoundDown} from "react-icons/io";
 import {IoMdClose} from "react-icons/io";
 import {IoIosSave} from "react-icons/io";
+import QuotaOverview from "./QuotaOverview";
 
 
 //Styles
@@ -24,7 +25,7 @@ const QuotaManagement = (props)=>{
     return(
         <div className="quota-page">
             <div className="quota-page default-bar">
-            <h2 className="h2">
+                <h2 className="h2">
                     QUOTA SETTINGS
                 </h2>
                 <div className="up">
@@ -71,7 +72,10 @@ const QuotaManagement = (props)=>{
                     <p>Silde 05/334</p>
                 </div>
             </div>
-                
+            <div className="quota-page--tables">
+                <QuotaOverview/>
+                <QuotaOverview/>
+            </div>
         </div>
     );
 };
