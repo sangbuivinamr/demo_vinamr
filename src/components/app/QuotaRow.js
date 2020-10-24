@@ -26,7 +26,7 @@ export default function QuotaRow(props){
             <tr 
                 key={quota_label} 
                 onClick={() => onChoosingQuota(quota_label)} 
-                style={{backgroundColor: quotaClickStatus.status && quotaClickStatus.id === quota_label && "blue" }}
+                style={{backgroundColor: quotaClickStatus.status && quotaClickStatus.id === quota_label && "#7B2025" }}
             >
                 <td>{quota_label}</td>
                 <td>{expression}</td>
