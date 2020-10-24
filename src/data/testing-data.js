@@ -26,3 +26,37 @@ export const QUOTA_OVERVIEW_DATA = [
         expression: "S6=1"
     },
 ]
+
+export const EXPRESSION_REVIEW_DATA = [
+    {
+        slide_index: 1,
+        slide_question: "Vui lòng cho biết thu nhập trung bình hàng tháng của hộ gia đình anh/ chị? (SA)",
+        slide_note: "[Nếu Đáp viên từ chối trả lời, PVV không hỏi lại và chọn code 99]",
+        slide_options: [
+            {
+                option_index: 1,
+                option_description: "Dưới 5.000.000 đ"
+            },
+            {
+                option_index: 2,
+                option_description: "Dưới 5.000.000 đ"
+            },
+            {
+                option_index: 3,
+                option_description: "Dưới 5.000.000 đ"
+            },
+            {
+                option_index: 4,
+                option_description: "Dưới 5.000.000 đ"
+            },
+            {
+                option_index: 5,
+                option_description: "Dưới 5.000.000 đ"
+            },
+            {
+                option_index: 99,
+                option_description: "Dưới 5.000.000 đ"
+            },
+        ]
+    }
+]

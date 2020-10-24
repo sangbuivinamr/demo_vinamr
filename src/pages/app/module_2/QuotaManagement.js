@@ -14,6 +14,7 @@ import { IoIosArrowRoundUp } from "react-icons/io";
 import {IoIosArrowRoundDown} from "react-icons/io";
 import {IoMdClose} from "react-icons/io";
 import {IoIosSave} from "react-icons/io";
+import ExpressionReview from "./ExpressionReview";
 import QuotaOverview from "./QuotaOverview";
 
 
@@ -74,7 +75,8 @@ const QuotaManagement = (props)=>{
             </div>
             <div className="quota-page--tables">
                 <QuotaOverview/>
-                <QuotaOverview/>
+                <ExpressionReview/>
+
             </div>
         </div>
     );
