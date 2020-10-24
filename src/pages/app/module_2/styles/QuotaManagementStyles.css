@@ -1,12 +1,13 @@
 @import "../../styles/GlobalStyles.css";
-.quota-page{
-    background-color:var(--global-background-color);
-    display:grid;
-    width: 1535px;
-    margin-left: -7px;
-    margin-top: -10px;
+.quota-page {
+  background-color: var(--global-background-color);
+
+  height: 100vh;
+  width: 100vw;
+  margin-left: -7px;
+  margin-top: -10px;
 }
-.quota-page--tables{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.quota-page--tables {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
 }

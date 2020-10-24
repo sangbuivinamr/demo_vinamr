@@ -8,6 +8,7 @@
   border-collapse: collapse;
   border: 2px solid #ddd;
   font-family: var(--global-font-family);
+  margin: 5px;
 }
 .quota-management-page--expression-review--tables th {
   padding: 10px;
