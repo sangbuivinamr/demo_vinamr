@@ -2,7 +2,7 @@
 .quota-page{
     background-color:var(--global-background-color);
     display:grid;
-    width: 1600px;
+    width: 1535px;
     margin-left: -7px;
     margin-top: -10px;
 }
