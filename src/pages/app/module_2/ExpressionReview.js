@@ -30,9 +30,9 @@ const ExpressionReview = (props) => {
                    <tr key = {option_index}>
                        <td className ="option--index">{option_index}</td>
                        <td>
-                           
+                           <ul>
                <li>{option_description}</li>
-                        
+                           </ul>
                        </td>
                    </tr>
                )
@@ -47,7 +47,7 @@ const ExpressionReview = (props) => {
        }
 
 return(
-    <div className="quota-management-page--expression-review">
+    <div className="">
     <table className="quota-management-page--expression-review--tables">
         <thead>
         {renderExpressionHeader()}
