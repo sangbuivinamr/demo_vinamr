@@ -16,10 +16,11 @@ import {IoIosSave} from "react-icons/io";
 
 //Styles
 import "./styles/QuotaManagementStyles.css";
-import { QUOTA_OVERVIEW_DATA, testing_quota } from "../../../data/testing-data";
+import { QUOTA_OVERVIEW_DATA, testing_quota, EXPRESSION_REVIEW_DATA } from "../../../data/testing-data";
 
 const QuotaManagement = (props)=>{
-
+    const [selectedExpression, setSelectedExpression] = useState("");
+    const [highlightedSlide, setHightlightedSlide] = useState(1);
     const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
     const [quotaInput, setQuotaInput] = useState({
         quota_index: null,
@@ -33,7 +34,7 @@ const QuotaManagement = (props)=>{
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
-
+    
     /**
      * @summary Swap the quota row in the table
      * @param {string} swapType The type of the swap: UP/ DOWN
@@ -142,13 +143,46 @@ const QuotaManagement = (props)=>{
         // Filter out the selected quota row
         let newQuotaData = currentQuotaData.filter(quota => quota.quota_label !== quotaClickStatus.quotaLabel)
         setQuotaData(newQuotaData);
+
     }
 
+       /**
+     * @summary returning the valid expression if matching, else return an empty string ""
+     * @param {string} expression the selected expression
+     */
+    const returningValidExpression = (expression) => {
+  
+        const verifiedExpression = /^([S]\d+[=]\d+)*/g;
+         const getExpresssion = expression.match(verifiedExpression); 
+          
+        return getExpresssion[0];
+    }
+     /**
+     * @summary Handling the highlighted text
+     * @return the index of the slide
+     * @param {string} expression the selected expression
+     */
+      const handleExpressionHighlight = () => {
+      var selectedText = window.getSelection().toString();
+      console.log("Highlighting successfully",selectedText)
+       selectedText =  returningValidExpression(selectedText);
+        if(selectedText !== "") 
+        {
+        
+        setSelectedExpression(selectedText);
+        selectedText = selectedText.match(/(\d+)/);
+        const slide = parseInt(selectedText);
+        setHightlightedSlide(slide);
+        } 
+     
+        
+      }
     return(
         <div className="quota-page">
            <div className="quota-page default-bar">
                 <h2 className="h2-default">
                     QUOTA SETTINGS
+                    
                 </h2>
                 <div className="up">
                     <i>
@@ -196,10 +230,10 @@ const QuotaManagement = (props)=>{
                     <h2 className="review">
                         EXPRESSION REVIEW
                     </h2>
-                    <p>Silde 05/334</p>
+                    <p>Silde {highlightedSlide}/334</p>
                 </div>
             </div>  
-            <div className="quota-page--tables">
+            <div className="quota-page--tables" onMouseUp ={handleExpressionHighlight} >
                 <QuotaOverview
                     quotaData={quotaData}
                     quotaInput={quotaInput}
@@ -208,8 +242,9 @@ const QuotaManagement = (props)=>{
                     onChoosingQuota={onChoosingQuota}
                     quotaClickStatus={quotaClickStatus}
                     setQuotaClickStatus={setQuotaClickStatus}
+                    
                 />
-                <ExpressionReview/>
+                <ExpressionReview expressionReviewData ={EXPRESSION_REVIEW_DATA} setHightlightedSlide ={highlightedSlide}/>
             </div>
         </div>
     );
