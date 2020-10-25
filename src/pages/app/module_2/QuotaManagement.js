@@ -17,6 +17,7 @@ import {IoIosSave} from "react-icons/io";
 //Styles
 import "./styles/QuotaManagementStyles.css";
 import { QUOTA_OVERVIEW_DATA, testing_quota } from "../../../data/testing-data";
+import { onSwappingRow } from "../../../helper/table/Table";
 
 
 const QuotaManagement = (props)=>{
@@ -32,74 +33,38 @@ const QuotaManagement = (props)=>{
         status: false
     })
 
-   
-   
-    let myData=QUOTA_OVERVIEW_DATA;
+    const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
+    const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
+
     /**
-     * @summary Make a quota row move up 
-     * @param mydata an array of a list
-     * @return void
+     * @summary Swap the quota row in the table
+     * @param {string} swapType The type of the swap: UP/ DOWN
      */
-    const swapUp=(input)=> {
-        if(quotaClickStatus.quotaLabel === "" && !quotaClickStatus.status){
-            alert("Please indicate the quota you want to move up")
-            return;
+    const onSwappingQuotaRow = (swapType) => {
+
+        if(onCheckingNotAnyHighlightedQuota()) return;
+
+        const currentQuotaData = [].concat(quotaData);
+
+        let selectedQuotaIndex;
+
+        // Finding the index of the highlighted quota row
+        for(let quotaIndex = 0; quotaIndex < currentQuotaData.length; quotaIndex++){
+            if(currentQuotaData[quotaIndex]["quota_label"] === quotaClickStatus.quotaLabel) selectedQuotaIndex = quotaIndex;
+        }
+
+        // Swapping
+        const tempQuota = currentQuotaData[selectedQuotaIndex];
+        if(swapType === "UP"){
+            currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex - 1]
+            currentQuotaData[selectedQuotaIndex - 1] = tempQuota
+        }else{
+            currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex + 1]
+            currentQuotaData[selectedQuotaIndex + 1] = tempQuota
         }
         
-
-
-        else if(quotaClickStatus.quotaLabel  !== quotaClickStatus.status )
-        {
-            for (let i=0;i<=input.length-1;i++)
-            {
-                if(quotaClickStatus.quotaLabel ===input[i].quota_label)
-                {
-                    let temp = input[i];
-                    input[i] = input[i-1];
-                    input[i-1] = temp;
-                    break;
-                }
-                
-            }
-            // setQuotaData() 
-        } 
+        setQuotaData(currentQuotaData)
     }
-     
-    /**
-     * @summary Make a quota row move down
-     * @param mydata an array of a list
-     * @return void
-     */
-    
-
-    
-    
-    
-    const swapDown=(input)=> {
-        if(quotaClickStatus.quotaLabel === "" && !quotaClickStatus.status)
-        {
-            alert("Please indicate the quota you want to move down!")
-            return;
-        }
-
-        else if(quotaClickStatus.quotaLabel  !== quotaClickStatus.status && quotaClickStatus.quotaLabel!=="" )
-        {
-            for (let i=0;i<=input.length-1;i++)
-            {
-                if(quotaClickStatus.quotaLabel ===input[i].quota_label)
-                {
-                    let temp = input[i];
-                    input[i] = input[i+1];
-                    input[i+1] = temp;
-                    break;
-                    
-                }
-            } 
-        }
-    }
-
-
-
 
     /**
      * @summary Add a quota row to the table
@@ -107,7 +72,7 @@ const QuotaManagement = (props)=>{
     const onAddingQuota = () => {
 
         // Check if the user has actually inputted a quota
-        if(quotaInput.quota_label === "" && quotaInput.quota_expression === ""){
+        if(onCheckingNotAnyInputtedQuota()){
             alert("You haven't typed any quota")
             return;
         }
@@ -169,7 +134,7 @@ const QuotaManagement = (props)=>{
      * @summary Delete the selected quota row in the table
      */
     const onDeletingQuota = () => {
-        if(quotaClickStatus.quotaLabel === "" && !quotaClickStatus.status){
+        if(onCheckingNotAnyHighlightedQuota()){
             alert("Please indicate the quota you want to remove!")
             return;
         }
@@ -191,7 +156,8 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoIosArrowRoundUp
                         className="up icon"
-                        onClick={()=>swapUp(myData)}
+                        // onClick={()=>swapUp(myData)}
+                        onClick={() => onSwappingQuotaRow("UP")}
                     />
                     </i>
                 </div>
@@ -199,10 +165,7 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoIosArrowRoundDown
                         className="up icon"
-                        onClick={()=>
-                            swapDown(myData)
-                            // setQuotaData(myData)
-                        }
+                        onClick={() => onSwappingQuotaRow("DOWN")}
                     />
                     </i>
                 </div>
