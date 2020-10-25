@@ -5,6 +5,8 @@ import { EXPRESSION_REVIEW_DATA } from "../../../data/testing-data";
 
 
 const ExpressionReview = (props) => {
+   const expressionReviewData = props.expressionReviewData;
+   const highlightedSlide = props.setHightlightedSlide;
     const renderExpressionHeader = () => {
         let headerElement = ['Code', 'Description'];
         return headerElement.map( (key, index) => {
@@ -12,9 +14,11 @@ const ExpressionReview = (props) => {
         })
        }
        
-       const renderExpressionBody = () => {
-       return EXPRESSION_REVIEW_DATA && EXPRESSION_REVIEW_DATA.map(({slide_index,slide_question, slide_note, slide_options}) => {
-           return (
+       const renderExpressionBody = (selectedSlideIndex) => {
+  
+       return expressionReviewData && expressionReviewData.map(({slide_index,slide_question, slide_note, slide_options}) => {
+        if (slide_index ===selectedSlideIndex)   
+        return (
                <tbody>
                  <tr key = {slide_index}>
                <td className ="slide--index">S{slide_index}</td>
@@ -53,7 +57,7 @@ return(
         {renderExpressionHeader()}
         </thead>
         
-        {renderExpressionBody()}
+        {renderExpressionBody(highlightedSlide)}
         
       
         
