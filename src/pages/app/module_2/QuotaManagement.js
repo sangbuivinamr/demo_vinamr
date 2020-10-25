@@ -17,9 +17,52 @@ import axios from 'axios';
 
 //Styles
 import "./styles/QuotaManagementStyles.css";
+import { QUOTA_OVERVIEW_DATA, testing_quota } from "../../../data/testing-data";
 
 
 const QuotaManagement = (props)=>{
+
+    const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
+    const [quotaInput, setQuotaInput] = useState({
+        quota_index: null,
+        quota_label: "",
+        quota_expression: ""
+    })
+
+    const onAddingQuota = () => {
+        let newQuotaData = quotaData.concat(quotaInput);
+
+        console.log('newQuotaData', newQuotaData)
+
+        setQuotaData(newQuotaData);
+
+        setQuotaInput({
+            quota_index: null,
+            quota_label: "",
+            quota_expression: ""
+        })
+    }
+
+    const onAddingQuotaLabel = (quota_label) => {
+        let newQuotaInput = {
+            quota_index: quotaData.length,
+            quota_label: quota_label,
+            quota_expression: quotaInput.quota_expression
+        };
+
+        setQuotaInput(newQuotaInput)
+        
+    }
+
+    const onAddingQuotaExpression = (quota_expression) => {
+        let newQuotaInput = {
+            quota_index: quotaData.length,
+            quota_label: quotaInput.quota_label,
+            quota_expression: quota_expression
+        }
+        setQuotaInput(newQuotaInput)
+    }
+
     return(
         <div className="quota-page">
            <div className="quota-page default-bar">
@@ -51,6 +94,7 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoIosSave
                         className="up icon"
+                        onClick={onAddingQuota}
                     />
                     </i>
                 </div>
@@ -71,9 +115,13 @@ const QuotaManagement = (props)=>{
                 </div>
             </div>  
             <div className="quota-page--tables">
-                <QuotaOverview/>
+                <QuotaOverview
+                    quotaData={quotaData}
+                    quotaInput={quotaInput}
+                    setQuotaLabel={onAddingQuotaLabel}
+                    setQuotaExpression={onAddingQuotaExpression}
+                />
                 <ExpressionReview/>
-
             </div>
         </div>
     );

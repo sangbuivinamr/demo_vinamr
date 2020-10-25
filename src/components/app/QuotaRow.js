@@ -21,7 +21,7 @@ export default function QuotaRow(props){
         status: false
     })
 
-    return props.quotaData && props.quotaData.map(({ quota_label, expression }) => {
+    return props.quotaData && props.quotaData.map(({ quota_label, quota_expression }) => {
         return (
             <tr 
                 key={quota_label} 
@@ -29,7 +29,7 @@ export default function QuotaRow(props){
                 style={{backgroundColor: quotaClickStatus.status && quotaClickStatus.id === quota_label && "#7B2025" }}
             >
                 <td>{quota_label}</td>
-                <td>{expression}</td>
+                <td>{quota_expression}</td>
             </tr>
         )
     })

@@ -4,13 +4,9 @@ import React, {useState, useEffect} from "react";
 
 //Styles
 import "./styles/QuotaOverview.css";
-import { QUOTA_OVERVIEW_DATA } from "../../../data/testing-data";
 import QuotaRow from "../../../components/app/QuotaRow";
 
-
 const QuotaOverview = (props)=>{
-
-    const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
 
     const renderHeader = () => {
         let headerElement = ['Quota Label', 'Expression']
@@ -28,14 +24,25 @@ const QuotaOverview = (props)=>{
                 </thead>
                 <tbody className="quota-overview-table--body">
                     <QuotaRow
-                        quotaData={quotaData}
+                        quotaData={props.quotaData}
                     />
-                    <input
-                        placeholder=""
-                        value={props.inputQuota}
-                        onChange={(text) => props.setInputQuota(text.target.value)}
-                        className="quota-overview-table--input"
-                    />
+                    <td>
+                        <input
+                            placeholder=""
+                            value={props.quotaInput.quota_label}
+                            onChange={(text) => props.setQuotaLabel(text.target.value)}
+                            className="quota-overview-table--input"
+                        />
+                    </td>
+                    <td>
+                        <input
+                            placeholder=""
+                            value={props.quotaInput.quota_expression}
+                            onChange={(text) => props.setQuotaExpression(text.target.value)}
+                            className="quota-overview-table--input"
+                        />
+                    </td>
+                    
                     
                 </tbody>
             </table>
