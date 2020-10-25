@@ -17,8 +17,6 @@ import {IoIosSave} from "react-icons/io";
 //Styles
 import "./styles/QuotaManagementStyles.css";
 import { QUOTA_OVERVIEW_DATA, testing_quota } from "../../../data/testing-data";
-import { onSwappingRow } from "../../../helper/table/Table";
-
 
 const QuotaManagement = (props)=>{
 
