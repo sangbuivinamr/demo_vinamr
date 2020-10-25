@@ -12,7 +12,6 @@ import { IoIosArrowRoundUp } from "react-icons/io";
 import {IoIosArrowRoundDown} from "react-icons/io";
 import {IoMdClose} from "react-icons/io";
 import {IoIosSave} from "react-icons/io";
-import axios from 'axios';
 
 
 //Styles
@@ -28,14 +27,27 @@ const QuotaManagement = (props)=>{
         quota_label: "",
         quota_expression: ""
     })
+    const [quotaClickStatus, setQuotaClickStatus] = useState({
+        quotaLabel: "",
+        status: false
+    })
 
+    /**
+     * @summary Add a quota row to the table
+     */
     const onAddingQuota = () => {
-        let newQuotaData = quotaData.concat(quotaInput);
 
-        console.log('newQuotaData', newQuotaData)
+        // Check if the user has actually inputted a quota
+        if(quotaInput.quota_label == "" && quotaInput.quota_expression == ""){
+            alert("You haven't typed any quota")
+            return;
+        }
+
+        let newQuotaData = quotaData.concat(quotaInput);
 
         setQuotaData(newQuotaData);
 
+        // After we've added a quota, the input will be cleaned up
         setQuotaInput({
             quota_index: null,
             quota_label: "",
@@ -43,6 +55,10 @@ const QuotaManagement = (props)=>{
         })
     }
 
+    /**
+     * @summary Handle the input change for the label input in the quota table
+     * @param {string} quota_label The label (aka value of the input at the label column)
+     */
     const onAddingQuotaLabel = (quota_label) => {
         let newQuotaInput = {
             quota_index: quotaData.length,
@@ -54,6 +70,10 @@ const QuotaManagement = (props)=>{
         
     }
 
+    /**
+     * @summary Handle the input change for the expression input in the quota table
+     * @param {string} quota_expression The expression (aka value of the input at the expression column) 
+     */
     const onAddingQuotaExpression = (quota_expression) => {
         let newQuotaInput = {
             quota_index: quotaData.length,
@@ -61,6 +81,30 @@ const QuotaManagement = (props)=>{
             quota_expression: quota_expression
         }
         setQuotaInput(newQuotaInput)
+    }
+
+    /**
+     * @summary Make the selected (clicked) row to be highlighted
+     * @param {string} quotaLabel The label of the current selected quota row
+     */
+    const onChoosingQuota = (quotaLabel) => {
+
+        let newQuotaStatus = {
+            quotaLabel: quotaLabel,
+            status: true
+        }
+        setQuotaClickStatus(newQuotaStatus);
+    }
+
+    const onDeletingQuota = () => {
+        if(quotaClickStatus.quotaLabel == "" && !quotaClickStatus.status){
+            alert("Please indicate the quota you want to remove!")
+            return;
+        }
+        let currentQuotaData = [];
+        currentQuotaData = currentQuotaData.concat(quotaData);
+        let newQuotaData = currentQuotaData.filter(quota => quota.quota_label !== quotaClickStatus.quotaLabel)
+        setQuotaData(newQuotaData);
     }
 
     return(
@@ -87,6 +131,7 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoMdClose
                         className="up icon"
+                        onClick={onDeletingQuota}
                     />
                     </i>
                 </div>
@@ -120,6 +165,9 @@ const QuotaManagement = (props)=>{
                     quotaInput={quotaInput}
                     setQuotaLabel={onAddingQuotaLabel}
                     setQuotaExpression={onAddingQuotaExpression}
+                    onChoosingQuota={onChoosingQuota}
+                    quotaClickStatus={quotaClickStatus}
+                    setQuotaClickStatus={setQuotaClickStatus}
                 />
                 <ExpressionReview/>
             </div>

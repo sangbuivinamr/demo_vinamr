@@ -25,6 +25,9 @@ const QuotaOverview = (props)=>{
                 <tbody className="quota-overview-table--body">
                     <QuotaRow
                         quotaData={props.quotaData}
+                        quotaClickStatus={props.quotaClickStatus}
+                        setQuotaClickStatus={props.setQuotaClickStatus}
+                        onChoosingQuota={props.onChoosingQuota}
                     />
                     <td>
                         <input
