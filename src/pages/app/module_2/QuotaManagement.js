@@ -5,7 +5,7 @@
 */
 
 //Packages
-import React,{useState}  from "react";
+import React,{useState,useEffect}  from "react";
 import QuotaOverview from "./QuotaOverview";
 import ExpressionReview from "./ExpressionReview";
 import { IoIosArrowRoundUp } from "react-icons/io";
@@ -28,9 +28,78 @@ const QuotaManagement = (props)=>{
         quota_expression: ""
     })
     const [quotaClickStatus, setQuotaClickStatus] = useState({
-        quotaLabel: "",
+        quotaLabel: "", 
         status: false
     })
+
+   
+   
+    let myData=QUOTA_OVERVIEW_DATA;
+    /**
+     * @summary Make a quota row move up 
+     * @param mydata an array of a list
+     * @return void
+     */
+    const swapUp=(input)=> {
+        if(quotaClickStatus.quotaLabel === "" && !quotaClickStatus.status){
+            alert("Please indicate the quota you want to move up")
+            return;
+        }
+        
+
+
+        else if(quotaClickStatus.quotaLabel  !== quotaClickStatus.status )
+        {
+            for (let i=0;i<=input.length-1;i++)
+            {
+                if(quotaClickStatus.quotaLabel ===input[i].quota_label)
+                {
+                    let temp = input[i];
+                    input[i] = input[i-1];
+                    input[i-1] = temp;
+                    break;
+                }
+                
+            }
+            // setQuotaData() 
+        } 
+    }
+     
+    /**
+     * @summary Make a quota row move down
+     * @param mydata an array of a list
+     * @return void
+     */
+    
+
+    
+    
+    
+    const swapDown=(input)=> {
+        if(quotaClickStatus.quotaLabel === "" && !quotaClickStatus.status)
+        {
+            alert("Please indicate the quota you want to move down!")
+            return;
+        }
+
+        else if(quotaClickStatus.quotaLabel  !== quotaClickStatus.status && quotaClickStatus.quotaLabel!=="" )
+        {
+            for (let i=0;i<=input.length-1;i++)
+            {
+                if(quotaClickStatus.quotaLabel ===input[i].quota_label)
+                {
+                    let temp = input[i];
+                    input[i] = input[i+1];
+                    input[i+1] = temp;
+                    break;
+                    
+                }
+            } 
+        }
+    }
+
+
+
 
     /**
      * @summary Add a quota row to the table
@@ -38,7 +107,7 @@ const QuotaManagement = (props)=>{
     const onAddingQuota = () => {
 
         // Check if the user has actually inputted a quota
-        if(quotaInput.quota_label == "" && quotaInput.quota_expression == ""){
+        if(quotaInput.quota_label === "" && quotaInput.quota_expression === ""){
             alert("You haven't typed any quota")
             return;
         }
@@ -97,7 +166,7 @@ const QuotaManagement = (props)=>{
     }
 
     const onDeletingQuota = () => {
-        if(quotaClickStatus.quotaLabel == "" && !quotaClickStatus.status){
+        if(quotaClickStatus.quotaLabel === "" && !quotaClickStatus.status){
             alert("Please indicate the quota you want to remove!")
             return;
         }
@@ -117,6 +186,7 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoIosArrowRoundUp
                         className="up icon"
+                        onClick={()=>swapUp(myData)}
                     />
                     </i>
                 </div>
@@ -124,6 +194,10 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoIosArrowRoundDown
                         className="up icon"
+                        onClick={()=>
+                            swapDown(myData)
+                            // setQuotaData(myData)
+                        }
                     />
                     </i>
                 </div>
