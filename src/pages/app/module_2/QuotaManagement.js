@@ -165,6 +165,9 @@ const QuotaManagement = (props)=>{
         setQuotaClickStatus(newQuotaStatus);
     }
 
+    /**
+     * @summary Delete the selected quota row in the table
+     */
     const onDeletingQuota = () => {
         if(quotaClickStatus.quotaLabel === "" && !quotaClickStatus.status){
             alert("Please indicate the quota you want to remove!")
@@ -172,6 +175,8 @@ const QuotaManagement = (props)=>{
         }
         let currentQuotaData = [];
         currentQuotaData = currentQuotaData.concat(quotaData);
+
+        // Filter out the selected quota row
         let newQuotaData = currentQuotaData.filter(quota => quota.quota_label !== quotaClickStatus.quotaLabel)
         setQuotaData(newQuotaData);
     }
