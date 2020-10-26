@@ -174,7 +174,13 @@ const QuotaManagement = (props)=>{
         const slide = parseInt(selectedText);
         setHightlightedSlide(slide);
         } 
-     
+      }
+
+
+
+      const onChangeNav=(e)=>{
+          
+              props.history.push(`/${e.target.value}`)
         
       }
     return(
@@ -220,11 +226,27 @@ const QuotaManagement = (props)=>{
                 <div className="mode">
                     Mode:
                 </div>
-                    <select className="select">
-                        <option value="Expression"> Expression </option>
-                        <option value="Editing"> Editing </option>
-                        <option value="When Exceeded"> When Exceeded </option>
-                        <option value="Tracking"> Tracking </option>
+                    <select className="select"onChange={onChangeNav}>
+                        <option
+                            value="Expression"
+                        > 
+                            Expression 
+                        </option>
+                        <option 
+                            value="editing"
+                        >
+                            Editing 
+                        </option>
+                        <option
+                            value="exceeded"
+                        >
+                            When Exceeded 
+                        </option>
+                        <option 
+                            value="tracking"
+                        >
+                            Tracking
+                        </option>
                     </select>
                 <div className="expression-review">
                     <h2 className="review">
