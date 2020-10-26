@@ -6,8 +6,15 @@ import React, {useState, useEffect} from "react";
 import "./styles/QuotaOverview.css";
 import QuotaRow from "../../../../components/app/QuotaRow";
 
+/**
+ * @summary Render the table of the left expression layout
+ * @param {object} props Props of QuotaOverview
+ */
 const QuotaOverview = (props)=>{
 
+    /**
+     * @summary Render the header of the table
+     */
     const renderHeader = () => {
         let headerElement = ['Quota Label', 'Expression']
 
