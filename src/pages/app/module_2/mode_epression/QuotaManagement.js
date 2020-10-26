@@ -16,7 +16,7 @@ import {IoIosSave} from "react-icons/io";
 
 //Styles
 import "./styles/QuotaManagementStyles.css";
-import { QUOTA_OVERVIEW_DATA, testing_quota, EXPRESSION_REVIEW_DATA } from "../../../data/testing-data";
+import { QUOTA_OVERVIEW_DATA, testing_quota, EXPRESSION_REVIEW_DATA } from "../../../../data/testing-data";
 
 const QuotaManagement = (props)=>{
     const [selectedExpression, setSelectedExpression] = useState("");

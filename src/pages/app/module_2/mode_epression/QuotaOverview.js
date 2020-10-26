@@ -4,7 +4,7 @@ import React, {useState, useEffect} from "react";
 
 //Styles
 import "./styles/QuotaOverview.css";
-import QuotaRow from "../../../components/app/QuotaRow";
+import QuotaRow from "../../../../components/app/QuotaRow";
 
 const QuotaOverview = (props)=>{
 

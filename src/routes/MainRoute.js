@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import QuotaManagement from '../pages/app/module_2/QuotaManagement';
+import QuotaManagement from '../pages/app/module_2/mode_epression/QuotaManagement';
 
 // react-router-dom
 
