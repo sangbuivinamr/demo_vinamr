@@ -164,7 +164,7 @@ const QuotaManagement = (props)=>{
      */
       const handleExpressionHighlight = () => {
       var selectedText = window.getSelection().toString();
-      console.log("Highlighting successfully",selectedText)
+      
        selectedText =  returningValidExpression(selectedText);
         if(selectedText !== "") 
         {

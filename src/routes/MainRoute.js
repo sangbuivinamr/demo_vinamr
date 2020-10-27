@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import QuotaManagement from '../pages/app/module_2/mode_epression/QuotaManagement';
-import QuotaEditing from "../pages/app/module_2/mode_editing/QuotaEdting";
+import QuotaManagement from '../pages/app/module_2/mode_expression/QuotaManagement';
+import QuotaEditing from "../pages/app/module_2/mode_editing/QuotaEditing";
 import QuotaTracking from "../pages/app/module_2/mode_tracking/QuotaTracking";
 // react-router-dom
 

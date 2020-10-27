@@ -2,13 +2,13 @@
 import React from "react";
 
 //Styles
-import "./styles/QuotaEdting.css";
+import "./styles/QuotaEditing.css";
 
 
-const QuotaEdting = ()=>{
+const QuotaEditing = ()=>{
     return(
         <div>hi</div>
     );
 };
 
-export default QuotaEdting;
+export default QuotaEditing;
