@@ -228,7 +228,7 @@ const QuotaManagement = (props)=>{
                 </div>
                     <select className="select"onChange={onChangeNav}>
                         <option
-                            value="Expression"
+                            value=""
                         > 
                             Expression 
                         </option>

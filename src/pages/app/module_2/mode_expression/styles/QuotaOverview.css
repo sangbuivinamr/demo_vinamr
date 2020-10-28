@@ -25,11 +25,11 @@
 
   #quota-overview-table tr{
 
-    border: 1px solid var(--global-color-1);
+    border: 2px solid var(--global-color-1);
   }
 
   #quota-overview-table td{
-    border: 1px solid var(--global-color-1);
+    border: 2px solid var(--global-color-1);
   }
   
   #quota-overview-table th {
