@@ -1,24 +1,23 @@
-/*
-*Contributor: 
-   *Tien 23/10/2020(init the codebase)
-*Function: Render Screen Quota Management
-*/
-
 //Packages
-import React,{useState,useEffect}  from "react";
-import QuotaOverview from "./QuotaOverview";
-import ExpressionReview from "./ExpressionReview";
+import React,{useState} from "react";
 import { IoIosArrowRoundUp } from "react-icons/io";
 import {IoIosArrowRoundDown} from "react-icons/io";
 import {IoMdClose} from "react-icons/io";
 import {IoIosSave} from "react-icons/io";
-
+import {IoIosUndo} from "react-icons/io";
+import {IoIosRedo} from "react-icons/io";
+import ExceededLeft from "./ExceededLeft";
+import QuotaName from "./QuotaName";
+import ActionExceeded from "./ActionExceeded";
+import Message from "./Message";
 
 //Styles
-import "./styles/QuotaManagementStyles.css";
-import { QUOTA_OVERVIEW_DATA, testing_quota, EXPRESSION_REVIEW_DATA } from "../../../../data/testing-data";
+import "./styles/QuotaExceeded.css";
 
-const QuotaManagement = (props)=>{
+//Data
+import {QUOTA_OVERVIEW_DATA, EXCEEDED_LAYOUT_LEFT,EXCEEDED_SEX_LEFT} from "../../../../data/testing-data";
+
+const QuotaExceeded = (props)=>{
     const [selectedExpression, setSelectedExpression] = useState("");
     const [highlightedSlide, setHightlightedSlide] = useState(1);
     const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
@@ -175,24 +174,21 @@ const QuotaManagement = (props)=>{
         setHightlightedSlide(slide);
         } 
       }
-
-
-
-      const onChangeNav=(e)=>{
+    const onChangeNav=(e)=>{
           
-              props.history.push(`/${e.target.value}`)
-        
-      }
+    props.history.push(`/${e.target.value}`)
+  
+}
     return(
-        <div className="quota-page">
-           <div className="quota-page default-bar">
+        <div className="exceeded">
+             <div className="exceeded exceeded-bar">
                 <h2 className="h2-default">
                     QUOTA SETTINGS
                     
                 </h2>
                 <div className="up">
                     <i>
-                    <IoIosArrowRoundUp
+                    <IoIosUndo
                         className="up icon"
                         onClick={() => onSwappingQuotaRow("UP")}
                     />
@@ -200,17 +196,9 @@ const QuotaManagement = (props)=>{
                 </div>
                 <div className="up">
                     <i>
-                    <IoIosArrowRoundDown
+                    <IoIosRedo
                         className="up icon"
                         onClick={() => onSwappingQuotaRow("DOWN")}
-                    />
-                    </i>
-                </div>
-                <div className="up">
-                    <i>
-                    <IoMdClose
-                        className="up icon"
-                        onClick={onDeletingQuota}
                     />
                     </i>
                 </div>
@@ -222,10 +210,10 @@ const QuotaManagement = (props)=>{
                     />
                     </i>
                 </div>
-                <div className="mode">
-                    Mode:
+                <div className="mode-exceeded">
+                    Mode: 
                 </div>
-                    <select className="select"onChange={onChangeNav}>
+                    <select className="select" onChange={onChangeNav} /*value={}*/>
                         <option
                             value=""
                         > 
@@ -247,27 +235,34 @@ const QuotaManagement = (props)=>{
                             Tracking
                         </option>
                     </select>
-                <div className="expression-review">
                     <h2 className="review">
-                        EXPRESSION REVIEW
+                        ACTION & MESAGES
                     </h2>
-                    <p>Silde {highlightedSlide}/334</p>
-                </div>
-            </div>  
-            <div className="quota-page--tables" onMouseUp ={handleExpressionHighlight} >
-                <QuotaOverview
-                    quotaData={quotaData}
-                    quotaInput={quotaInput}
-                    setQuotaLabel={onAddingQuotaLabel}
-                    setQuotaExpression={onAddingQuotaExpression}
-                    onChoosingQuota={onChoosingQuota}
-                    quotaClickStatus={quotaClickStatus}
-                    setQuotaClickStatus={setQuotaClickStatus}
-                    
-                />
-                <ExpressionReview expressionReviewData ={EXPRESSION_REVIEW_DATA} setHightlightedSlide ={highlightedSlide}/>
             </div>
+            <div className="layouts">
+                <div className="layout-left">
+                    <ExceededLeft 
+                        exceededLeft={ EXCEEDED_LAYOUT_LEFT}
+                        exceededLeftHeader={QUOTA_OVERVIEW_DATA}
+                        exceededLeftSex={EXCEEDED_SEX_LEFT} 
+                    />
+                </div>
+                <div className="layout-right">
+                    <div>
+                        <QuotaName />
+                    </div>
+                    <div>
+                        <ActionExceeded/>
+                    </div>
+                    <div>
+                        <Message/> 
+                    </div>                       
+                </div>
+            </div>
+                
+                
         </div>
     );
 };
-export default QuotaManagement;
+
+export default QuotaExceeded;
