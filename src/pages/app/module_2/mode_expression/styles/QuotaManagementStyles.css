@@ -1,11 +1,11 @@
 @import "../../../styles/GlobalStyles.css";
+
 .quota-page {
   background-color: var(--global-background-color);
 
-  height: 100vh;
+  height: 150vh;
   width: 100vw;
-  margin-left: -7px;
-  margin-top: -10px;
+  margin: -10px;
 }
 .quota-page .default-bar {
   padding-top: 50px;
