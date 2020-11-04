@@ -2,12 +2,12 @@ export const QUOTA_OVERVIEW_DATA = [
     {
         quota_index: 0,
         quota_label: "Ha Noi",
-        quota_expression: "S6=1"
+        quota_expression: "S6=1",
     },
     {
         quota_index: 1,
         quota_label: "HCM",
-        quota_expression: "S6=1"
+        quota_expression: "S6=1",
     },{
         quota_index: 2,
         quota_label: "Hai Phong",
@@ -245,4 +245,41 @@ export const EXPRESSION_REVIEW_DATA = [
             },
         ]
     }
+]
+export const EXCEEDED_LAYOUT_LEFT = [
+    
+    {
+        type_index: 1,
+        type_car: "Owner. Honda Accord"
+    },
+    {
+        type_index: 2,
+        type_car: "Owner. Toyota Camry"
+    },
+    {
+        type_index: 3,
+        type_car: "Owner. Other Models"
+    },
+    {
+        type_index: 4,
+        type_car: "Intend. Honda Accord"
+    },
+    {
+        type_index: 5,
+        type_car: "Intend. Toyota Camry"
+    },
+    {
+        type_index: 6,
+        type_car:"Intend. Other Models"
+    },
+]
+export const EXCEEDED_SEX_LEFT=[
+    {
+        sex_index:0,
+        exceeded_sex:"Nam"
+    },
+    {
+        sex_index:1,
+        exceeded_sex:"Nữ"
+    }   
 ]
