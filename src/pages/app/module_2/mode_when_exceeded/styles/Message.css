@@ -8,7 +8,7 @@
     border-left: 2px solid #FCC216;
     margin-top: -20px;
     display: grid;
-    background-color: #f2f2f2;
+    background-color: white;
     height: 250px;
 }
 .two-mess{
@@ -16,11 +16,17 @@
     margin-left: 10px;
     margin-top: 10px;
 }
-.check{
-    margin-top: 22px;
-    margin-left: 10px;
-}
 .p-mess{
+    font-family: var(--global-font-family);
+    color: #4F3C06;
+    margin-right: 50px;
+}
+.check{
+    margin-top: 23px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.no-mess{
     font-family: var(--global-font-family);
     color: #4F3C06;
 }
@@ -31,4 +37,27 @@
     margin-left: 10px;
     background-color: var(--global-background-color);
     font-family: var(--global-font-family);
+}
+.button-mess{
+    display: flex;
+    justify-content: center;
+}
+.apply-mess{
+    background-color: #FCC216;
+    margin-right: 10px;
+    border-radius: 5px;
+    height: 30px;
+    width: 100px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+}
+.apply-all-mess{
+    background-color: #FCC216;
+    border-radius: 5px;
+    height: 30px;
+    width: 130px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
 }
