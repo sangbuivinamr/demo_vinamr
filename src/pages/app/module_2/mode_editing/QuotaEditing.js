@@ -6,6 +6,10 @@ import {IoMdClose} from "react-icons/io";
 import {IoIosSave} from "react-icons/io";
 import {IoIosUndo} from "react-icons/io";
 import {IoIosRedo} from "react-icons/io";
+import {ImSigma} from "react-icons/im";
+import QuotaLabelSelection from "./QuotaLabelSelection";
+import QuotaRowColumnAdjustment from "./QuotaRowColumnAdjustment";
+import EditingTable from "../../../../components/app/EditingTable";
 
 //Styles
 import "./styles/QuotaEditing.css";
@@ -170,7 +174,7 @@ const QuotaEditing = (props)=>{
         setHightlightedSlide(slide);
         } 
       }
-    const onChangeNav=(e)=>{
+    const onChangeNavtoExpression=(e)=>{
           
         props.history.push(`/${e.target.value}`)
   
@@ -182,51 +186,44 @@ const QuotaEditing = (props)=>{
                     QUOTA SETTINGS
                     
                 </h2>
-                <div className="up">
+                <div className="display--square--button">
                     <i>
                     <IoIosUndo
                         className="up icon"
-                        onClick={() => onSwappingQuotaRow("UP")}
+                     
                     />
                     </i>
                 </div>
-                <div className="up">
+                <div className="display--square--button">
                     <i>
                     <IoIosRedo
                         className="up icon"
-                        onClick={() => onSwappingQuotaRow("DOWN")}
+               
                     />
                     </i>
                 </div>
-                {/* <div className="up">
-                    <i>
-                    <IoMdClose
-                        className="up icon"
-                        onClick={onDeletingQuota}
-                    />
-                    </i>
-                </div> */}
-                <div className="up">
+           
+                <div className="display--square--button">
                     <i>
                     <IoIosSave
                         className="up icon"
-                        onClick={onAddingQuota}
+                     
                     />
                     </i>
                 </div>
                 <div className="mode">
                     Mode: 
                 </div>
-                    <select className="select"onChange={onChangeNav}>
+                    <select className="select"onChange={onChangeNavtoExpression}>
                         <option
                             value=""
                         > 
-                            Expression 
+                           Expression
                         </option>
                         <option 
                             value="editing"
                         >
-                            Editing 
+                              Editing
                         </option>
                         <option
                             value="exceeded"
@@ -241,29 +238,66 @@ const QuotaEditing = (props)=>{
                     </select>
                     <div className="expression-review">
                     <h2 className="review">
-                        QUOTA LABEL SELECTION
+                        QUOTA LABEL <br/> SELECTION
                     </h2>
-                   
+                    <button id ="quota--management--page--add--to-row--btn">
+                    Add to <br/> Row
+                    </button>
+                   <button id ="quota--management--page--add--to-column--btn">
+                    Add to <br/> Column
+                   </button>
                 </div>
 
-                <div className="quota-page--tables">
-                    <table>
-                        <tr>
-                            <th>Month</th>
-                            <th>Savings</th>
-                        </tr>
-                        <tr>
-                            <td>January</td>
-                            <td>$100</td>
-                        </tr>
-                        <tr>
-                            <td>February</td>
-                            <td>$80</td>
-                        </tr>
-                    </table>
-                    </div>
+            </div>
+            <div id = "quota--management--page--editing-mode--content">
+              
+                
+                <div id = "quota--display--added--table">
+                    <EditingTable></EditingTable>
                 </div>
-      
+                <div id ="quota--label--selection">
+                 
+                <QuotaLabelSelection quotaData ={quotaData} onChoosingQuota={onChoosingQuota}
+                    quotaClickStatus={quotaClickStatus}
+                    setQuotaClickStatus={setQuotaClickStatus}/>
+                </div>
+                <div id= "quota--management--adjust--rows--cols">
+                    <div id="quota--management--adjust--rows--cols--btn--div">
+                    <div className="display--square--button">
+                    
+                    <IoIosArrowRoundUp
+                        className="up icon"
+                    />
+                  
+                </div>
+                <div className="display--square--button">
+                   
+                    <IoIosArrowRoundDown
+                        className="up icon"
+                    />
+                   
+                </div>
+                <div className="display--square--button">
+                   
+                    <IoMdClose
+                        className="up icon"
+                    />
+                   
+                </div>
+                <div className="quota--management--add--total--cols-rows--btn">
+                    <ImSigma className="sigma-icon" />
+                    <text> Rows</text>
+                </div>
+                <div className="quota--management--add--total--cols-rows--btn">
+                    <ImSigma className="sigma-icon" />
+                    <text> Columns</text>
+                </div>
+                    </div>
+                    <QuotaRowColumnAdjustment/>
+              
+                </div>
+            </div>
+               
         </div>
     );
 };

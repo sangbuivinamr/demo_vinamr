@@ -1,0 +1,4 @@
+@import "../../../pages/app/styles/GlobalStyles.css";
+table {
+  background-color: red;
+}
