@@ -1,26 +1,19 @@
-@import "../../styles/GlobalStyles.css";
-.quota-page {
+@import "../../../styles/GlobalStyles.css";
+.exceeded{
   background-color: var(--global-background-color);
-
   height: 100vh;
   width: 100vw;
   margin-left: -7px;
   margin-top: -10px;
+  display: grid;
+  font-family: var(--global-font-family);
 }
-.quota-page .default-bar {
+.exceeded .exceeded-bar{
   padding-top: 50px;
-  margin-bottom: 50px;
   display: flex;
   height: 50px;
 }
-.h2-default {
-  color: var(--global-color-2);
-  margin-right: 200px;
-  margin-left: 30px;
-  font-family: var(--global-font-family);
-  white-space: nowrap;
-}
-.quota-page > .up {
+.exceeded > .up {
   margin-top: 20px;
   background-color: var(--global-color-1);
   border-radius: 5px;
@@ -28,7 +21,7 @@
   height: 35px;
   margin-right: 10px;
 }
-.up .icon {
+.exceeded .icon {
   cursor: pointer;
   justify-items: center;
   color: white;
@@ -37,12 +30,11 @@
   height: 30px;
   width: 40px;
 }
-.mode {
+.mode-exceeded{
   margin-top: 20px;
   border: 1px solid rgb(77, 74, 74);
   margin-left: 10px;
   margin-right: 0px;
-  justify-content: center;
   text-align: center;
   width: 70px;
   height: 28px;
@@ -51,7 +43,7 @@
   color: white;
   font-family: var(--global-font-family);
 }
-.quota-page > select {
+.exceeded > select {
   margin-top: 20px;
   height: 32px;
   width: 170px;
@@ -63,35 +55,25 @@
   font-family: var(--global-font-family);
   margin-right: 0px;
 }
-.select > option {
-  color: white;
-  font-family: var(--global-font-family);
-}
-.expression-review {
-  display: flex;
-}
-.review {
-  margin-top: 20px;
-  color: var(--global-color-2);
-  margin-right: 50px;
-  margin-left: 100px;
-  font-family: var(--global-font-family);
-  white-space: nowrap;
-}
-.expression-review > p {
-  margin-top: 20px;
-  background-color: white;
-  border-radius: 5rem;
-  width: 150px;
-  height: 30px;
-  justify-content: center;
-  border: 1px solid black;
-  text-align: center;
-  padding-top: 5px;
-  font-family: var(--global-font-family);
+.exceeded> .review{
+  margin-left: 400px;
 }
 
-.quota-page--tables {
+.layouts{
+  margin-top: -30px;
+  margin-left: -25px;
+  width: 1200px;
+  height: 500px;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: auto auto ;
+  grid-gap: 10px;
+}
+.layout-left{
+  font-family: var(--global-font-family);
+}
+.layout-right{
+  color: #4F3C06;
+  white-space: nowrap;
+  font-family: var(--global-font-family);
+  width: 250px;
 }

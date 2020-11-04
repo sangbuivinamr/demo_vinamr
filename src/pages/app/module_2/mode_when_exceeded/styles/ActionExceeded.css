@@ -1,0 +1,41 @@
+@import '../../../styles/GlobalStyles.css';
+.action-exceeded{
+   margin-top: 0px;
+   border:2px solid #FCC216;
+   display: grid;
+   background-color:#f2f2f2;
+   height: 200px;
+   width: 300px;
+   justify-content: center;
+
+}
+.action-p{
+   margin-left: -20px;
+   margin-top:0px
+}
+.select-action{
+   height: 30px;
+}
+.buttons{
+   display: flex;
+   margin-top:10px
+}
+.apply{
+   background-color: #FCC216;
+   color: white;
+   border-radius: 5px;
+   width: 100px;
+   height: 30px;
+   margin-right: 20px;
+   text-align: center;
+   cursor: pointer;
+}
+.apply-all{
+   background-color: #FCC216;
+   border-radius: 5px;
+   color: white;
+   width: 120px;
+   height: 30px;
+   text-align: center;
+   cursor: pointer;
+}

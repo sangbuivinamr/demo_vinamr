@@ -1,25 +1,25 @@
-/*
-*Contributor: 
-   *Tien 23/10/2020(init the codebase)
-*Function: Render Screen Quota Management
-*/
-
 //Packages
-import React,{useState,useEffect}  from "react";
-import QuotaOverview from "./QuotaOverview";
-import ExpressionReview from "./ExpressionReview";
+import React,{useState} from "react";
 import { IoIosArrowRoundUp } from "react-icons/io";
 import {IoIosArrowRoundDown} from "react-icons/io";
 import {IoMdClose} from "react-icons/io";
 import {IoIosSave} from "react-icons/io";
-
+import {IoIosUndo} from "react-icons/io";
+import {IoIosRedo} from "react-icons/io";
+import ExceededLeft from "./ExceededLeft";
+import QuotaName from "./QuotaName";
+import ActionExceeded from "./ActionExceeded";
+import Message from "./Message";
 
 //Styles
-import "./styles/QuotaManagementStyles.css";
-import { QUOTA_OVERVIEW_DATA, testing_quota } from "../../../data/testing-data";
+import "./styles/QuotaExceeded.css";
 
-const QuotaManagement = (props)=>{
+//Data
+import {QUOTA_OVERVIEW_DATA, EXCEEDED_LAYOUT_LEFT,EXCEEDED_SEX_LEFT} from "../../../../data/testing-data";
 
+const QuotaExceeded = (props)=>{
+    const [selectedExpression, setSelectedExpression] = useState("");
+    const [highlightedSlide, setHightlightedSlide] = useState(1);
     const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
     const [quotaInput, setQuotaInput] = useState({
         quota_index: null,
@@ -33,7 +33,7 @@ const QuotaManagement = (props)=>{
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
-
+    
     /**
      * @summary Swap the quota row in the table
      * @param {string} swapType The type of the swap: UP/ DOWN
@@ -142,36 +142,63 @@ const QuotaManagement = (props)=>{
         // Filter out the selected quota row
         let newQuotaData = currentQuotaData.filter(quota => quota.quota_label !== quotaClickStatus.quotaLabel)
         setQuotaData(newQuotaData);
+
     }
 
+       /**
+     * @summary returning the valid expression if matching, else return an empty string ""
+     * @param {string} expression the selected expression
+     */
+    const returningValidExpression = (expression) => {
+  
+        const verifiedExpression = /^([S]\d+[=]\d+)*/g;
+         const getExpresssion = expression.match(verifiedExpression); 
+          
+        return getExpresssion[0];
+    }
+     /**
+     * @summary Handling the highlighted text
+     * @return the index of the slide
+     * @param {string} expression the selected expression
+     */
+      const handleExpressionHighlight = () => {
+      var selectedText = window.getSelection().toString();
+      
+       selectedText =  returningValidExpression(selectedText);
+        if(selectedText !== "") 
+        {
+        
+        setSelectedExpression(selectedText);
+        selectedText = selectedText.match(/(\d+)/);
+        const slide = parseInt(selectedText);
+        setHightlightedSlide(slide);
+        } 
+      }
+    const onChangeNav=(e)=>{
+          
+    props.history.push(`/${e.target.value}`)
+  
+}
     return(
-        <div className="quota-page">
-           <div className="quota-page default-bar">
+        <div className="exceeded">
+             <div className="exceeded exceeded-bar">
                 <h2 className="h2-default">
                     QUOTA SETTINGS
+                    
                 </h2>
                 <div className="up">
                     <i>
-                    <IoIosArrowRoundUp
+                    <IoIosUndo
                         className="up icon"
-                        // onClick={()=>swapUp(myData)}
                         onClick={() => onSwappingQuotaRow("UP")}
                     />
                     </i>
                 </div>
                 <div className="up">
                     <i>
-                    <IoIosArrowRoundDown
+                    <IoIosRedo
                         className="up icon"
                         onClick={() => onSwappingQuotaRow("DOWN")}
-                    />
-                    </i>
-                </div>
-                <div className="up">
-                    <i>
-                    <IoMdClose
-                        className="up icon"
-                        onClick={onDeletingQuota}
                     />
                     </i>
                 </div>
@@ -183,35 +210,59 @@ const QuotaManagement = (props)=>{
                     />
                     </i>
                 </div>
-                <div className="mode">
-                    Mode:
+                <div className="mode-exceeded">
+                    Mode: 
                 </div>
-                    <select className="select">
-                        <option value="Expression"> Expression </option>
-                        <option value="Editing"> Editing </option>
-                        <option value="When Exceeded"> When Exceeded </option>
-                        <option value="Tracking"> Tracking </option>
+                    <select className="select" onChange={onChangeNav} /*value={}*/>
+                        <option
+                            value=""
+                        > 
+                            Expression 
+                        </option>
+                        <option 
+                            value="editing"
+                        >
+                            Editing 
+                        </option>
+                        <option
+                            value="exceeded"
+                        >
+                            When Exceeded 
+                        </option>
+                        <option 
+                            value="tracking"
+                        >
+                            Tracking
+                        </option>
                     </select>
-                <div className="expression-review">
                     <h2 className="review">
-                        EXPRESSION REVIEW
+                        ACTION & MESAGES
                     </h2>
-                    <p>Silde 05/334</p>
-                </div>
-            </div>  
-            <div className="quota-page--tables">
-                <QuotaOverview
-                    quotaData={quotaData}
-                    quotaInput={quotaInput}
-                    setQuotaLabel={onAddingQuotaLabel}
-                    setQuotaExpression={onAddingQuotaExpression}
-                    onChoosingQuota={onChoosingQuota}
-                    quotaClickStatus={quotaClickStatus}
-                    setQuotaClickStatus={setQuotaClickStatus}
-                />
-                <ExpressionReview/>
             </div>
+            <div className="layouts">
+                <div className="layout-left">
+                    <ExceededLeft 
+                        exceededLeft={ EXCEEDED_LAYOUT_LEFT}
+                        exceededLeftHeader={QUOTA_OVERVIEW_DATA}
+                        exceededLeftSex={EXCEEDED_SEX_LEFT} 
+                    />
+                </div>
+                <div className="layout-right">
+                    <div>
+                        <QuotaName />
+                    </div>
+                    <div>
+                        <ActionExceeded/>
+                    </div>
+                    <div>
+                        <Message/> 
+                    </div>                       
+                </div>
+            </div>
+                
+                
         </div>
     );
 };
-export default QuotaManagement;
+
+export default QuotaExceeded;

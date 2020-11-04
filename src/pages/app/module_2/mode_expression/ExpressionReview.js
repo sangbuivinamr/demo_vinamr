@@ -1,10 +1,12 @@
 import React from "react";
 import "./styles/ExpressionReview.css";
-import { EXPRESSION_REVIEW_DATA } from "../../../data/testing-data";
+import { EXPRESSION_REVIEW_DATA } from "../../../../data/testing-data";
 
 
 
 const ExpressionReview = (props) => {
+   const expressionReviewData = props.expressionReviewData;
+   const highlightedSlide = props.setHightlightedSlide;
     const renderExpressionHeader = () => {
         let headerElement = ['Code', 'Description'];
         return headerElement.map( (key, index) => {
@@ -12,9 +14,11 @@ const ExpressionReview = (props) => {
         })
        }
        
-       const renderExpressionBody = () => {
-       return EXPRESSION_REVIEW_DATA && EXPRESSION_REVIEW_DATA.map(({slide_index,slide_question, slide_note, slide_options}) => {
-           return (
+       const renderExpressionBody = (selectedSlideIndex) => {
+  
+       return expressionReviewData && expressionReviewData.map(({slide_index,slide_question, slide_note, slide_options}) => {
+        if (slide_index ===selectedSlideIndex)   
+        return (
                <tbody>
                  <tr key = {slide_index}>
                <td className ="slide--index">S{slide_index}</td>
@@ -30,9 +34,9 @@ const ExpressionReview = (props) => {
                    <tr key = {option_index}>
                        <td className ="option--index">{option_index}</td>
                        <td>
-                           
+                           <ul>
                <li>{option_description}</li>
-                        
+                           </ul>
                        </td>
                    </tr>
                )
@@ -47,13 +51,13 @@ const ExpressionReview = (props) => {
        }
 
 return(
-    <div className="quota-management-page--expression-review">
+    <div className="">
     <table className="quota-management-page--expression-review--tables">
         <thead>
         {renderExpressionHeader()}
         </thead>
         
-        {renderExpressionBody()}
+        {renderExpressionBody(highlightedSlide)}
         
       
         
