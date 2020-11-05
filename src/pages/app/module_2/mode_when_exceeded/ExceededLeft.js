@@ -19,24 +19,45 @@ const ExceededLeft =(props)=>{
         return exceededLeftHeader && exceededLeftHeader.map(({quota_index,quota_label,exceeded_sex})=>
         {
             return ((
-            <th className="header-left" key={quota_index}> {quota_label}</th>
+            <th 
+                className="header-left" 
+                key={quota_index}
+                onClick ={(e)=>{
+                    console.log(e.target.innerText)
+                }}
+
+            > 
+                {quota_label}
+            </th>
             
             ))
         })
     }
     
     const renderExceedBodyLeft =()=>{
-            
+        
+        // const isClicked=()=>{
+        //     style={{background-color:#ffefcc}}
+        // }
         return exceededLeft && exceededLeft.map(({ type_index,type_car,check})=>{
             return(
                     <tr key={type_index}>
                         <td className="body-exceeded-left">{type_car}</td>
-                        <td className="cell">{check}</td>
-                        <td className="cell">{check}</td>
-                        <td className="cell">{check}</td>
-                        <td className="cell">{check}</td>
-                        <td className="cell">{check}</td>
-                        <td className="cell">{check}</td>
+                        {check.map((count) => {
+                            return(
+                            <td
+                                className="cell"
+                                onClick = {(e) => {
+                                    console.log("e",e)
+                                    console.log("text",e.target.innerText)
+                                    console.log(e.target.parentNode.childNodes[0].innerText)
+                                }}
+                            >
+                                {count}
+                            </td>
+                        )}
+                        )}
+                        
                     </tr>
             )})
     }
