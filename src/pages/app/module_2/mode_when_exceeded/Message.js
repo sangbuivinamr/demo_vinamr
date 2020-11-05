@@ -15,16 +15,16 @@ const Message=(props)=>{
                             name="message"
                             type="checkbox"
                         />
-                    <p>No Message</p>
+                    <p className="no-mess"><i>No Message</i></p>
                 </div>
                    
                 <textarea 
                     className="textarea"
                 />
-                <div className="buttons">
-                <div className="apply">Apply</div>
-                <div className="apply-all">Apply to All</div>
-            </div>
+                <div className="button-mess">
+                    <div className="apply-mess">Apply</div>
+                    <div className="apply-all-mess">Apply to All</div>
+                </div>
         </div>
     );
 }

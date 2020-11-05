@@ -250,27 +250,33 @@ export const EXCEEDED_LAYOUT_LEFT = [
     
     {
         type_index: 1,
-        type_car: "Owner. Honda Accord"
+        type_car: "Owner. Honda Accord",
+        check:"Đã hết quota. Liên hệ F0 phụ trách"
     },
     {
         type_index: 2,
-        type_car: "Owner. Toyota Camry"
+        type_car: "Owner. Toyota Camry",
+        check:"Đã hết quota. Liên hệ F1 phụ trách"
     },
     {
         type_index: 3,
-        type_car: "Owner. Other Models"
+        type_car: "Owner. Other Models",
+        check:"Đã hết quota. Liên hệ F2 phụ trách"
     },
     {
         type_index: 4,
-        type_car: "Intend. Honda Accord"
+        type_car: "Intend. Honda Accord",
+        check:"Đã hết quota. Liên hệ F3 phụ trách"
     },
     {
         type_index: 5,
-        type_car: "Intend. Toyota Camry"
+        type_car: "Intend. Toyota Camry",
+        check:"Đã hết quota. Liên hệ F5 phụ trách"
     },
     {
         type_index: 6,
-        type_car:"Intend. Other Models"
+        type_car:"Intend. Other Models",
+        check:"Đã hết quota. Liên hệ F6 phụ trách"
     },
 ]
 export const EXCEEDED_SEX_LEFT=[

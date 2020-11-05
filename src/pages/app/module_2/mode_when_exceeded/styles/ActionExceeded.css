@@ -7,35 +7,36 @@
    height: 200px;
    width: 300px;
    justify-content: center;
-
+   color: #ffd066;
 }
 .action-p{
    margin-left: -20px;
-   margin-top:0px
+   margin-top:10px
 }
 .select-action{
    height: 30px;
+   justify-content: start;
 }
 .buttons{
    display: flex;
    margin-top:10px
 }
 .apply{
-   background-color: #FCC216;
+   background-color: #ffd066;
    color: white;
    border-radius: 5px;
    width: 100px;
    height: 30px;
-   margin-right: 20px;
+   margin-right: 10px;
    text-align: center;
    cursor: pointer;
 }
 .apply-all{
-   background-color: #FCC216;
-   border-radius: 5px;
-   color: white;
-   width: 120px;
-   height: 30px;
-   text-align: center;
-   cursor: pointer;
+   background-color: #ffd066;
+    border-radius: 5px;
+    height: 30px;
+    width: 130px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
 }

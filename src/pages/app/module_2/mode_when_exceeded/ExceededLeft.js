@@ -26,16 +26,17 @@ const ExceededLeft =(props)=>{
     }
     
     const renderExceedBodyLeft =()=>{
-        return exceededLeft && exceededLeft.map(({ type_index,type_car})=>{
+            
+        return exceededLeft && exceededLeft.map(({ type_index,type_car,check})=>{
             return(
                     <tr key={type_index}>
                         <td className="body-exceeded-left">{type_car}</td>
-                        <td><input/></td>
-                        <td><input/></td>
-                        <td><input/></td>
-                        <td><input/></td>
-                        <td><input/></td>
-                        <td><input/></td>
+                        <td className="cell">{check}</td>
+                        <td className="cell">{check}</td>
+                        <td className="cell">{check}</td>
+                        <td className="cell">{check}</td>
+                        <td className="cell">{check}</td>
+                        <td className="cell">{check}</td>
                     </tr>
             )})
     }
@@ -44,12 +45,13 @@ const ExceededLeft =(props)=>{
             <table>
                 <thead>
                     <tr>
-                        <th className=""></th>
+                        <td></td>
                         {renderHeaderLayoutLeft()}
                     </tr>
                 </thead>
                 <tbody>
                     {renderExceedBodyLeft()}
+                    
                 </tbody>
                 
                 

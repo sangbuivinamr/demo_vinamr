@@ -9,10 +9,10 @@
     background-color: white;
 }
 .quota-name-p{
-    margin-top: 0px;
+    margin-top: 10px;
     margin-left:10px;
     font-family:var(--global-font-family) ;
-    color: #4F3C06;
+    color: #FCC216;
 }
 .name{
     margin-left:10px;

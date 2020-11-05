@@ -182,7 +182,7 @@ const QuotaExceeded = (props)=>{
     return(
         <div className="exceeded">
              <div className="exceeded exceeded-bar">
-                <h2 className="h2-default">
+                <h2 className="h2-exceeded">
                     QUOTA SETTINGS
                     
                 </h2>
