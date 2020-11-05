@@ -7,7 +7,7 @@
    height: 200px;
    width: 300px;
    justify-content: center;
-   color: #FCC216;
+   color: #ffd066;
 }
 .action-p{
    margin-left: -20px;
@@ -15,13 +15,14 @@
 }
 .select-action{
    height: 30px;
+   justify-content: start;
 }
 .buttons{
    display: flex;
    margin-top:10px
 }
 .apply{
-   background-color: #FCC216;
+   background-color: #ffd066;
    color: white;
    border-radius: 5px;
    width: 100px;
@@ -31,7 +32,7 @@
    cursor: pointer;
 }
 .apply-all{
-   background-color: #FCC216;
+   background-color: #ffd066;
     border-radius: 5px;
     height: 30px;
     width: 130px;

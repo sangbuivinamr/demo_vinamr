@@ -18,7 +18,7 @@
 }
 .p-mess{
     font-family: var(--global-font-family);
-    color: #4F3C06;
+    color: #ffd066;
     margin-right: 50px;
 }
 .check{
@@ -31,6 +31,7 @@
     color: #4F3C06;
 }
 .textarea{
+    margin-top:-30px;
     resize: none;
     width: 270px;
     height: 100px;
@@ -43,7 +44,7 @@
     justify-content: center;
 }
 .apply-mess{
-    background-color: #FCC216;
+    background-color: #ffd066;
     margin-right: 10px;
     border-radius: 5px;
     height: 30px;
@@ -53,7 +54,7 @@
     color: white;
 }
 .apply-all-mess{
-    background-color: #FCC216;
+    background-color: #ffd066;
     border-radius: 5px;
     height: 30px;
     width: 130px;
