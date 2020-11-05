@@ -13,9 +13,11 @@ import EditingTable from "../../../../components/app/EditingTable";
 
 //Styles
 import "./styles/QuotaEditing.css";
-
+/*  exceededLeft={ EXCEEDED_LAYOUT_LEFT}
+                        exceededLeftHeader={QUOTA_OVERVIEW_DATA}
+                        exceededLeftSex={EXCEEDED_SEX_LEFT}  */
 //Data
-import {QUOTA_OVERVIEW_DATA} from "../../../../data/testing-data";
+import {QUOTA_OVERVIEW_DATA, EDITING_TABLE_DATA,EXCEEDED_SEX_LEFT} from "../../../../data/testing-data";
 
 const QuotaEditing = (props)=>{
     const [selectedExpression, setSelectedExpression] = useState("");
@@ -253,7 +255,10 @@ const QuotaEditing = (props)=>{
               
                 
                 <div id = "quota--display--added--table">
-                    <EditingTable></EditingTable>
+                    <EditingTable  
+                     exceededLeft={EDITING_TABLE_DATA}
+                        exceededLeftHeader={QUOTA_OVERVIEW_DATA}
+                        exceededLeftSex={EXCEEDED_SEX_LEFT} ></EditingTable>
                 </div>
                 <div id ="quota--label--selection">
                  
