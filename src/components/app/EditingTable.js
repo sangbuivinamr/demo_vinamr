@@ -1,5 +1,4 @@
-import React from 'react';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import { EDITING_TABLE_DATA } from '../../data/testing-data';
 import "./styles/EditingTable.css";
 const EditingTable = (props) => {
@@ -9,8 +8,9 @@ const EditingTable = (props) => {
     let totalRow =[]; // This is an array that each value is the sum of all cells in a row
     
     //The testing data, will move to testing data later
-    const tableData = props.editingTableData
-    
+    const tableData = props.editingTableData;
+
+    console.log("Editing data",tableData)
 
     const renderHeaderLayoutLeft =() =>{
         return tableData.columnList && tableData.columnList.map((row)=>
@@ -31,7 +31,7 @@ const EditingTable = (props) => {
    
     }
     handleTotalRow(tableData.dataList) /// Implement this function right away to calculate the sum of all row and columns 
-    const sumOfAllCells = totalRow.reduce((first, last) => first+ last,0);
+    const sumOfAllCells = totalRow.reduce((first,   last) => first+ last,0);
     
     const handleTotalColumn = (props) => {
       
@@ -73,7 +73,7 @@ const EditingTable = (props) => {
 
     const renderEditingBody =()=>{
         let i = -1; // Need i to print out the rowList 
-        return tableData.dataList && tableData.dataList.map(row=>{
+        return tableData.dataList.map(row=>{
             i++;
             return(
                     <tr>
@@ -89,7 +89,8 @@ const EditingTable = (props) => {
                     </tr>
             )})
     }
-    return(
+    if (tableData.colList.length < 1 && tableData.rowList.length < 1 ) return (null)
+    else return  (
         <div className="main-table">
             <table>
                 <thead>
