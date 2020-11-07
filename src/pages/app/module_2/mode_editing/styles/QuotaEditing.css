@@ -24,7 +24,6 @@
 }
 #quota--label--selection {
   grid-column-start: 2;
-  border: 3px solid black;
   height: 100%;
 }
 #quota--display--added--table {
@@ -33,9 +32,11 @@
   background-color: #f2f2f2;
   padding-left: 20px;
   padding-top: 15px;
+  height: 80%;
 }
 #quota--management--adjust--rows--cols {
-  border: 3px solid black;
+  border-top: 2px solid var(--global-color-1);
+  margin-top: 20px;
   grid-row: 2/3;
   padding-right: 20px;
   padding-left: 20px;

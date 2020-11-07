@@ -17,11 +17,9 @@ import "./styles/QuotaEditing.css";
                         exceededLeftHeader={QUOTA_OVERVIEW_DATA}
                         exceededLeftSex={EXCEEDED_SEX_LEFT}  */
 //Data
-import {QUOTA_OVERVIEW_DATA, EDITING_TABLE_DATA,EXCEEDED_SEX_LEFT} from "../../../../data/testing-data";
+import {QUOTA_OVERVIEW_DATA, EDITING_TABLE_DATA} from "../../../../data/testing-data";
 
 const QuotaEditing = (props)=>{
-    const [selectedExpression, setSelectedExpression] = useState("");
-    const [highlightedSlide, setHightlightedSlide] = useState(1);
     const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
     const [quotaInput, setQuotaInput] = useState({
         quota_index: null,
@@ -147,35 +145,7 @@ const QuotaEditing = (props)=>{
 
     }
 
-       /**
-     * @summary returning the valid expression if matching, else return an empty string ""
-     * @param {string} expression the selected expression
-     */
-    const returningValidExpression = (expression) => {
-  
-        const verifiedExpression = /^([S]\d+[=]\d+)*/g;
-         const getExpresssion = expression.match(verifiedExpression); 
-          
-        return getExpresssion[0];
-    }
-     /**
-     * @summary Handling the highlighted text
-     * @return the index of the slide
-     * @param {string} expression the selected expression
-     */
-      const handleExpressionHighlight = () => {
-      var selectedText = window.getSelection().toString();
-      
-       selectedText =  returningValidExpression(selectedText);
-        if(selectedText !== "") 
-        {
-        
-        setSelectedExpression(selectedText);
-        selectedText = selectedText.match(/(\d+)/);
-        const slide = parseInt(selectedText);
-        setHightlightedSlide(slide);
-        } 
-      }
+
     const onChangeNavtoExpression=(e)=>{
           
         props.history.push(`/${e.target.value}`)
@@ -256,9 +226,9 @@ const QuotaEditing = (props)=>{
                 
                 <div id = "quota--display--added--table">
                     <EditingTable  
-                     exceededLeft={EDITING_TABLE_DATA}
-                        exceededLeftHeader={QUOTA_OVERVIEW_DATA}
-                        exceededLeftSex={EXCEEDED_SEX_LEFT} ></EditingTable>
+                     editingTableData={EDITING_TABLE_DATA}
+                        editingTableHeader={QUOTA_OVERVIEW_DATA}
+                     ></EditingTable>
                 </div>
                 <div id ="quota--label--selection">
                  
@@ -298,7 +268,7 @@ const QuotaEditing = (props)=>{
                     <text> Columns</text>
                 </div>
                     </div>
-                    <QuotaRowColumnAdjustment/>
+                    <QuotaRowColumnAdjustment  />
               
                 </div>
             </div>
