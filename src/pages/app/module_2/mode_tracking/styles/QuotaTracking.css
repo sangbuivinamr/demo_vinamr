@@ -28,7 +28,6 @@
     margin-left: 100px;
 }
 .export{
- 
  cursor: pointer;
 }
 .export>.p-tracking{
@@ -43,6 +42,10 @@
  text-align: center;
  padding: 1%;
  font-family: var(--global-font-family);
+}
+.p-tracking:hover{
+    
+ opacity: 0.75;
 }
 .mode-tracking{
   margin-top: 20px;

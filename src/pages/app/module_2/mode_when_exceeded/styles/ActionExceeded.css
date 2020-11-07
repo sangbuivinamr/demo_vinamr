@@ -31,6 +31,9 @@
    text-align: center;
    cursor: pointer;
 }
+.apply:hover{
+   opacity: 0.75;
+}
 .apply-all{
    background-color: #ffd066;
     border-radius: 5px;
@@ -39,4 +42,7 @@
     text-align: center;
     cursor: pointer;
     color: white;
+}
+.apply-all:hover{
+   opacity: 0.75;
 }

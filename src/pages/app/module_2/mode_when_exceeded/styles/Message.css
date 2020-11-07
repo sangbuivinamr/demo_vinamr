@@ -53,6 +53,9 @@
     cursor: pointer;
     color: white;
 }
+.apply-mess:hover{
+    opacity: 0.75;
+}
 .apply-all-mess{
     background-color: #ffd066;
     border-radius: 5px;
@@ -62,3 +65,6 @@
     cursor: pointer;
     color: white;
 }
+.apply-all-mess:hover{
+    opacity: 0.75;
+ }

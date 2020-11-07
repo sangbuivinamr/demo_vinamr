@@ -53,6 +53,7 @@ const QuotaTracking = (props)=>{
                             <i>
                             <FaSyncAlt
                                 className="sync-icon"
+                            onClick={()=>console.log("nguasa")}
                             />
                         </i>
                         </div>
