@@ -6,24 +6,23 @@ import React,{useState} from "react";
 import './styles/Message.css';
 
 const Message=(props)=>{
+
+    //Initialize the states
     const [mess,setMess]=useState();
+    const [disable, setDisable] = useState(false);
+    const [input, setInput]=useState();
+
+    //Funtions handle
     const onChange=(mess)=>{
         setMess(mess)
     }
-
-    const handleNoMess=()=>{
-        Array.from(document.querySelectorAll("textarea")).forEach(
-            textarea => (textarea.value = "")
-          );
+    
+    const handleClick=(e)=>{
+        setDisable(!disable);
     }
 
-//    function disable(){
-//        if()
-//     disabled={true};
-//    }
-    
+    //Render to browser
     return(
-        // console.log("test",e),
         <div className="message">
                 <div className="two-mess">
                     <p className="p-mess">Message</p>
@@ -31,14 +30,13 @@ const Message=(props)=>{
                             className="check"
                             name="message"
                             type="checkbox"
-                            // onClick={(disable())}
-                           
+                            onClick={()=>handleClick()}
                         />
                     <p className="no-mess"><i>No Message</i></p>
                 </div>
                    
                 <textarea 
-                    disabled={true}
+                    disabled={disable}
                     className="textarea"
                     value={mess}
                     onChange={(mess)=>onChange(mess.target.value)}

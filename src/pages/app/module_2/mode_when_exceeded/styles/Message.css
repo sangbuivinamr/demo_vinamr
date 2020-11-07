@@ -31,6 +31,7 @@
     color: #4F3C06;
 }
 .textarea{
+    outline: none;
     margin-top:-30px;
     resize: none;
     width: 270px;
