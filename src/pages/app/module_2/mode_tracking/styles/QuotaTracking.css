@@ -1,1 +1,104 @@
 @import "../../../styles/GlobalStyles.css";
+.tracking{
+    background-color: var(--global-background-color);
+    height: 100vh;
+    width: 100vw;
+    margin-left: -7px;
+    margin-top: -10px;
+    display: grid;
+    position: fixed;
+    font-family: var(--global-font-family);
+  
+}
+.tracking .tracking-bar{
+    padding-top: 50px;
+    display: grid;
+    height: 50px;
+}
+.bar{
+    display: flex;
+}
+.h2-tracking{
+    color:#c69017;
+    margin-left: 50px;
+    margin-right:200px;
+}
+.export.area{
+    display: flex;
+    margin-left: 100px;
+}
+.export{
+ 
+ cursor: pointer;
+}
+.export>.p-tracking{
+ color: white;
+ background-color: #ffd066;
+ border-radius: 5px;
+ width: 150px;
+ height: 30px;
+ vertical-align: middle;
+ margin-top: 20px;
+ white-space: nowrap;
+ text-align: center;
+ padding: 1%;
+ font-family: var(--global-font-family);
+}
+.mode-tracking{
+  margin-top: 20px;
+  border: 1px solid rgb(77, 74, 74);
+  margin-left: 10px;
+  margin-right: 0px;
+  text-align: center;
+  width: 70px;
+  height: 28px;
+  padding-top: 2px;
+  background-color: rgb(77, 74, 74);
+  color: white;
+  font-family: var(--global-font-family);
+
+}
+.export > select {
+    margin-top: 20px;
+    height: 32px;
+    width: 170px;
+    background-color: rgb(77, 74, 74);
+    color: white;
+    outline: none;
+    cursor: pointer;
+    margin-left: -1px;
+    font-family: var(--global-font-family);
+    margin-right: 0px;
+}
+.icon-sync{
+    cursor: pointer;
+    background-color:#ffd066 ;
+    margin-top: 20px;
+    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+    margin-left: 20px;
+}
+.sync-icon{
+    cursor: pointer;
+    justify-items: center;
+    color: white;
+    margin-left: 3px;
+    padding-top: 5px;
+    height: 20px;
+    width: 30px;
+}
+.sync{
+    margin-top: 25px;
+    margin-left: 20px;
+    color: gray;
+}
+.content-tracking{
+border: 1px solid #c48e11;
+width: 1450px;
+margin-left: 50px;
+height: 100px;
+overflow:scroll;
+height: 600px;
+background-color: #f2f2f2;
+}

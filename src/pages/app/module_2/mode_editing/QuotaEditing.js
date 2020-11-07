@@ -237,6 +237,11 @@ const QuotaEditing = (props)=>{
                         >
                             Tracking
                         </option>
+                        <option
+                            value="interview"
+                        >
+                            Interview Preview
+                        </option>
                     </select>
                     <div className="expression-review">
                     <h2 className="review">

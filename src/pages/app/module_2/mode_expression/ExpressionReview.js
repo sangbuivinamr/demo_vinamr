@@ -35,7 +35,7 @@ const ExpressionReview = (props) => {
                        <td className ="option--index">{option_index}</td>
                        <td>
                            <ul>
-               <li>{option_description}</li>
+                                <li>{option_description}</li>
                            </ul>
                        </td>
                    </tr>

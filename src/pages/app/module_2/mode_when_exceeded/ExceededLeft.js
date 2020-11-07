@@ -16,7 +16,7 @@ const ExceededLeft =(props)=>{
     const exceededLeftHeader=props.exceededLeftHeader ;
     const exceededLeftSex = props.exceededLeftSex
     const renderHeaderLayoutLeft =() =>{
-        return exceededLeftHeader && exceededLeftHeader.map(({quota_index,quota_label,exceeded_sex})=>
+        return exceededLeftHeader && exceededLeftHeader.map(({quota_index,quota_label})=>
         {
             return ((
             <th 
@@ -36,9 +36,6 @@ const ExceededLeft =(props)=>{
     
     const renderExceedBodyLeft =()=>{
         
-        // const isClicked=()=>{
-        //     style={{background-color:#ffefcc}}
-        // }
         return exceededLeft && exceededLeft.map(({ type_index,type_car,check})=>{
             return(
                     <tr key={type_index}>
