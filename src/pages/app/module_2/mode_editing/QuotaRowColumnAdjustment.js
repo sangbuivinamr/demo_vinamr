@@ -8,7 +8,8 @@ import "./styles/QuotaRowColumnAdjustment.css";
 import {ImSigma} from "react-icons/im";
 
  const QuotaRowColumnAdjustment = (props) =>{
-    //  const addedColumnRowData = props.addedColumnRowData;
+    const addedColumn = props.columnData;
+    const addedRow = props.rowData;
     const renderHeader = () => {
         let headerElement = ['Rows', 'Columns']
 
@@ -24,41 +25,25 @@ import {ImSigma} from "react-icons/im";
                 </thead>
                 <tbody className="quota-label-selection-table--body">
                  <tr>
-         {/* This is the column row's part */}
+         {/* This is the row adjustment's part */}
                    <td>
                         <div className="sigma-total-rounded-box">
                         <ImSigma className="sigma-icon" style={{size:"10px"}} /> <text> Total</text>
                         </div>
-                            <div className="selected--expression--box"> 
-                                Owner.Honda Account 
-                            </div>
-                            <div className="selected--expression--box"> 
-                                Owner.Honda Account 
-                            </div>
-                            <div className="selected--expression--box"> 
-                                Owner.Honda Account 
-                            </div>
-                            <div className="selected--expression--box"> 
-                                Owner.Honda Account 
-                            </div>
-                            <div className="selected--expression--box"> 
-                                Owner.Honda Account 
-                            </div>
+                        {addedRow.map(col => {return(  <div className="selected--expression--box"> 
+                            {col}
+                            </div>)})}
+                          
+
                    </td>
     {/* This is the column adjustment's part */}
                    <td>
                    <div className="sigma-total-rounded-box">
                    <ImSigma className="sigma-icon" style={{size:"10px"}} /> Total
                         </div>
-                        <div className="selected--expression--box"> 
-                                Hà Nội
-                            </div>
-                            <div className="selected--expression--box"> 
-                               TP.HCM
-                            </div>
-                            <div className="selected--expression--box"> 
-                                Cần Thơ
-                            </div>
+                        {addedColumn.map(row => {return(  <div className="selected--expression--box"> 
+                            {row}
+                            </div>)})}
                    </td>
                 </tr>   
                     

@@ -56,3 +56,14 @@
   border-spacing: 0px;
   border-collapse: collapse;
 }
+.sum-all-cols-rows-cell {
+  border: 1px solid black;
+  background-color: #6a972d;
+  color: white;
+  font-size: 15px;
+  height: 10px;
+  font-family: var(--global-font-family);
+  width: 10px;
+  margin-top: 20px;
+  text-align: center;
+}

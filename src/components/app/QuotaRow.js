@@ -16,7 +16,7 @@ export default function QuotaRow(props){
             <tr
                 key={quota_label} 
                 onClick={() => props.onChoosingQuota(quota_label)} 
-                style={{backgroundColor: props.quotaClickStatus.status && props.quotaClickStatus.quotaLabel === quota_label && "yellow" }}
+                style={{backgroundColor: props.quotaClickStatus.status && props.quotaClickStatus.quotaLabel === quota_label && "#ffefcc" }}
             >
                 <td>{quota_label}</td>
                 <td>{quota_expression}</td>

@@ -17,12 +17,10 @@ import "./styles/QuotaEditing.css";
                         exceededLeftHeader={QUOTA_OVERVIEW_DATA}
                         exceededLeftSex={EXCEEDED_SEX_LEFT}  */
 //Data
-import {QUOTA_OVERVIEW_DATA, EDITING_TABLE_DATA,EXCEEDED_SEX_LEFT} from "../../../../data/testing-data";
+import {QUOTA_LABEL_SELECTION_DATA, EDITING_TABLE_DATA} from "../../../../data/testing-data";
 
 const QuotaEditing = (props)=>{
-    const [selectedExpression, setSelectedExpression] = useState("");
-    const [highlightedSlide, setHightlightedSlide] = useState(1);
-    const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
+    const [quotaData, setQuotaData] = useState(QUOTA_LABEL_SELECTION_DATA);
     const [quotaInput, setQuotaInput] = useState({
         quota_index: null,
         quota_label: "",
@@ -32,7 +30,14 @@ const QuotaEditing = (props)=>{
         quotaLabel: "", 
         status: false
     })
-
+    const [editingtable,setEditingTable] = useState([{
+        colList: [],
+        rowList: [],
+        dataList: [[{row:"", column:"", quotaCount: 0}]]
+        }]
+        )
+    const [addedRow,setAddedRow] = useState([]);
+    const [addedColumn,setAddedColumn] = useState([]);
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
     
@@ -40,31 +45,31 @@ const QuotaEditing = (props)=>{
      * @summary Swap the quota row in the table
      * @param {string} swapType The type of the swap: UP/ DOWN
      */
-    const onSwappingQuotaRow = (swapType) => {
+    // const onSwappingQuotaRow = (swapType) => {
 
-        if(onCheckingNotAnyHighlightedQuota()) return;
+    //     if(onCheckingNotAnyHighlightedQuota()) return;
 
-        const currentQuotaData = [].concat(quotaData);
+    //     const currentQuotaData = [].concat(quotaData);
 
-        let selectedQuotaIndex;
+    //     let selectedQuotaIndex;
 
-        // Finding the index of the highlighted quota row
-        for(let quotaIndex = 0; quotaIndex < currentQuotaData.length; quotaIndex++){
-            if(currentQuotaData[quotaIndex]["quota_label"] === quotaClickStatus.quotaLabel) selectedQuotaIndex = quotaIndex;
-        }
+    //     // Finding the index of the highlighted quota row
+    //     for(let quotaIndex = 0; quotaIndex < currentQuotaData.length; quotaIndex++){
+    //         if(currentQuotaData[quotaIndex]["quota_label"] === quotaClickStatus.quotaLabel) selectedQuotaIndex = quotaIndex;
+    //     }
 
-        // Swapping
-        const tempQuota = currentQuotaData[selectedQuotaIndex];
-        if(swapType === "UP"){
-            currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex - 1]
-            currentQuotaData[selectedQuotaIndex - 1] = tempQuota
-        }else{
-            currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex + 1]
-            currentQuotaData[selectedQuotaIndex + 1] = tempQuota
-        }
+    //     // Swapping
+    //     const tempQuota = currentQuotaData[selectedQuotaIndex];
+    //     if(swapType === "UP"){
+    //         currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex - 1]
+    //         currentQuotaData[selectedQuotaIndex - 1] = tempQuota
+    //     }else{
+    //         currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex + 1]
+    //         currentQuotaData[selectedQuotaIndex + 1] = tempQuota
+    //     }
         
-        setQuotaData(currentQuotaData)
-    }
+    //     setQuotaData(currentQuotaData)
+    // }
 
     /**
      * @summary Add a quota row to the table
@@ -103,19 +108,8 @@ const QuotaEditing = (props)=>{
         setQuotaInput(newQuotaInput)
         
     }
-
-    /**
-     * @summary Handle the input change for the expression input in the quota table
-     * @param {string} quota_expression The expression (aka value of the input at the expression column) 
-     */
-    const onAddingQuotaExpression = (quota_expression) => {
-        let newQuotaInput = {
-            quota_index: quotaData.length,
-            quota_label: quotaInput.quota_label,
-            quota_expression: quota_expression
-        }
-        setQuotaInput(newQuotaInput)
-    }
+    /*
+    */
 
     /**
      * @summary Make the selected (clicked) row to be highlighted
@@ -129,6 +123,7 @@ const QuotaEditing = (props)=>{
         }
         setQuotaClickStatus(newQuotaStatus);
     }
+    console.log(quotaClickStatus)
 
     /**
      * @summary Delete the selected quota row in the table
@@ -147,39 +142,63 @@ const QuotaEditing = (props)=>{
 
     }
 
-       /**
-     * @summary returning the valid expression if matching, else return an empty string ""
-     * @param {string} expression the selected expression
-     */
-    const returningValidExpression = (expression) => {
-  
-        const verifiedExpression = /^([S]\d+[=]\d+)*/g;
-         const getExpresssion = expression.match(verifiedExpression); 
-          
-        return getExpresssion[0];
-    }
-     /**
-     * @summary Handling the highlighted text
-     * @return the index of the slide
-     * @param {string} expression the selected expression
-     */
-      const handleExpressionHighlight = () => {
-      var selectedText = window.getSelection().toString();
-      
-       selectedText =  returningValidExpression(selectedText);
-        if(selectedText !== "") 
-        {
-        
-        setSelectedExpression(selectedText);
-        selectedText = selectedText.match(/(\d+)/);
-        const slide = parseInt(selectedText);
-        setHightlightedSlide(slide);
-        } 
-      }
+
     const onChangeNavtoExpression=(e)=>{
           
         props.history.push(`/${e.target.value}`)
   
+}
+
+/**  
+* @summary handle add to row when clicked add to Row 
+*/
+const handleAddToRow = (quotaLabel) => {
+    const {quotaLabel: takenQuotaLabel} = quotaLabel
+    if (takenQuotaLabel==="") {
+        alert("You haven't chosen any labels")
+        return;
+    }
+for( const table of editingtable)
+    for(const row of table.rowList)
+        if (takenQuotaLabel === row)
+        {
+            alert("You have already added to row this quota Label")
+            return;
+        }
+        console.log("Get the quotal Label",takenQuotaLabel)
+        let tempArray = [].concat(addedRow);
+        tempArray.push(takenQuotaLabel)
+        setAddedRow(tempArray);
+        let tempTable = editingtable;
+        let indexOfTable = 0;
+        tempTable[indexOfTable].rowList.push(takenQuotaLabel)
+        setEditingTable(tempTable)
+}
+
+/**  
+* @summary handle add to row when clicked add to Row 
+*/
+const handleAddToColumn = (quotaLabel) => {
+    const {quotaLabel: takenQuotaLabel} = quotaLabel
+    if (takenQuotaLabel==="") {
+        alert("You haven't chosen any labels")
+        return;
+    }
+for( const table of editingtable)
+    for(const column of table.rowList)
+        if (takenQuotaLabel === column)
+        {
+            alert("You have already added to row this quota Label")
+            return;
+        }
+        console.log("Get the quotal Label",takenQuotaLabel)
+        let tempArray = [].concat(addedColumn);
+        tempArray.push(takenQuotaLabel)
+        setAddedColumn(tempArray);
+        let tempTable = editingtable;
+        let indexOfTable = 0;
+        tempTable[indexOfTable].colList.push(takenQuotaLabel)
+        setEditingTable(tempTable)
 }
     return(
         <div className="quota-page">
@@ -247,10 +266,10 @@ const QuotaEditing = (props)=>{
                     <h2 className="review">
                         QUOTA LABEL <br/> SELECTION
                     </h2>
-                    <button id ="quota--management--page--add--to-row--btn">
+                    <button id ="quota--management--page--add--to-row--btn" onClick ={() =>handleAddToRow(quotaClickStatus)} >
                     Add to <br/> Row
                     </button>
-                   <button id ="quota--management--page--add--to-column--btn">
+                   <button id ="quota--management--page--add--to-column--btn" onClick ={() =>handleAddToColumn(quotaClickStatus)}>
                     Add to <br/> Column
                    </button>
                 </div>
@@ -261,9 +280,8 @@ const QuotaEditing = (props)=>{
                 
                 <div id = "quota--display--added--table">
                     <EditingTable  
-                     exceededLeft={EDITING_TABLE_DATA}
-                        exceededLeftHeader={QUOTA_OVERVIEW_DATA}
-                        exceededLeftSex={EXCEEDED_SEX_LEFT} ></EditingTable>
+                     editingTableData={editingtable[0]}
+                     ></EditingTable>
                 </div>
                 <div id ="quota--label--selection">
                  
@@ -303,7 +321,7 @@ const QuotaEditing = (props)=>{
                     <text> Columns</text>
                 </div>
                     </div>
-                    <QuotaRowColumnAdjustment/>
+                    <QuotaRowColumnAdjustment rowData={addedRow} columnData={addedColumn} />
               
                 </div>
             </div>
