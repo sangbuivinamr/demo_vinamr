@@ -18,8 +18,6 @@ import "./styles/QuotaExceeded.css";
 import {QUOTA_OVERVIEW_DATA, EXCEEDED_LAYOUT_LEFT,EXCEEDED_SEX_LEFT} from "../../../../data/testing-data";
 
 const QuotaExceeded = (props)=>{
-    const [selectedExpression, setSelectedExpression] = useState("");
-    const [highlightedSlide, setHightlightedSlide] = useState(1);
     const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
     const [quotaInput, setQuotaInput] = useState({
         quota_index: null,
@@ -31,8 +29,7 @@ const QuotaExceeded = (props)=>{
         status: false
     })
 
-    const [name,setName]=useState("");
-    const [message,setMessage]=useState("");
+    
 
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
@@ -136,24 +133,43 @@ const QuotaExceeded = (props)=>{
      * @return the index of the slide
      * @param {string} expression the selected expression
      */
-      const handleExpressionHighlight = () => {
-      var selectedText = window.getSelection().toString();
+    //   const handleExpressionHighlight = () => {
+    //   var selectedText = window.getSelection().toString();
       
-       selectedText =  returningValidExpression(selectedText);
-        if(selectedText !== "") 
-        {
+    //    selectedText =  returningValidExpression(selectedText);
+    //     if(selectedText !== "") 
+    //     {
         
-        setSelectedExpression(selectedText);
-        selectedText = selectedText.match(/(\d+)/);
-        const slide = parseInt(selectedText);
-        setHightlightedSlide(slide);
-        } 
-      }
+    //     setSelectedExpression(selectedText);
+    //     selectedText = selectedText.match(/(\d+)/);
+    //     const slide = parseInt(selectedText);
+    //     setHightlightedSlide(slide);
+    //     } 
+    //   }
     const onChangeNav=(e)=>{  props.history.push(`/${e.target.value}`) }
 
     const onChangeName=(newName)=>{
         setName({name:newName});
     }
+    const onChoosingCell=(e)=>{
+        
+        let type_car=e.target.parentNode.childNodes[0].innerText;
+        let notification=e.target.innerText;
+        // const [car,setCar]
+        console.log("e",e)
+        console.log("cảr",type_car)
+        console.log("cc",notification)
+        
+
+    }
+    const test=(e)=>{
+        let type_car=e.target.parentNode.childNodes[0].innerText;
+        return(
+           <h1>{type_car}</h1> 
+        );
+    }
+    const [name,setName]=useState("");
+    const [message,setMessage]=useState("");
     return(
         <div className="exceeded">
              <div className="exceeded exceeded-bar">
@@ -225,12 +241,13 @@ const QuotaExceeded = (props)=>{
                         exceededLeft={ EXCEEDED_LAYOUT_LEFT}
                         exceededLeftHeader={QUOTA_OVERVIEW_DATA}
                         exceededLeftSex={EXCEEDED_SEX_LEFT} 
+                        onChoosingCell={(e)=>onChoosingCell(e)}
                     />
                 </div>
                 <div className="layout-right">
                     <div>
                         <QuotaName 
-                            name={name}
+                            dataFromTable={name}
                         />
                     </div>
                     <div>
@@ -239,6 +256,7 @@ const QuotaExceeded = (props)=>{
                     <div>
                         <Message
                             mess={message}
+                            onChange={(e)=>onChoosingCell=(message.target.parentNode.childNodes[0].innerText)}
                         /> 
                     </div>                       
                 </div>

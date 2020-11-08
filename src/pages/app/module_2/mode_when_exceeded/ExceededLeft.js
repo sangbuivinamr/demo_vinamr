@@ -12,9 +12,13 @@ import "./styles/ExceededLeft.css";
 
 
 const ExceededLeft =(props)=>{
+    const sendDataParent= (e)=>{
+        props.onChoosingCell(e);
+    }
     const exceededLeft= props.exceededLeft;
     const exceededLeftHeader=props.exceededLeftHeader ;
-    const exceededLeftSex = props.exceededLeftSex
+    const exceededLeftSex = props.exceededLeftSex;
+    // let type_car=e.target.parentNode.childNodes[0].innerText;
     const renderHeaderLayoutLeft =() =>{
         return exceededLeftHeader && exceededLeftHeader.map(({quota_index,quota_label})=>
         {
@@ -23,7 +27,8 @@ const ExceededLeft =(props)=>{
                 className="header-left" 
                 key={quota_index}
                 onClick ={(e)=>{
-                    console.log(e.target.innerText)
+                    // console.log("p1",e.target.innerText)
+                    // sendDataParent("p21",e.target.innerText);
                 }}
 
             > 
@@ -35,7 +40,7 @@ const ExceededLeft =(props)=>{
     }
     
     const renderExceedBodyLeft =()=>{
-        
+       
         return exceededLeft && exceededLeft.map(({ type_index,type_car,check})=>{
             return(
                     <tr key={type_index}>
@@ -45,9 +50,7 @@ const ExceededLeft =(props)=>{
                             <td
                                 className="cell"
                                 onClick = {(e) => {
-                                    console.log("e",e)
-                                    console.log("text",e.target.innerText)
-                                    console.log(e.target.parentNode.childNodes[0].innerText)
+                                    sendDataParent(e);
                                 }}
                             >
                                 {count}
