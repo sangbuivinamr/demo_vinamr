@@ -28,7 +28,7 @@ const QuotaExceeded = (props)=>{
         quotaLabel: "", 
         status: false
     })
-
+const [typeCar, setTypeCar] = useState("");
     
 
 
@@ -151,17 +151,17 @@ const QuotaExceeded = (props)=>{
     const onChangeName=(newName)=>{
         setName({name:newName});
     }
+ 
     const onChoosingCell=(e)=>{
         
         let type_car=e.target.parentNode.childNodes[0].innerText;
-        let notification=e.target.innerText;
+       let notification=e.target.innerText;
         // const [car,setCar]
-        console.log("e",e)
-        console.log("cảr",type_car)
-        console.log("cc",notification)
+     setTypeCar(type_car)
         
 
     }
+console.log("Type car",typeCar)
     const test=(e)=>{
         let type_car=e.target.parentNode.childNodes[0].innerText;
         return(
@@ -256,7 +256,7 @@ const QuotaExceeded = (props)=>{
                     <div>
                         <Message
                             mess={message}
-                            onChange={(e)=>onChoosingCell=(message.target.parentNode.childNodes[0].innerText)}
+                            onChange={(e)=>onChoosingCell(message.target.parentNode.childNodes[0].innerText)}
                         /> 
                     </div>                       
                 </div>
