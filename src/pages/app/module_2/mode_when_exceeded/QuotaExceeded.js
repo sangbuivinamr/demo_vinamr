@@ -247,7 +247,7 @@ console.log("Type car",typeCar)
                 <div className="layout-right">
                     <div>
                         <QuotaName 
-                            dataFromTable={name}
+                            dataFromTable={typeCar}
                         />
                     </div>
                     <div>

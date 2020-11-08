@@ -12,9 +12,10 @@ import './styles/QuotaName.css';
 
 const QuotaName = (props)=>{
     return (
+
         <div className="quota-name">
             <p className="quota-name-p">Quota Name</p>
-            <p className="name">{props.name}</p>
+            <p className="name">{props. dataFromTable}</p>
         </div>
     )
 }
