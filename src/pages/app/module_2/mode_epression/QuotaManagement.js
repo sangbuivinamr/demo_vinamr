@@ -1,27 +1,36 @@
 /*
 *Contributor: 
-   *Tien 23/10/2020(init the codebase)
+   *Khánh
+   *Tien 
+    -23/10/2020(init the codebase)
+    -10/11/2020 (Start hooking BE to FE)
+
 *Function: Render Screen Quota Management
 */
 
 //Packages
-import React,{useState,useEffect}  from "react";
+import React,{useState, useEffect}  from "react";
 import QuotaOverview from "./QuotaOverview";
 import ExpressionReview from "./ExpressionReview";
 import { IoIosArrowRoundUp } from "react-icons/io";
 import {IoIosArrowRoundDown} from "react-icons/io";
 import {IoMdClose} from "react-icons/io";
 import {IoIosSave} from "react-icons/io";
+import axios from "axios";
 
 
 //Styles
 import "./styles/QuotaManagementStyles.css";
-import { QUOTA_OVERVIEW_DATA, testing_quota, EXPRESSION_REVIEW_DATA } from "../../../../data/testing-data";
+import {EXPRESSION_REVIEW_DATA } from "../../../../data/testing-data";
+
+//Default url
+const URL_QUOTA_INFORMATION ="https://115.73.222.254:8000/quota/getQuotaInformation?projectId=1"
+const URL_EXPRESSION="https://115.73.222.254:8000/expression/expressionReview/?projectId=0515&code=Q7A"
 
 const QuotaManagement = (props)=>{
     const [selectedExpression, setSelectedExpression] = useState("");
     const [highlightedSlide, setHightlightedSlide] = useState(1);
-    const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
+    const [quotaData, setQuotaData] = useState([]);
     const [quotaInput, setQuotaInput] = useState({
         quota_index: null,
         quota_label: "",
@@ -31,15 +40,18 @@ const QuotaManagement = (props)=>{
         quotaLabel: "", 
         status: false
     })
+    const [expression,setExpression]=useState([])
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
-    
     /**
      * @summary Swap the quota row in the table
      * @param {string} swapType The type of the swap: UP/ DOWN
      */
     const onSwappingQuotaRow = (swapType) => {
+        axios.get(URL).then((result) =>{
+            console.log(result)
+        })
 
         if(onCheckingNotAnyHighlightedQuota()) return;
 
@@ -162,22 +174,50 @@ const QuotaManagement = (props)=>{
      * @return the index of the slide
      * @param {string} expression the selected expression
      */
-      const handleExpressionHighlight = () => {
-      var selectedText = window.getSelection().toString();
-      console.log("Highlighting successfully",selectedText)
-       selectedText =  returningValidExpression(selectedText);
-        if(selectedText !== "") 
-        {
-        
-        setSelectedExpression(selectedText);
-        selectedText = selectedText.match(/(\d+)/);
-        const slide = parseInt(selectedText);
-        setHightlightedSlide(slide);
-        } 
-     
-        
-      }
+    const handleExpressionHighlight = () => {
+    var selectedText = window.getSelection().toString();
+    console.log("Highlighting successfully",selectedText)
+    selectedText =  returningValidExpression(selectedText);
+    if(selectedText !== "") 
+    {
+    
+    setSelectedExpression(selectedText);
+    selectedText = selectedText.match(/(\d+)/);
+    const slide = parseInt(selectedText);
+    setHightlightedSlide(slide);
+    }
+
+    }
+
+    /**
+     * @summary Function useEffect
+     * @return void
+     */
+    useEffect(()=>{
+        getDataInformation()
+        getDataExpression()
+    },[])
+
+
+    // get data information from DB
+    const getDataInformation =async ()=>{
+
+        const response= await axios.get(URL_QUOTA_INFORMATION)
+        setQuotaData(response.data)
+        console.log("response",response)
+    }
+
+
+    //Get data expression from DB
+    const getDataExpression =async ()=>{
+        const response = await axios.get(URL_EXPRESSION)
+        setExpression(response.data)
+        console.log("check",response)
+    }
+
+
     return(
+        
         <div className="quota-page">
            <div className="quota-page default-bar">
                 <h2 className="h2-default">
@@ -188,7 +228,6 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoIosArrowRoundUp
                         className="up icon"
-                        // onClick={()=>swapUp(myData)}
                         onClick={() => onSwappingQuotaRow("UP")}
                     />
                     </i>
@@ -244,7 +283,7 @@ const QuotaManagement = (props)=>{
                     setQuotaClickStatus={setQuotaClickStatus}
                     
                 />
-                <ExpressionReview expressionReviewData ={EXPRESSION_REVIEW_DATA} setHightlightedSlide ={highlightedSlide}/>
+                <ExpressionReview expressionReviewData ={expression} setHightlightedSlide ={highlightedSlide}/>
             </div>
         </div>
     );

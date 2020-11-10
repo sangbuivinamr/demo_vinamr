@@ -6,7 +6,9 @@
   
   #quota-overview-table {
     border-collapse: collapse;
-    border: 1px solid var(--global-color-1);
+    border: 2px solid var(--global-color-1);
+    width: 900px;
+    margin-left: 20px;
   }
   
   #quota-overview-table td,
