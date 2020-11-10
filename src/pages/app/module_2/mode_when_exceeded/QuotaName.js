@@ -15,7 +15,7 @@ const QuotaName = (props)=>{
 
         <div className="quota-name">
             <p className="quota-name-p">Quota Name</p>
-            <p className="name">{props. dataFromTable}</p>
+            <p className="name">{props.dataCityTable} {props.dataCarTable}</p>
         </div>
     )
 }

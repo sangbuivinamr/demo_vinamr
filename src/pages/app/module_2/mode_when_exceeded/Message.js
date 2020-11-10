@@ -8,18 +8,11 @@ import './styles/Message.css';
 const Message=(props)=>{
 
     //Initialize the states
-    const [mess,setMess]=useState();
-    const [disable, setDisable] = useState(false);
-    const [input, setInput]=useState();
-
-    //Funtions handle
-    const onChange=(mess)=>{
-        setMess(mess)
-    }
-    
-    const handleClick=(e)=>{
-        setDisable(!disable);
-    }
+    // const [disable, setDisable] = useState(false);
+    // //Funtions handle
+    // const handleClick=(e)=>{
+    //     setDisable(!disable);
+    // }
 
     //Render to browser
     return(
@@ -30,17 +23,17 @@ const Message=(props)=>{
                             className="check"
                             name="message"
                             type="checkbox"
-                            onClick={()=>handleClick()}
+                            // onClick={()=>handleClick()}
                         />
                     <p className="no-mess"><i>No Message</i></p>
                 </div>
-                   
-                <textarea 
-                    disabled={disable}
-                    className="textarea"
-                    value={mess}
-                    onChange={(mess)=>onChange(mess.target.value)}
-                />
+                <div className="notification-area">
+                <p 
+                    className="notification"
+                >
+                    {props.mess}
+                </p>
+                </div>
                 <div className="button-mess">
                     <div className="apply-mess">Apply</div>
                     <div className="apply-all-mess">Apply to All</div>

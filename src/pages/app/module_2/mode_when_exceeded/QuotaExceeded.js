@@ -28,7 +28,9 @@ const QuotaExceeded = (props)=>{
         quotaLabel: "", 
         status: false
     })
-const [typeCar, setTypeCar] = useState("");
+    const [typeCar, setTypeCar] = useState("");
+    const [notification,setNotification] =useState();
+    const [city,setCity]=useState("");
     
 
 
@@ -148,28 +150,33 @@ const [typeCar, setTypeCar] = useState("");
     //   }
     const onChangeNav=(e)=>{  props.history.push(`/${e.target.value}`) }
 
-    const onChangeName=(newName)=>{
-        setName({name:newName});
-    }
  
     const onChoosingCell=(e)=>{
         
         let type_car=e.target.parentNode.childNodes[0].innerText;
-       let notification=e.target.innerText;
-        // const [car,setCar]
-     setTypeCar(type_car)
+        // let city=e.target.innerText;
+        let notification=e.target.innerText;
+
+        setTypeCar(type_car)
+        setNotification(notification);
+        setCity(city)
+        console.log("e",e.target.offsetParent.childNodes[0].childNodes[0].childNodes[1].innerText)
+        console.log(e)
+        console.log("p1",e.target.innerText)
+        const check=(e)=>{
+            let childElementCount;
+            let index;
+            for(let i=1;i<=childElementCount;i++)
+            {
+                index=e.target.offsetParent.childNodes[0].childNodes[0].childNodes[i].innerText;
+            }
+            console.log('in',index);
+            console.log("eee",e.target.offsetParent.childNodes[0].childNodes[0].childNodes[2].innerText);
+        }
         
+        console.log("cech",check(e))
 
     }
-console.log("Type car",typeCar)
-    const test=(e)=>{
-        let type_car=e.target.parentNode.childNodes[0].innerText;
-        return(
-           <h1>{type_car}</h1> 
-        );
-    }
-    const [name,setName]=useState("");
-    const [message,setMessage]=useState("");
     return(
         <div className="exceeded">
              <div className="exceeded exceeded-bar">
@@ -247,7 +254,8 @@ console.log("Type car",typeCar)
                 <div className="layout-right">
                     <div>
                         <QuotaName 
-                            dataFromTable={typeCar}
+                            dataCityTable={city}
+                            dataCarTable={typeCar}
                         />
                     </div>
                     <div>
@@ -255,8 +263,7 @@ console.log("Type car",typeCar)
                     </div>
                     <div>
                         <Message
-                            mess={message}
-                            onChange={(e)=>onChoosingCell(message.target.parentNode.childNodes[0].innerText)}
+                            mess={notification}
                         /> 
                     </div>                       
                 </div>

@@ -29,6 +29,7 @@ const ExceededLeft =(props)=>{
                 onClick ={(e)=>{
                     // console.log("p1",e.target.innerText)
                     // sendDataParent("p21",e.target.innerText);
+                    sendDataParent(e);
                 }}
 
             > 

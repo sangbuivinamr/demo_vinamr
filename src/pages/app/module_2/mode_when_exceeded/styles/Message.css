@@ -32,12 +32,20 @@
 }
 .textarea{
     outline: none;
-    margin-top:-30px;
     resize: none;
+    
+}
+.notification-area{
+    margin-top:-10px;
+    background-color: var(--global-background-color);
     width: 270px;
-    height: 100px;
+    height: 120px;
     margin-left: 10px;
     background-color: var(--global-background-color);
+}
+.notification{
+    margin-left: 20px;
+    font-size: 15px;
     font-family: var(--global-font-family);
 }
 .button-mess{
