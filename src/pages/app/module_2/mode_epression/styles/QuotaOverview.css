@@ -16,6 +16,9 @@
     border: 1px solid var(--global-background-color);
     padding: 12px;
   }
+  #quota-overview-table td{
+    cursor: pointer;
+  }
 
   .quota-overview-table--body{
     background-color: white;

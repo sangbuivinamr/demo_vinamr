@@ -4,6 +4,7 @@
    *Tien 
     -23/10/2020(init the codebase)
     -10/11/2020 (Start hooking BE to FE)
+    -11/11/2020 (edited functionality for 4 buttons with Be)
 
 *Function: Render Screen Quota Management
 */
@@ -16,31 +17,33 @@ import { IoIosArrowRoundUp } from "react-icons/io";
 import {IoIosArrowRoundDown} from "react-icons/io";
 import {IoMdClose} from "react-icons/io";
 import {IoIosSave} from "react-icons/io";
+import {IoIosArrowRoundForward} from "react-icons/io";
 import axios from "axios";
 
 
 //Styles
 import "./styles/QuotaManagementStyles.css";
-import {EXPRESSION_REVIEW_DATA } from "../../../../data/testing-data";
+// import {EXPRESSION_REVIEW_DATA } from "../../../../data/testing-data";
 
 //Default url
-const URL_QUOTA_INFORMATION ="https://115.73.222.254:8000/quota/getQuotaInformation?projectId=1"
-const URL_EXPRESSION="https://115.73.222.254:8000/expression/expressionReview/?projectId=0515&code=Q7A"
+const URL_QUOTA_INFORMATION ="https://115.73.222.254:8000/quota/getQuotaInformation/"
+const URL_EXPRESSION="https://115.73.222.254:8000/expression/expressionReview/"
 
 const QuotaManagement = (props)=>{
     const [selectedExpression, setSelectedExpression] = useState("");
     const [highlightedSlide, setHightlightedSlide] = useState(1);
     const [quotaData, setQuotaData] = useState([]);
-    const [quotaInput, setQuotaInput] = useState({
+    const [quotaInput, setQuotaInput] = useState([{
         quota_index: null,
         quota_label: "",
         quota_expression: ""
-    })
+    }])
     const [quotaClickStatus, setQuotaClickStatus] = useState({
         quotaLabel: "", 
         status: false
     })
-    const [expression,setExpression]=useState([])
+    const [expression , setExpression] = useState( [] )
+    const [code , setCode] = useState();
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
@@ -49,9 +52,7 @@ const QuotaManagement = (props)=>{
      * @param {string} swapType The type of the swap: UP/ DOWN
      */
     const onSwappingQuotaRow = (swapType) => {
-        axios.get(URL).then((result) =>{
-            console.log(result)
-        })
+        axios.get(URL_QUOTA_INFORMATION).then((res) =>{
 
         if(onCheckingNotAnyHighlightedQuota()) return;
 
@@ -60,27 +61,45 @@ const QuotaManagement = (props)=>{
         let selectedQuotaIndex;
 
         // Finding the index of the highlighted quota row
-        for(let quotaIndex = 0; quotaIndex < currentQuotaData.length; quotaIndex++){
-            if(currentQuotaData[quotaIndex]["quota_label"] === quotaClickStatus.quotaLabel) selectedQuotaIndex = quotaIndex;
+        let quotaIndex = 0;
+        for(quotaIndex; quotaIndex <= currentQuotaData.length -1 ; quotaIndex++){
+            if(currentQuotaData[quotaIndex]["name"] === quotaClickStatus.quotaLabel) 
+            {
+                selectedQuotaIndex = quotaIndex;
+            }
+            
         }
+
 
         // Swapping
         const tempQuota = currentQuotaData[selectedQuotaIndex];
-        if(swapType === "UP"){
-            currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex - 1]
-            currentQuotaData[selectedQuotaIndex - 1] = tempQuota
-        }else{
-            currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex + 1]
-            currentQuotaData[selectedQuotaIndex + 1] = tempQuota
+        if(swapType === "UP" )
+        {
+            if(selectedQuotaIndex > 0 )
+            {
+                currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex - 1]
+                currentQuotaData[selectedQuotaIndex - 1] = tempQuota
+            }
+        }
+        else{
+            if(selectedQuotaIndex < currentQuotaData.length - 1)
+            {
+                currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex + 1]
+                currentQuotaData[selectedQuotaIndex + 1] = tempQuota
+            }
         }
         
         setQuotaData(currentQuotaData)
+    })
     }
 
     /**
      * @summary Add a quota row to the table
      */
     const onAddingQuota = () => {
+        // axios.post(URL_QUOTA_INFORMATION).then((result) =>{
+        //     console.log(result)
+        // })
 
         // Check if the user has actually inputted a quota
         if(onCheckingNotAnyInputtedQuota()){
@@ -145,7 +164,8 @@ const QuotaManagement = (props)=>{
      * @summary Delete the selected quota row in the table
      */
     const onDeletingQuota = () => {
-        if(onCheckingNotAnyHighlightedQuota()){
+        if( onCheckingNotAnyHighlightedQuota() )
+        {
             alert("Please indicate the quota you want to remove!")
             return;
         }
@@ -153,9 +173,8 @@ const QuotaManagement = (props)=>{
         currentQuotaData = currentQuotaData.concat(quotaData);
 
         // Filter out the selected quota row
-        let newQuotaData = currentQuotaData.filter(quota => quota.quota_label !== quotaClickStatus.quotaLabel)
+        let newQuotaData = currentQuotaData.filter(quota => quota.name !== quotaClickStatus.quotaLabel)
         setQuotaData(newQuotaData);
-
     }
 
        /**
@@ -194,27 +213,37 @@ const QuotaManagement = (props)=>{
      * @return void
      */
     useEffect(()=>{
-        getDataInformation()
-        getDataExpression()
+        getDataInformation("1")
+        getDataExpression("0515",code)
     },[])
 
 
     // get data information from DB
-    const getDataInformation =async ()=>{
+    const getDataInformation =async (projectId)=>{
 
-        const response= await axios.get(URL_QUOTA_INFORMATION)
+        const response= await axios.get(URL_QUOTA_INFORMATION + `?projectId=${projectId}`)
         setQuotaData(response.data)
-        console.log("response",response)
     }
 
 
     //Get data expression from DB
-    const getDataExpression =async ()=>{
-        const response = await axios.get(URL_EXPRESSION)
+    const getDataExpression =async (propjectId,code)=>{
+        const response = await axios.get(URL_EXPRESSION + `?projectId=${propjectId}&code=${code}`)
         setExpression(response.data)
-        console.log("check",response)
     }
 
+
+    //Function handle code submittion
+    const onChangeCode =(code) =>{
+        setCode(code);
+    }
+
+
+    // const updateCode = (newCode) => {
+    //     let oldCode="";
+    //     let UpdateCode=oldCode.concat(oldcode);
+    //     setNewCode(UpdateCode)
+    // }
 
     return(
         
@@ -228,7 +257,7 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoIosArrowRoundUp
                         className="up icon"
-                        onClick={() => onSwappingQuotaRow("UP")}
+                        onClick={() => onSwappingQuotaRow("UP") }
                     />
                     </i>
                 </div>
@@ -236,7 +265,7 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoIosArrowRoundDown
                         className="up icon"
-                        onClick={() => onSwappingQuotaRow("DOWN")}
+                        onClick={() => onSwappingQuotaRow("DOWN") }
                     />
                     </i>
                 </div>
@@ -244,7 +273,7 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoMdClose
                         className="up icon"
-                        onClick={onDeletingQuota}
+                        onClick={() => onDeletingQuota() }
                     />
                     </i>
                 </div>
@@ -269,7 +298,21 @@ const QuotaManagement = (props)=>{
                     <h2 className="review">
                         EXPRESSION REVIEW
                     </h2>
-                    <p>Silde {highlightedSlide}/334</p>
+                    <input 
+                        className="input-code"
+                        type="text" 
+                        placeholder="Input the code"
+                        value={code}
+                        onChange={ (code) => onChangeCode(code.target.value) }
+                    />
+                    <div className="up">
+                        <i>
+                            <IoIosArrowRoundForward
+                                className="up icon"
+                                onClick={() => getDataExpression("0515",code)}
+                            />
+                        </i>
+                    </div>
                 </div>
             </div>  
             <div className="quota-page--tables" onMouseUp ={handleExpressionHighlight} >
@@ -281,9 +324,12 @@ const QuotaManagement = (props)=>{
                     onChoosingQuota={onChoosingQuota}
                     quotaClickStatus={quotaClickStatus}
                     setQuotaClickStatus={setQuotaClickStatus}
-                    
                 />
-                <ExpressionReview expressionReviewData ={expression} setHightlightedSlide ={highlightedSlide}/>
+                <ExpressionReview  
+                    expressionReviewData ={expression} 
+                    setHightlightedSlide ={highlightedSlide}
+                    expression_code={code}
+                />
             </div>
         </div>
     );

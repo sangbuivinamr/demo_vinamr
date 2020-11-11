@@ -10,6 +10,7 @@ import "./styles/ExpressionReview.css";
 
 const ExpressionReview = (props) => {
    const expressionReviewData = props.expressionReviewData;
+   const expression_code = props.expression_code;
    const highlightedSlide = props.setHightlightedSlide;
     const renderExpressionHeader = () => {
         let headerElement = ['Code', 'Description'];
@@ -27,7 +28,7 @@ const ExpressionReview = (props) => {
      * @param {*} selectedSlideIndex 
      * @return void
      */
-    const renderExpressionBody = (selectedSlideIndex) => {
+    const renderExpressionBody = () => {
         return expressionReviewData.child && expressionReviewData.child.map(({type, name}) =>{
             // if (type ===selectedSlideIndex) 
             // The line above will work if the expression in the left_layout is correct so I commented it and uncomment later when the DB is edited 
@@ -56,7 +57,7 @@ return(
 
         {/* The code and the discription  */}
         <tr>
-            <td className ="slide--index">{expressionReviewData.code}</td>
+            <td className ="slide--index">{expression_code}</td>
             <td>{expressionReviewData.description}</td>
         </tr>
 

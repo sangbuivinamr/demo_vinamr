@@ -1,6 +1,6 @@
 @import "../../../styles/GlobalStyles.css";
 .quota-page {
-  background-color: var(--global-background-color);
+  background-color: #ffefcc;
   display: block;
   height: 200vh;
   width: 100vw;
@@ -98,4 +98,26 @@
   grid-template-columns: 2fr 1fr;
   margin-top: 150px;
   direction: row;
+}
+.expression-review > .up{
+  margin-top: 20px;
+  background-color: var(--global-color-1);
+  border-radius: 5px;
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+}
+.input-code{
+  border-radius: 5rem;
+  outline: none;
+  margin-top: 20px;
+  height: 30px;
+  margin-left: -20px;
+  margin-right: 10px;
+  width: 100px;
+  text-align: center;
+
+}
+.input-code::placeholder{
+  text-align: center;
 }
