@@ -1,7 +1,8 @@
 const configs = require('./expressionConfig')
-
+//Hàm check được dùng để kiểm trả các kiểu câu hỏi trong survey form
 module.exports.check = async (question) => {
     let result = []
+    //duyệt qua config nếu có và check matching với question.type
     for (let config of configs) {
         if (question.type == config.name) {
             console.log(question.type, config.name)
