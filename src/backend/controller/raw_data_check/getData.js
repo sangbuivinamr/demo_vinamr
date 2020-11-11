@@ -24,6 +24,7 @@ module.exports.getData = async (req, res, next) => {
         for (let value of myMap.values()) {
             response.push(value)
         }
+        connection.end()
         return res.send(response) 
     }
     catch (error) {

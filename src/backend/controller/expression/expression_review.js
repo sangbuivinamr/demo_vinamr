@@ -40,13 +40,14 @@ module.exports.getCodeExpression = async (req, res, next) => {
                                 description: question.title,
                                 child: child
                             }
-                            console.log(result)
+                            connection.end()
                             return res.send(result)
                         }
                     }
                 }
             }
         }
+        
         return res.json({
             massage: "no matching result"
         })
