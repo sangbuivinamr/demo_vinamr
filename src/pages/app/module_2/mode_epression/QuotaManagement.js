@@ -47,6 +47,18 @@ const QuotaManagement = (props)=>{
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
+    
+    /**
+     * @summary Function useEffect
+     * @return void
+     */
+    useEffect(()=>{
+        getDataInformation("1")
+        getDataExpression("0515",code)
+        onAddingQuota("1")
+    },[])
+
+    
     /**
      * @summary Swap the quota row in the table
      * @param {string} swapType The type of the swap: UP/ DOWN
@@ -96,28 +108,30 @@ const QuotaManagement = (props)=>{
     /**
      * @summary Add a quota row to the table
      */
-    const onAddingQuota = () => {
-        // axios.post(URL_QUOTA_INFORMATION).then((result) =>{
-        //     console.log(result)
-        // })
-
+    const onAddingQuota = (projectId) => {
+       
         // Check if the user has actually inputted a quota
         if(onCheckingNotAnyInputtedQuota()){
             alert("You haven't typed any quota")
             return;
         }
-
         let newQuotaData = quotaData.concat(quotaInput);
-
         setQuotaData(newQuotaData);
-
         // After we've added a quota, the input will be cleaned up
         setQuotaInput({
             quota_index: null,
             quota_label: "",
             quota_expression: ""
         })
-    }
+
+        // const totalQuota ={
+        //     quotaLabel : newQuotaData,
+        //     quotaExpression : 
+        // }
+        axios.post(URL_QUOTA_INFORMATION + `${projectId}`,).then((result) =>{
+
+        })
+}
 
     /**
      * @summary Handle the input change for the label input in the quota table
@@ -129,7 +143,6 @@ const QuotaManagement = (props)=>{
             quota_label: quota_label,
             quota_expression: quotaInput.quota_expression
         };
-
         setQuotaInput(newQuotaInput)
         
     }
@@ -208,27 +221,19 @@ const QuotaManagement = (props)=>{
 
     }
 
-    /**
-     * @summary Function useEffect
-     * @return void
-     */
-    useEffect(()=>{
-        getDataInformation("1")
-        getDataExpression("0515",code)
-    },[])
+    
 
 
     // get data information from DB
     const getDataInformation =async (projectId)=>{
-
-        const response= await axios.get(URL_QUOTA_INFORMATION + `?projectId=${projectId}`)
+        const response= await axios.get( URL_QUOTA_INFORMATION + `?projectId=${projectId}`)
         setQuotaData(response.data)
     }
 
 
     //Get data expression from DB
-    const getDataExpression =async (propjectId,code)=>{
-        const response = await axios.get(URL_EXPRESSION + `?projectId=${propjectId}&code=${code}`)
+    const getDataExpression =async (projectId,code)=>{
+        const response = await axios.get(URL_EXPRESSION + `?projectId=${projectId}&code=${code}`)
         setExpression(response.data)
     }
 
@@ -238,12 +243,6 @@ const QuotaManagement = (props)=>{
         setCode(code);
     }
 
-
-    // const updateCode = (newCode) => {
-    //     let oldCode="";
-    //     let UpdateCode=oldCode.concat(oldcode);
-    //     setNewCode(UpdateCode)
-    // }
 
     return(
         

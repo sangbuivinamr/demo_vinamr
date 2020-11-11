@@ -58,7 +58,7 @@ return(
         {/* The code and the discription  */}
         <tr>
             <td className ="slide--index">{expression_code}</td>
-            <td>{expressionReviewData.description}</td>
+            <td id="des">{expressionReviewData.description}</td>
         </tr>
 
         {/* Render layout_left body */}
