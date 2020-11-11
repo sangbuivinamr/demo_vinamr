@@ -28,15 +28,16 @@ import "./styles/QuotaManagementStyles.css";
 //Default url
 const URL_QUOTA_INFORMATION ="https://115.73.222.254:8000/quota/getQuotaInformation/"
 const URL_EXPRESSION="https://115.73.222.254:8000/expression/expressionReview/"
+const URL_POST_QUOTA_INFORMATION ="https://115.73.222.254:8000/quota/quotaInformation"
 
 const QuotaManagement = (props)=>{
     const [selectedExpression, setSelectedExpression] = useState("");
     const [highlightedSlide, setHightlightedSlide] = useState(1);
-    const [quotaData, setQuotaData] = useState([]);
+    const [quotaData, setQuotaData] = useState( [] );
     const [quotaInput, setQuotaInput] = useState([{
-        quota_index: null,
-        quota_label: "",
-        quota_expression: ""
+        id: null,
+        name: "",
+        expression: ""
     }])
     const [quotaClickStatus, setQuotaClickStatus] = useState({
         quotaLabel: "", 
@@ -64,7 +65,6 @@ const QuotaManagement = (props)=>{
      * @param {string} swapType The type of the swap: UP/ DOWN
      */
     const onSwappingQuotaRow = (swapType) => {
-        axios.get(URL_QUOTA_INFORMATION).then((res) =>{
 
         if(onCheckingNotAnyHighlightedQuota()) return;
 
@@ -102,7 +102,6 @@ const QuotaManagement = (props)=>{
         }
         
         setQuotaData(currentQuotaData)
-    })
     }
 
     /**
@@ -117,20 +116,18 @@ const QuotaManagement = (props)=>{
         }
         let newQuotaData = quotaData.concat(quotaInput);
         setQuotaData(newQuotaData);
+        
         // After we've added a quota, the input will be cleaned up
         setQuotaInput({
-            quota_index: null,
-            quota_label: "",
-            quota_expression: ""
+            id: null,
+            name: "",
+            expression: ""
         })
-
-        // const totalQuota ={
-        //     quotaLabel : newQuotaData,
-        //     quotaExpression : 
-        // }
-        axios.post(URL_QUOTA_INFORMATION + `${projectId}`,).then((result) =>{
-
+        console.log("newQuotaData",newQuotaData)
+        axios.post(URL_POST_QUOTA_INFORMATION + `?projectId=${projectId}`,newQuotaData).then((res) =>{
+                console.log("res",res)
         })
+       
 }
 
     /**
@@ -139,9 +136,9 @@ const QuotaManagement = (props)=>{
      */
     const onAddingQuotaLabel = (quota_label) => {
         let newQuotaInput = {
-            quota_index: quotaData.length,
-            quota_label: quota_label,
-            quota_expression: quotaInput.quota_expression
+            id: quotaData.length,
+            name: quota_label,
+            expression: quotaInput.quota_expression
         };
         setQuotaInput(newQuotaInput)
         
@@ -153,9 +150,9 @@ const QuotaManagement = (props)=>{
      */
     const onAddingQuotaExpression = (quota_expression) => {
         let newQuotaInput = {
-            quota_index: quotaData.length,
-            quota_label: quotaInput.quota_label,
-            quota_expression: quota_expression
+            id: quotaData.length,
+            name: quotaInput.name,
+            expression: quota_expression
         }
         setQuotaInput(newQuotaInput)
     }
@@ -227,7 +224,12 @@ const QuotaManagement = (props)=>{
     // get data information from DB
     const getDataInformation =async (projectId)=>{
         const response= await axios.get( URL_QUOTA_INFORMATION + `?projectId=${projectId}`)
-        setQuotaData(response.data)
+        let unprocessedData = response.data;
+        for(let i=0; i < unprocessedData.length ; i++ )
+        {
+            unprocessedData[i].id = i;
+        }
+        setQuotaData(unprocessedData)
     }
 
 
@@ -280,7 +282,7 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoIosSave
                         className="up icon"
-                        onClick={onAddingQuota}
+                        onClick={() => onAddingQuota(1)}
                     />
                     </i>
                 </div>
