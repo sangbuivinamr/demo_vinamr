@@ -23,7 +23,6 @@ import axios from "axios";
 
 //Styles
 import "./styles/QuotaManagementStyles.css";
-<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
 // import {EXPRESSION_REVIEW_DATA } from "../../../../data/testing-data";
 
 //Default url
@@ -35,14 +34,6 @@ const QuotaManagement = (props)=>{
     const [highlightedSlide, setHightlightedSlide] = useState(1);
     const [quotaData, setQuotaData] = useState([]);
     const [quotaInput, setQuotaInput] = useState([{
-=======
-import { QUOTA_OVERVIEW_DATA, testing_quota } from "../../../data/testing-data";
-
-const QuotaManagement = (props)=>{
-
-    const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
-    const [quotaInput, setQuotaInput] = useState({
->>>>>>> main:src/pages/app/module_2/QuotaManagement.js
         quota_index: null,
         quota_label: "",
         quota_expression: ""
@@ -56,10 +47,18 @@ const QuotaManagement = (props)=>{
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
-<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
-=======
+    
+    /**
+     * @summary Function useEffect
+     * @return void
+     */
+    useEffect(()=>{
+        getDataInformation("1")
+        getDataExpression("0515",code)
+        onAddingQuota("1")
+    },[])
 
->>>>>>> main:src/pages/app/module_2/QuotaManagement.js
+    
     /**
      * @summary Swap the quota row in the table
      * @param {string} swapType The type of the swap: UP/ DOWN
@@ -109,28 +108,30 @@ const QuotaManagement = (props)=>{
     /**
      * @summary Add a quota row to the table
      */
-    const onAddingQuota = () => {
-        // axios.post(URL_QUOTA_INFORMATION).then((result) =>{
-        //     console.log(result)
-        // })
-
+    const onAddingQuota = (projectId) => {
+       
         // Check if the user has actually inputted a quota
         if(onCheckingNotAnyInputtedQuota()){
             alert("You haven't typed any quota")
             return;
         }
-
         let newQuotaData = quotaData.concat(quotaInput);
-
         setQuotaData(newQuotaData);
-
         // After we've added a quota, the input will be cleaned up
         setQuotaInput({
             quota_index: null,
             quota_label: "",
             quota_expression: ""
         })
-    }
+
+        // const totalQuota ={
+        //     quotaLabel : newQuotaData,
+        //     quotaExpression : 
+        // }
+        axios.post(URL_QUOTA_INFORMATION + `${projectId}`,).then((result) =>{
+
+        })
+}
 
     /**
      * @summary Handle the input change for the label input in the quota table
@@ -142,7 +143,6 @@ const QuotaManagement = (props)=>{
             quota_label: quota_label,
             quota_expression: quotaInput.quota_expression
         };
-
         setQuotaInput(newQuotaInput)
         
     }
@@ -190,7 +190,6 @@ const QuotaManagement = (props)=>{
         setQuotaData(newQuotaData);
     }
 
-<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
        /**
      * @summary returning the valid expression if matching, else return an empty string ""
      * @param {string} expression the selected expression
@@ -222,27 +221,19 @@ const QuotaManagement = (props)=>{
 
     }
 
-    /**
-     * @summary Function useEffect
-     * @return void
-     */
-    useEffect(()=>{
-        getDataInformation("1")
-        getDataExpression("0515",code)
-    },[])
+    
 
 
     // get data information from DB
     const getDataInformation =async (projectId)=>{
-
-        const response= await axios.get(URL_QUOTA_INFORMATION + `?projectId=${projectId}`)
+        const response= await axios.get( URL_QUOTA_INFORMATION + `?projectId=${projectId}`)
         setQuotaData(response.data)
     }
 
 
     //Get data expression from DB
-    const getDataExpression =async (propjectId,code)=>{
-        const response = await axios.get(URL_EXPRESSION + `?projectId=${propjectId}&code=${code}`)
+    const getDataExpression =async (projectId,code)=>{
+        const response = await axios.get(URL_EXPRESSION + `?projectId=${projectId}&code=${code}`)
         setExpression(response.data)
     }
 
@@ -253,20 +244,13 @@ const QuotaManagement = (props)=>{
     }
 
 
-    // const updateCode = (newCode) => {
-    //     let oldCode="";
-    //     let UpdateCode=oldCode.concat(oldcode);
-    //     setNewCode(UpdateCode)
-    // }
-
-=======
->>>>>>> main:src/pages/app/module_2/QuotaManagement.js
     return(
         
         <div className="quota-page">
            <div className="quota-page default-bar">
                 <h2 className="h2-default">
                     QUOTA SETTINGS
+                    
                 </h2>
                 <div className="up">
                     <i>
@@ -313,7 +297,6 @@ const QuotaManagement = (props)=>{
                     <h2 className="review">
                         EXPRESSION REVIEW
                     </h2>
-<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
                     <input 
                         className="input-code"
                         type="text" 
@@ -329,12 +312,9 @@ const QuotaManagement = (props)=>{
                             />
                         </i>
                     </div>
-=======
-                    <p>Silde 05/334</p>
->>>>>>> main:src/pages/app/module_2/QuotaManagement.js
                 </div>
             </div>  
-            <div className="quota-page--tables">
+            <div className="quota-page--tables" onMouseUp ={handleExpressionHighlight} >
                 <QuotaOverview
                     quotaData={quotaData}
                     quotaInput={quotaInput}
@@ -344,15 +324,11 @@ const QuotaManagement = (props)=>{
                     quotaClickStatus={quotaClickStatus}
                     setQuotaClickStatus={setQuotaClickStatus}
                 />
-<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
                 <ExpressionReview  
                     expressionReviewData ={expression} 
                     setHightlightedSlide ={highlightedSlide}
                     expression_code={code}
                 />
-=======
-                <ExpressionReview/>
->>>>>>> main:src/pages/app/module_2/QuotaManagement.js
             </div>
         </div>
     );
