@@ -23,6 +23,7 @@ import axios from "axios";
 
 //Styles
 import "./styles/QuotaManagementStyles.css";
+<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
 // import {EXPRESSION_REVIEW_DATA } from "../../../../data/testing-data";
 
 //Default url
@@ -34,6 +35,14 @@ const QuotaManagement = (props)=>{
     const [highlightedSlide, setHightlightedSlide] = useState(1);
     const [quotaData, setQuotaData] = useState([]);
     const [quotaInput, setQuotaInput] = useState([{
+=======
+import { QUOTA_OVERVIEW_DATA, testing_quota } from "../../../data/testing-data";
+
+const QuotaManagement = (props)=>{
+
+    const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
+    const [quotaInput, setQuotaInput] = useState({
+>>>>>>> main:src/pages/app/module_2/QuotaManagement.js
         quota_index: null,
         quota_label: "",
         quota_expression: ""
@@ -47,6 +56,10 @@ const QuotaManagement = (props)=>{
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
+<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
+=======
+
+>>>>>>> main:src/pages/app/module_2/QuotaManagement.js
     /**
      * @summary Swap the quota row in the table
      * @param {string} swapType The type of the swap: UP/ DOWN
@@ -177,6 +190,7 @@ const QuotaManagement = (props)=>{
         setQuotaData(newQuotaData);
     }
 
+<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
        /**
      * @summary returning the valid expression if matching, else return an empty string ""
      * @param {string} expression the selected expression
@@ -245,13 +259,14 @@ const QuotaManagement = (props)=>{
     //     setNewCode(UpdateCode)
     // }
 
+=======
+>>>>>>> main:src/pages/app/module_2/QuotaManagement.js
     return(
         
         <div className="quota-page">
            <div className="quota-page default-bar">
                 <h2 className="h2-default">
                     QUOTA SETTINGS
-                    
                 </h2>
                 <div className="up">
                     <i>
@@ -298,6 +313,7 @@ const QuotaManagement = (props)=>{
                     <h2 className="review">
                         EXPRESSION REVIEW
                     </h2>
+<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
                     <input 
                         className="input-code"
                         type="text" 
@@ -313,9 +329,12 @@ const QuotaManagement = (props)=>{
                             />
                         </i>
                     </div>
+=======
+                    <p>Silde 05/334</p>
+>>>>>>> main:src/pages/app/module_2/QuotaManagement.js
                 </div>
             </div>  
-            <div className="quota-page--tables" onMouseUp ={handleExpressionHighlight} >
+            <div className="quota-page--tables">
                 <QuotaOverview
                     quotaData={quotaData}
                     quotaInput={quotaInput}
@@ -325,11 +344,15 @@ const QuotaManagement = (props)=>{
                     quotaClickStatus={quotaClickStatus}
                     setQuotaClickStatus={setQuotaClickStatus}
                 />
+<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
                 <ExpressionReview  
                     expressionReviewData ={expression} 
                     setHightlightedSlide ={highlightedSlide}
                     expression_code={code}
                 />
+=======
+                <ExpressionReview/>
+>>>>>>> main:src/pages/app/module_2/QuotaManagement.js
             </div>
         </div>
     );

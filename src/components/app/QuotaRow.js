@@ -4,6 +4,7 @@
     Tiến 10/11/2020 (Start hooking BE to FE)
  */
 
+<<<<<<< HEAD
 //Packages
 import React from 'react';
 import axios from "axios";
@@ -23,6 +24,11 @@ export default function QuotaRow(props){
     // quotaClickStatus: status of the clicked row
 
     return props.quotaData && props.quotaData.map(({id, name, expression }) => {
+=======
+export default function QuotaRow(props){
+
+    return props.quotaData && props.quotaData.map(({ quota_label, quota_expression }) => {
+>>>>>>> main
         return (
             <tr
                 key={name} 
