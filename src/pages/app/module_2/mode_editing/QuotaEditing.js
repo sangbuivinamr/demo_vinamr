@@ -204,7 +204,7 @@ for( const table of editingtable)
         tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
         setEditingTable(tempTable)
 }
-
+console.log("Changed table", editingtable)
 
 /**  
 * @summary handle add to row when clicked add to Row 
@@ -226,7 +226,7 @@ const handleAddToColumn = (quotaLabel) => {
 }
 
 /** 
-@summary This function is a temporary function. It is to return the id of the selected quota Label 
+@summary This function is just a temporary function. It is to return the id of the selected quota Label 
 @param {string} quotaLabel The name of the selected quota Label
 @return {string} the uniqueID of the label that is passed to the function
 **/
