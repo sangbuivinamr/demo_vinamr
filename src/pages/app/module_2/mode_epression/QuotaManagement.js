@@ -245,6 +245,12 @@ const QuotaManagement = (props)=>{
         setCode(code);
     }
 
+    //Function navigate to other mode
+    const onChangeNav=(e)=>{
+          
+        props.history.push(`/${e.target.value}`)
+  
+}
 
     return(
         
@@ -289,7 +295,7 @@ const QuotaManagement = (props)=>{
                 <div className="mode">
                     Mode:
                 </div>
-                    <select className="select">
+                        <select className="select" onChange={onChangeNav} /*value={}*/>
                         <option value="Expression"> Expression </option>
                         <option value="Editing"> Editing </option>
                         <option value="When Exceeded"> When Exceeded </option>
