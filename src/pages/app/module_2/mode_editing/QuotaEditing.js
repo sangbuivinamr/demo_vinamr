@@ -240,62 +240,44 @@ const getUniqueIDByPassingQuotaLabel = (quotaLabel) => {
 }
     return(
         <div className="quota-page">
-             <div className="quota-page default-bar">
-                <h2 className="h2-default">
-                    QUOTA SETTINGS
-                    
-                </h2>
+            <div className="quota-page default-bar">
+                <h2 className="h2-default">QUOTA SETTINGS</h2>
                 <div className="display--square--button">
-                    <i>
-                    <IoIosUndo
-                        className="up icon"
-                     
-                    />
-                    </i>
+                    <i><IoIosUndo className="up icon"/></i>
                 </div>
                 <div className="display--square--button">
-                    <i>
-                    <IoIosRedo
-                        className="up icon"
-               
-                    />
-                    </i>
+                    <i><IoIosRedo className="up icon"/></i>
                 </div>
            
                 <div className="display--square--button">
-                    <i>
-                    <IoIosSave
-                        className="up icon"
-                     
-                    />
-                    </i>
+                    <i><IoIosSave className="up icon"/></i>
                 </div>
                 <div className="mode">
                     Mode: 
                 </div>
-                    <select className="select"onChange={onChangeNavtoExpression}>
-                        <option
-                            value=""
-                        > 
-                           Expression
-                        </option>
-                        <option 
-                            value="editing"
-                        >
-                              Editing
-                        </option>
-                        <option
-                            value="exceeded"
-                        >
-                            When Exceeded 
-                        </option>
-                        <option 
-                            value="tracking"
-                        >
-                            Tracking
-                        </option>
-                    </select>
-                    <div className="expression-review">
+                <select className="select"onChange={onChangeNavtoExpression}>
+                    <option
+                        value=""
+                    >
+                        Expression
+                    </option>
+                    <option 
+                        value="editing"
+                    >
+                        Editing
+                    </option>
+                    <option
+                        value="exceeded"
+                    >
+                        When Exceeded 
+                    </option>
+                    <option 
+                        value="tracking"
+                    >
+                        Tracking
+                    </option>
+                </select>
+                <div className="expression-review">
                     <h2 className="review">
                         QUOTA LABEL <br/> SELECTION
                     </h2>
@@ -318,41 +300,35 @@ const getUniqueIDByPassingQuotaLabel = (quotaLabel) => {
                 </div>
                 <div id ="quota--label--selection">
                  
-                <QuotaLabelSelection quotaData ={quotaData} onChoosingQuota={onChoosingQuota}
-                    quotaClickStatus={quotaClickStatus}
-                    setQuotaClickStatus={setQuotaClickStatus}/>
+                    <QuotaLabelSelection 
+                        quotaData ={quotaData} 
+                        onChoosingQuota={onChoosingQuota}
+                        quotaClickStatus={quotaClickStatus}
+                        setQuotaClickStatus={setQuotaClickStatus}/>
                 </div>
                 <div id= "quota--management--adjust--rows--cols">
                     <div id="quota--management--adjust--rows--cols--btn--div">
-                    <div className="display--square--button">
+                        <div className="display--square--button">                
+                            <IoIosArrowRoundUp className="up icon" />
                     
-                    <IoIosArrowRoundUp
-                        className="up icon"
-                    />
-                  
-                </div>
-                <div className="display--square--button">
-                   
-                    <IoIosArrowRoundDown
-                        className="up icon"
-                    />
-                   
-                </div>
-                <div className="display--square--button">
-                   
-                    <IoMdClose
-                        className="up icon"
-                    />
-                   
-                </div>
-                <div className="quota--management--add--total--cols-rows--btn">
-                    <ImSigma className="sigma-icon" />
-                    <text> Rows</text>
-                </div>
-                <div className="quota--management--add--total--cols-rows--btn">
-                    <ImSigma className="sigma-icon" />
-                    <text> Columns</text>
-                </div>
+                    </div>
+                        <div className="display--square--button">
+                            <IoIosArrowRoundDown className="up icon"/>
+                        
+                        </div>
+                        <div className="display--square--button">
+                        
+                            <IoMdClose className="up icon" />
+                        
+                        </div>
+                        <div className="quota--management--add--total--cols-rows--btn">
+                            <ImSigma className="sigma-icon" />
+                            <text> Rows</text>
+                        </div>
+                        <div className="quota--management--add--total--cols-rows--btn">
+                            <ImSigma className="sigma-icon" />
+                            <text> Columns</text>
+                        </div>
                     </div>
                     <QuotaRowColumnAdjustment rowData={addedRow} columnData={addedColumn} />
               
