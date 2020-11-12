@@ -15,17 +15,19 @@ export default function QuotaRow(props){
     // quotaData: fixed data of the table
     // onChoosingQuota: onClick a row in the table
     // quotaClickStatus: status of the clicked row
-
+    
     return props.quotaData && props.quotaData.map(({ name, expression }) => {
-        return (
-            <tr
-                key={name} 
-                onClick={() => props.onChoosingQuota(name)} 
-                style={{backgroundColor: props.quotaClickStatus.status && props.quotaClickStatus.quotaLabel === name && "#7B2025" }}
-            >
-                <td>{name}</td>
-                <td>{expression}</td>
-            </tr>
-        )
+        if( name !== "" && expression !== "" ) {
+            return (
+                <tr
+                    key={name} 
+                    onClick={() => props.onChoosingQuota(name)} 
+                    style={{backgroundColor: props.quotaClickStatus.status && props.quotaClickStatus.quotaLabel === name && "#7B2025" }}
+                >
+                    <td>{name}</td>
+                    <td>{expression}</td>
+                </tr>
+            )
+        }
     })
 }

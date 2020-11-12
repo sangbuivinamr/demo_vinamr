@@ -123,7 +123,6 @@ const QuotaManagement = (props)=>{
             name: "",
             expression: ""
         })
-        console.log("newQuotaData",newQuotaData)
         axios.post(URL_POST_QUOTA_INFORMATION + `?projectId=${projectId}`,newQuotaData).then((res) =>{
                 console.log("res",res)
         })
