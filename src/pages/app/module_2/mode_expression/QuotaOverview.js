@@ -39,7 +39,7 @@ const QuotaOverview = (props)=>{
                     <td>
                         <input
                             placeholder=""
-                            value={props.quotaInput.quota_label}
+                            value={props.quotaInput.name}
                             onChange={(text) => props.setQuotaLabel(text.target.value)}
                             className="quota-overview-table--input"
                         />
@@ -47,7 +47,7 @@ const QuotaOverview = (props)=>{
                     <td>
                         <input
                             placeholder=""
-                            value={props.quotaInput.quota_expression}
+                            value={props.quotaInput.expression}
                             onChange={(text) => props.setQuotaExpression(text.target.value)}
                             className="quota-overview-table--input"
                         />
