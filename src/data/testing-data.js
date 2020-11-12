@@ -28,58 +28,58 @@ export const QUOTA_OVERVIEW_DATA = [
 ]
 export const QUOTA_LABEL_SELECTION_DATA = [
     {
-        quota_index: 0,
+        uniqueID:"a1729b65-6865-42c2-9b35-66e7054309b7",
         quota_label: "Ha Noi",
         quota_expression: "S6=1",
     },
     {
-        quota_index: 1,
+        uniqueID: "d4e872fc-0613-4606-b400-49f3ecb7751c",
         quota_label: "HCM",
         quota_expression: "S7=1",
     },{
-        quota_index: 2,
+        uniqueID: "d0199501-25d1-4e26-bc41-190b078febe0",
         quota_label: "Hai Phong",
         quota_expression: "S8=1"
     },{
-        quota_index: 3,
+        uniqueID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",
         quota_label: "Hue",
         quota_expression: "S3=1"
     },{
-        quota_index: 4,
+        uniqueID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",
         quota_label: "Ha Tinh",
         quota_expression: "S4=1"
     },{
-        quota_index: 5,
+        uniqueID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",
         quota_label: "Da Nang",
         quota_expression: "S9=1"
     },
     {
-        quota_index: 6,
+        uniqueID: "5f2e335c-0119-4b8f-973e-71f7e913b6d1",
         quota_label: "Owner. Honda Accord",
         quota_expression: "S1=1"
     },
     {
-        quota_index: 7,
+        uniqueID: "878ab427-f5ef-488d-a356-d709f7f4c84e",
         quota_label: "Owner. Toyota Camry",
         quota_expression: "S8=1"
     },
     {
-        quota_index: 8,
+        uniqueID:"42821bde-4a59-4b7e-b223-8de5249bd18c",
         quota_label: "Owner. Other Models",
         quota_expression: "S3=1"
     },
     {
-        quota_index: 9,
+        uniqueID: "7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",
         quota_label: "Intend. Honda Accord",
         quota_expression: "S5=1"
     },
     {
-        quota_index: 10,
+        uniqueID: "d39a6398-ce5e-4c92-8d60-41ddbf39edc8",
         quota_label: "Intend. Toyota Camry",
         quota_expression: "S4=1"
     },
     {
-        quota_index: 11,
+        uniqueID: "22910aea-7f3e-43ec-838f-6968a2ea08ee",
         quota_label: "Intend. Other Models",
         quota_expression: "S1=1"
     }
@@ -356,48 +356,64 @@ export const EXCEEDED_LAYOUT_LEFT = [
 ]
 
 export const EDITING_TABLE_DATA = {
-    columnList : ["Ha Noi","HCM","Hai Phong","Hue","Ha Tinh","Da Nang"] ,
-    rowList : ["Owner. Honda Accord","Owner. Toyota Camry","Owner. Other Models","Intend. Honda Accord","Intend. Toyota Camry","Intend. Other Models"],
- dataList: [ [{column:"Ha Noi",row:"Owner. Honda Accord",quotaCount: 40},
- {column:"HCM",row:"Owner. Honda Accord",quotaCount: 40},
- {column:"Hai Phong",row:"Owner. Honda Accord",quotaCount: 60},
- {column:"Hue",row:"Owner. Honda Accord",quotaCount: 80},
- {column:"Ha Tinh",row:"Owner. Honda Accord",quotaCount: 90},
- {column:"Da Nang",row:"Owner. Honda Accord",quotaCount: 100}],
+    columnList : [{text:"Ha Noi",uniqueID: "a1729b65-6865-42c2-9b35-66e7054309b7"},
+    {text:"HCM", uniqueID: "d4e872fc-0613-4606-b400-49f3ecb7751c"},
+    {text:"Hai Phong",uniqueID: "d0199501-25d1-4e26-bc41-190b078febe0"},
+    {text: "Hue", uniqueID: "0f09c642-813c-40e5-b7a1-6cb9ef05d417"},
+    {text:"Da Nang", uniqueID: "8b4301a5-71ce-45d9-8dfc-7b69cedd77ae"},
+    {text:"Ha Tinh", uniqueID: "74ecd576-4f9a-4c70-a56e-56aac7ca5b39"}] ,
+    rowList : [{text: "Owner. Honda Accord", uniqueID: "5f2e335c-0119-4b8f-973e-71f7e913b6d1"},
+    {text: "Owner. Toyota Camry", uniqueID: "878ab427-f5ef-488d-a356-d709f7f4c84e"},
+    {text:"Owner. Other Models", uniqueID: "42821bde-4a59-4b7e-b223-8de5249bd18c"},
+    {text:"Intend. Honda Accord", uniqueID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944"},
+    {text:"Intend. Toyota Camry", uniqueID: "d39a6398-ce5e-4c92-8d60-41ddbf39edc8"},
+    {text: "Intend. Other Models", uniqueID: "22910aea-7f3e-43ec-838f-6968a2ea08ee"}],
+ dataList: [ [
+ {columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"Owner. Honda Accord",quotaCount: 40},
+ {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 40},
+ {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 60},
+ {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 80},
+ {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 90},
+ {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 90},
+ ],
 
- [{column:"Ha Noi",row:"Owner. Toyota Camry",quotaCount: 50},
- {column:"HCM",row:"Owner. Toyota Camry",quotaCount: 60},
- {column:"Hai Phong",row:"Owner. Toyota Camry",quotaCount: 30},
- {column:"Hue",row:"Owner. Toyota Camry",quotaCount: 20},
- {column:"Ha Tinh",row:"Owner. Toyota Camry",quotaCount: 40},
- {column:"Da Nang",row:"Owner. Toyota Camry",quotaCount: 50}],
+ [{columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",quotaCount: 50},
+ {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",quotaCount: 60},
+ {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",quotaCount: 30},
+ {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",quotaCount: 20},
+ {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",quotaCount: 40},
+ {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",quotaCount: 90}
+ ],
  
- [{column:"Ha Noi",row:"Owner. Other Models",quotaCount: 60},
- {column:"HCM",row:"Owner. Other Models",quotaCount: 42},
- {column:"Hai Phong",row:"Owner. Other Models",quotaCount: 12},
- {column:"Hue",row:"Owner. Other Models",quotaCount: 23},
- {column:"Ha Tinh",row:"Owner. Other Models",quotaCount: 32},
- {column:"Da Nang",row:"Owner. Other Models",quotaCount: 23}],
+ [{columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",quotaCount: 60},
+ {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",quotaCount: 42},
+ {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",quotaCount: 12},
+ {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",quotaCount: 23},
+ {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",quotaCount: 32},
+ {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",quotaCount: 90}
+],
+[{columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",quotaCount: 60},
+ {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",quotaCount: 42},
+ {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",quotaCount: 12},
+ {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",quotaCount: 23},
+ {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",quotaCount: 32},
+ {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",quotaCount: 90}
+],
+[{columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",quotaCount: 60},
+ {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",quotaCount: 42},
+ {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",quotaCount: 12},
+ {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",quotaCount: 23},
+ {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",quotaCount: 32},
+ {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",quotaCount: 90}
+],
+[{columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 60},
+ {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 42},
+ {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 12},
+ {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 23},
+ {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 32},
+ {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 90}
+]
 
- [{column:"Ha Noi",row:"Intend. Honda Accord",quotaCount: 34},
- {column:"HCM",row:"Intend. Honda Accord",quotaCount: 34},
- {column:"Hai Phong",row:"Intend. Honda Accord",quotaCount: 12},
- {column:"Hue",row:"Intend. Honda Accord",quotaCount: 23},
- {column:"Ha Tinh",row:"Intend. Honda Accord",quotaCount: 404},
- {column:"Da Nang",row:"Intend. Honda Accord",quotaCount: 403}],
-
- [{column:"Ha Noi",row:"Intend. Toyota Camry",quotaCount: 23},
- {column:"HCM",row:"Intend. Toyota Camry",quotaCount: 423},
- {column:"Hai Phong",row:"Intend. Toyota Camry",quotaCount: 33},
- {column:"Hue",row:"Intend. Toyota Camry",quotaCount: 12},
- {column:"Ha Tinh",row:"Intend. Toyota Camry",quotaCount: 12},
- {column:"Da Nang",row:"Intend. Toyota Camry",quotaCount: 31}],
-
- [{column:"Ha Noi",row:"Intend. Other Models",quotaCount: 23},
- {column:"HCM",row:"Intend. Other Models",quotaCount: 43},
- {column:"Hai Phong",row:"Intend. Other Models",quotaCount: 12},
- {column:"Hue",row:"Intend. Other Models",quotaCount: 65},
- {column:"Ha Tinh",row:"Intend. Other Models",quotaCount: 452},
- {column:"Da Nang",row:"Intend. Other Models",quotaCount: 234}]
+ 
  
 ]}

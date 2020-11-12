@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { EDITING_TABLE_DATA } from '../../data/testing-data';
 import "./styles/EditingTable.css";
 const EditingTable = (props) => {
@@ -8,20 +8,21 @@ const EditingTable = (props) => {
     let totalRow =[]; // This is an array that each value is the sum of all cells in a row
     
     //The testing data, will move to testing data later
-    const tableData = props.editingTableData;
+    const [tableData,setTableData] = useState(props.editingTableData);
 
-    console.log("Editing data",tableData)
-
-    const renderHeaderLayoutLeft =() =>{
-        return tableData.columnList && tableData.columnList.map((row)=>
-        {
+   
+    const renderHeaderLayoutLeft =(props) =>{
+        console.log(" Render column props", props)
+        return props.columnList && props.columnList.map((row)=>
+        {   
             return ((
-            <th className="header-left"> {row}</th>
+            <th className="header-left"> {row.text}</th>
             
             ))
         })
     }
     const handleTotalRow = (props) =>{
+       
         let tempTotal;
         for(const row of props)
         {   
@@ -46,12 +47,12 @@ const EditingTable = (props) => {
 
     handleTotalColumn(tableData.dataList); ///Implement the function right away to calculate the sum of all row and columns 
 
-    const renderTableRowOfColTotals = () => {
+    const renderTableRowOfColTotals = (props) => {
 
         return(
             <tr>
                 <td className="header-left-total"> Total</td>
-                {totalCol.map (total =>{
+                {props.map (total =>{
                     return (
                         <td className="header-left-total">
                             {total}
@@ -71,13 +72,15 @@ const EditingTable = (props) => {
 //    }
 //    console.log("Check equivalene ",checkEquivalenceSampleSize());
 
-    const renderEditingBody =()=>{
+    const renderEditingBody =(props)=>{
         let i = -1; // Need i to print out the rowList 
-        return tableData.dataList.map(row=>{
+        console.log("render Editing body",props)
+        return props.dataList.map(row=>{
             i++;
+           
             return(
                     <tr>
-                        <td className="body-exceeded-left">{tableData.rowList[i]}</td>
+                        <td className="body-exceeded-left">{props.rowList[i].text}</td>
                         {row.map(({quotaCount}) => {
                             return(
                                 <td className="cell">
@@ -89,20 +92,21 @@ const EditingTable = (props) => {
                     </tr>
             )})
     }
-    if (tableData.colList.length < 1 && tableData.rowList.length < 1 ) return (null)
-    else return  (
+    if (tableData.columnList.length < 1 || tableData.rowList.length < 1 ) return (null)
+   else return  (
         <div className="main-table">
+            {tableData.columnList.length}
             <table>
                 <thead>
                     <tr>
                         <td></td>
-                        {renderHeaderLayoutLeft()}
+                        {renderHeaderLayoutLeft(tableData)}
                         <td className="header-left-total"> Total</td>
                     </tr>
                 </thead>
                 <tbody>
-                    {renderEditingBody()}
-                    {renderTableRowOfColTotals()}
+                    {renderEditingBody(tableData)}
+                    {renderTableRowOfColTotals(totalCol)}
                 </tbody>
                 
                 
