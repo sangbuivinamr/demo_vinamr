@@ -17,7 +17,7 @@ export default function QuotaRow(props){
     // quotaClickStatus: status of the clicked row
     
     return props.quotaData && props.quotaData.map(({ name, expression }) => {
-        if( name !== "" && expression !== "" ) {
+        if( props.quotaData.name !== "" && props.quotaData.expression !== "" ) {
             return (
                 <tr
                     key={name} 
