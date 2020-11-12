@@ -241,18 +241,16 @@ const QuotaManagement = (props)=>{
     }
 
 
-    //Function handle code submittion
-    const onChangeCode =(code) =>{
-        setCode(code);
-    }
-
-    //Function navigate to other mode
     const onChangeNav=(e)=>{
           
         props.history.push(`/${e.target.value}`)
   
 }
 
+    //Function handle code submittion
+    const onChangeCode =(code) =>{
+        setCode(code);
+    }
     return(
         
         <div className="quota-page">
@@ -296,7 +294,7 @@ const QuotaManagement = (props)=>{
                 <div className="mode">
                     Mode:
                 </div>
-                    <select className="select" onChange={onChangeNav} /*value={}*/>
+                    <select className="select"onChange={onChangeNav}>
                         <option
                             value=""
                         > 
@@ -322,7 +320,7 @@ const QuotaManagement = (props)=>{
                         >
                             Interview Preview
                         </option>
-                </select>
+                    </select>
                 <div className="expression-review">
                     <h2 className="review">
                         EXPRESSION REVIEW
@@ -362,5 +360,5 @@ const QuotaManagement = (props)=>{
             </div>
         </div>
     );
-};
+}
 export default QuotaManagement;
