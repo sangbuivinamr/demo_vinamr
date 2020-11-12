@@ -47,8 +47,10 @@ const QuotaManagement = (props)=>{
     const [code , setCode] = useState();
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
-    const onCheckingNotAnyInputtedQuota = () => quotaInput.id === null && quotaInput.name === "" && quotaInput.expression === "";
+    const onCheckingNotAnyInputtedQuota = () => (quotaInput.name === "" && quotaInput.expression === "") || (quotaInput.name === undefined && quotaInput.expression === undefined );
     
+    // console.log()
+
     /**
      * @summary Function useEffect
      * @return void
@@ -107,14 +109,9 @@ const QuotaManagement = (props)=>{
      * @summary Add a quota row to the table
      */
     const onAddingQuota = (projectId) => {
-       
-        // Check if the user has actually inputted a quota
-        if(onCheckingNotAnyInputtedQuota()){
-            alert("You haven't typed any quota")
-            return;
-        }
         let newQuotaData = quotaData.concat(quotaInput);
         setQuotaData(newQuotaData);
+        console.log("quotaData",quotaData)
         
         // After we've added a quota, the input will be cleaned up
         setQuotaInput({
@@ -122,14 +119,23 @@ const QuotaManagement = (props)=>{
             name: "",
             expression: ""
         })
-        if( quotaInput.name !== "" && quotaInput.expression !== "")
+
+        console.log("input name", quotaInput.name)
+        console.log("input expression", quotaInput.expression)
+
+        // Check if the user has actually inputted a quota
+        if(onCheckingNotAnyInputtedQuota() === true){
+            alert("You haven't typed any quota")
+            return;
+        }
+        else
         {
             axios.post(URL_POST_QUOTA_INFORMATION + `?projectId=${projectId}`,newQuotaData).then((res) =>{
                 console.log("res",res)
-        })
+            })
         }
        
-}
+    }
 
     /**
      * @summary Handle the input change for the label input in the quota table
