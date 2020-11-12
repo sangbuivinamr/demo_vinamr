@@ -47,7 +47,7 @@ const QuotaManagement = (props)=>{
     const [code , setCode] = useState();
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
-    const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
+    const onCheckingNotAnyInputtedQuota = () => quotaInput.id === null && quotaInput.name === "" && quotaInput.expression === "";
     
     /**
      * @summary Function useEffect
@@ -56,7 +56,6 @@ const QuotaManagement = (props)=>{
     useEffect(()=>{
         getDataInformation("1")
         getDataExpression("0515",code)
-        onAddingQuota("1")
     },[])
 
     
@@ -123,10 +122,12 @@ const QuotaManagement = (props)=>{
             name: "",
             expression: ""
         })
-        console.log("newQuotaData",newQuotaData)
-        axios.post(URL_POST_QUOTA_INFORMATION + `?projectId=${projectId}`,newQuotaData).then((res) =>{
+        if( quotaInput.name !== "" && quotaInput.expression !== "")
+        {
+            axios.post(URL_POST_QUOTA_INFORMATION + `?projectId=${projectId}`,newQuotaData).then((res) =>{
                 console.log("res",res)
         })
+        }
        
 }
 
@@ -250,8 +251,6 @@ const QuotaManagement = (props)=>{
     const onChangeCode =(code) =>{
         setCode(code);
     }
-
-
     return(
         
         <div className="quota-page">
@@ -288,7 +287,7 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoIosSave
                         className="up icon"
-                        onClick={() => onAddingQuota(1)}
+                        onClick={() => onAddingQuota(1) }
                     />
                     </i>
                 </div>
@@ -361,5 +360,5 @@ const QuotaManagement = (props)=>{
             </div>
         </div>
     );
-};
+}
 export default QuotaManagement;
