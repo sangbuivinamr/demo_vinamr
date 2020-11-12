@@ -31,9 +31,9 @@ const QuotaEditing = (props)=>{
         status: false
     })
     const [editingtable,setEditingTable] = useState([{
-        colList: [],
+        columnList: [],
         rowList: [],
-        dataList: [[{row:"", column:"", quotaCount: 0}]]
+        dataList: [[{rowID:"", columnID:"", quotaCount: 0}]]
         }]
         )
     const [addedRow,setAddedRow] = useState([]);
@@ -50,7 +50,7 @@ const QuotaEditing = (props)=>{
     //     if(onCheckingNotAnyHighlightedQuota()) return;
 
     //     const currentQuotaData = [].concat(quotaData);
-
+        
     //     let selectedQuotaIndex;
 
     //     // Finding the index of the highlighted quota row
@@ -123,7 +123,7 @@ const QuotaEditing = (props)=>{
         }
         setQuotaClickStatus(newQuotaStatus);
     }
-    console.log(quotaClickStatus)
+ 
 
     /**
      * @summary Delete the selected quota row in the table
@@ -149,15 +149,45 @@ const QuotaEditing = (props)=>{
   
 }
 
+/** 
+ * @summary This function is to check whether the label has been selected or not, having already added to row/columns or not
+ *@param {string} takenQuotaLabel is the name of the selected quota
+ * @return {boolean} false if the label is not valid, true if the label is valid 
+ *  **/
+const checkLabelValidity = (takenQuotaLabel) => {
+    if (takenQuotaLabel==="") {
+        alert("You haven't chosen any labels")
+        return false;
+    }
+for( const table of editingtable)
+    for(const column of table.columnList)
+        if (takenQuotaLabel === column.text)
+        {
+            alert("You have already added to column this quota Label")
+            return false;
+        }
+for( const table of editingtable)
+    for(const row of table.rowList)
+            if (takenQuotaLabel === row.text)
+            {
+                alert("You have already added to row this quota Label")
+                return false;
+            }   
+    
+return true;
+}
+
 /**  
 * @summary handle add to row when clicked add to Row 
 */
 const handleAddToRow = (quotaLabel) => {
     const {quotaLabel: takenQuotaLabel} = quotaLabel
-    if (takenQuotaLabel==="") {
-        alert("You haven't chosen any labels")
+    if (!checkLabelValidity(takenQuotaLabel)) {
+        
         return;
     }
+    const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel);
+    
 for( const table of editingtable)
     for(const row of table.rowList)
         if (takenQuotaLabel === row)
@@ -165,99 +195,89 @@ for( const table of editingtable)
             alert("You have already added to row this quota Label")
             return;
         }
-        console.log("Get the quotal Label",takenQuotaLabel)
+        
         let tempArray = [].concat(addedRow);
         tempArray.push(takenQuotaLabel)
         setAddedRow(tempArray);
         let tempTable = editingtable;
         let indexOfTable = 0;
-        tempTable[indexOfTable].rowList.push(takenQuotaLabel)
+        tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
         setEditingTable(tempTable)
 }
+console.log("Changed table", editingtable)
 
 /**  
 * @summary handle add to row when clicked add to Row 
 */
 const handleAddToColumn = (quotaLabel) => {
     const {quotaLabel: takenQuotaLabel} = quotaLabel
-    if (takenQuotaLabel==="") {
-        alert("You haven't chosen any labels")
+    if (!checkLabelValidity(takenQuotaLabel)) {
+        
         return;
     }
-for( const table of editingtable)
-    for(const column of table.rowList)
-        if (takenQuotaLabel === column)
-        {
-            alert("You have already added to row this quota Label")
-            return;
-        }
-        console.log("Get the quotal Label",takenQuotaLabel)
+    const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel);
         let tempArray = [].concat(addedColumn);
         tempArray.push(takenQuotaLabel)
         setAddedColumn(tempArray);
         let tempTable = editingtable;
         let indexOfTable = 0;
-        tempTable[indexOfTable].colList.push(takenQuotaLabel)
+        tempTable[indexOfTable].columnList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
         setEditingTable(tempTable)
+}
+
+/** 
+@summary This function is just a temporary function. It is to return the id of the selected quota Label 
+@param {string} quotaLabel The name of the selected quota Label
+@return {string} the uniqueID of the label that is passed to the function
+**/
+const getUniqueIDByPassingQuotaLabel = (quotaLabel) => {
+    for( const label of QUOTA_LABEL_SELECTION_DATA)
+        {
+            if (quotaLabel === label.quota_label)
+          
+        return label.uniqueID;
+        }
 }
     return(
         <div className="quota-page">
-             <div className="quota-page default-bar">
-                <h2 className="h2-default">
-                    QUOTA SETTINGS
-                    
-                </h2>
+            <div className="quota-page default-bar">
+                <h2 className="h2-default">QUOTA SETTINGS</h2>
                 <div className="display--square--button">
-                    <i>
-                    <IoIosUndo
-                        className="up icon"
-                     
-                    />
-                    </i>
+                    <i><IoIosUndo className="up icon"/></i>
                 </div>
                 <div className="display--square--button">
-                    <i>
-                    <IoIosRedo
-                        className="up icon"
-               
-                    />
-                    </i>
+                    <i><IoIosRedo className="up icon"/></i>
                 </div>
            
                 <div className="display--square--button">
-                    <i>
-                    <IoIosSave
-                        className="up icon"
-                     
-                    />
-                    </i>
+                    <i><IoIosSave className="up icon"/></i>
                 </div>
                 <div className="mode">
                     Mode: 
                 </div>
-                    <select className="select"onChange={onChangeNavtoExpression}>
-                        <option
-                            value=""
-                        > 
-                           Expression
-                        </option>
-                        <option 
-                            value="editing"
-                        >
-                              Editing
-                        </option>
-                        <option
-                            value="exceeded"
-                        >
-                            When Exceeded 
-                        </option>
-                        <option 
-                            value="tracking"
-                        >
-                            Tracking
-                        </option>
-                    </select>
-                    <div className="expression-review">
+                <select className="select"onChange={onChangeNavtoExpression}>
+                    <option
+                        value=""
+                    >
+                        Expression
+                    </option>
+                    <option 
+                        value="editing"
+                    >
+                        Editing
+                    </option>
+                    <option
+                        value="exceeded"
+                    >
+                        When Exceeded 
+                    </option>
+                    <option 
+                        value="tracking"
+                    >
+                        Tracking
+                    </option>
+                </select>
+                <div className="expression-review">
                     <h2 className="review">
                         QUOTA LABEL <br/> SELECTION
                     </h2>
@@ -280,41 +300,35 @@ for( const table of editingtable)
                 </div>
                 <div id ="quota--label--selection">
                  
-                <QuotaLabelSelection quotaData ={quotaData} onChoosingQuota={onChoosingQuota}
-                    quotaClickStatus={quotaClickStatus}
-                    setQuotaClickStatus={setQuotaClickStatus}/>
+                    <QuotaLabelSelection 
+                        quotaData ={quotaData} 
+                        onChoosingQuota={onChoosingQuota}
+                        quotaClickStatus={quotaClickStatus}
+                        setQuotaClickStatus={setQuotaClickStatus}/>
                 </div>
                 <div id= "quota--management--adjust--rows--cols">
                     <div id="quota--management--adjust--rows--cols--btn--div">
-                    <div className="display--square--button">
+                        <div className="display--square--button">                
+                            <IoIosArrowRoundUp className="up icon" />
                     
-                    <IoIosArrowRoundUp
-                        className="up icon"
-                    />
-                  
-                </div>
-                <div className="display--square--button">
-                   
-                    <IoIosArrowRoundDown
-                        className="up icon"
-                    />
-                   
-                </div>
-                <div className="display--square--button">
-                   
-                    <IoMdClose
-                        className="up icon"
-                    />
-                   
-                </div>
-                <div className="quota--management--add--total--cols-rows--btn">
-                    <ImSigma className="sigma-icon" />
-                    <text> Rows</text>
-                </div>
-                <div className="quota--management--add--total--cols-rows--btn">
-                    <ImSigma className="sigma-icon" />
-                    <text> Columns</text>
-                </div>
+                    </div>
+                        <div className="display--square--button">
+                            <IoIosArrowRoundDown className="up icon"/>
+                        
+                        </div>
+                        <div className="display--square--button">
+                        
+                            <IoMdClose className="up icon" />
+                        
+                        </div>
+                        <div className="quota--management--add--total--cols-rows--btn">
+                            <ImSigma className="sigma-icon" />
+                            <text> Rows</text>
+                        </div>
+                        <div className="quota--management--add--total--cols-rows--btn">
+                            <ImSigma className="sigma-icon" />
+                            <text> Columns</text>
+                        </div>
                     </div>
                     <QuotaRowColumnAdjustment rowData={addedRow} columnData={addedColumn} />
               
