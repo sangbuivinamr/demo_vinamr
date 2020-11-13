@@ -35,7 +35,7 @@ const EditingTable = (props) => {
     const sumOfAllCells = totalRow.reduce((first,   last) => first+ last,0);
     
     const handleTotalColumn = (props) => {
-      
+        console.log("Handle Total Column props", props)
          for(var i = 0; i < props.length;i++){
              totalCol.push(0);
              for(var j  =0; j< props[i].length;j++){
@@ -75,9 +75,8 @@ const EditingTable = (props) => {
     const renderEditingBody =(props)=>{
         let i = -1; // Need i to print out the rowList 
         console.log("render Editing body",props)
-        return props.dataList.map(row=>{
-            i++;
-           
+        return props.dataList && props.dataList.map(row=>{
+          {  i++;
             return(
                     <tr>
                         <td className="body-exceeded-left">{props.rowList[i].text}</td>
@@ -90,12 +89,14 @@ const EditingTable = (props) => {
                         })}
                         <td className="header-left-total">{totalRow[i]}</td>
                     </tr>
-            )})
+            )
+                    }
+        })
     }
     if (tableData.columnList.length < 1 || tableData.rowList.length < 1 ) return (null)
     else return  (
         <div className="main-table">
-            {tableData.columnList.length}
+
             <table>
                 <thead>
                     <tr>
