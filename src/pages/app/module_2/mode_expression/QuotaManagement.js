@@ -49,7 +49,6 @@ const QuotaManagement = (props) => {
   });
   const [expression, setExpression] = useState([]);
   const [code, setCode] = useState();
-  const [selected, setSelected] =useState();
   const onCheckingNotAnyHighlightedQuota = () =>
     quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
   const onCheckingNotAnyInputtedQuota = () =>
