@@ -1,6 +1,6 @@
-const quotaRoute = require('./routes/quota')
+const quotaRoute = require('../routes/quota')
 const bodyParser = require('body-parser')
-const expressionRoute = require('./routes/expression')
+const expressionRoute = require('../routes/expression')
 
 module.exports = function (app) {
     
