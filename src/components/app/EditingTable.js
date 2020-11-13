@@ -93,7 +93,7 @@ const EditingTable = (props) => {
             )})
     }
     if (tableData.columnList.length < 1 || tableData.rowList.length < 1 ) return (null)
-   else return  (
+    else return  (
         <div className="main-table">
             {tableData.columnList.length}
             <table>
