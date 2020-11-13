@@ -11,13 +11,16 @@ import React from "react";
 import './styles/QuotaName.css';
 
 const QuotaName = (props)=>{
-    return (
-
-        <div className="quota-name">
-            <p className="quota-name-p">Quota Name</p>
-            <p className="name">{props.dataCityTable} {props.dataCarTable}</p>
-        </div>
-    )
+    const renderQuotaName = () =>{
+        return props.dataCityTable !== "" && props.dataCarTable !== "" ?  <p className="name">{props.dataCityTable} {"."} {props.dataCarTable}</p> : null;
+    }
+        return (
+            <div className="quota-name">
+                <p className="quota-name-p">Quota Name</p>
+                {renderQuotaName() }
+            </div>
+        )
+   
 }
 
 export default QuotaName;

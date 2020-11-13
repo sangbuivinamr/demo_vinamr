@@ -12,13 +12,17 @@ import "./styles/ExceededLeft.css";
 
 
 const ExceededLeft =(props)=>{
-    const sendDataParent= (e)=>{
-        props.onChoosingCell(e);
-    }
     const exceededLeft= props.exceededLeft;
     const exceededLeftHeader=props.exceededLeftHeader ;
     const exceededLeftSex = props.exceededLeftSex;
-    // let type_car=e.target.parentNode.childNodes[0].innerText;
+    const highlightedSlide = props.setHightlightedSlide;
+
+    //Function send data of the table to parent component
+    const sendDataParent= (e)=>{
+        props.onChoosingCell(e);
+    }
+
+
     const renderHeaderLayoutLeft =() =>{
         return exceededLeftHeader && exceededLeftHeader.map(({quota_index,quota_label})=>
         {
@@ -26,12 +30,6 @@ const ExceededLeft =(props)=>{
             <th 
                 className="header-left" 
                 key={quota_index}
-                onClick ={(e)=>{
-                    // console.log("p1",e.target.innerText)
-                    // sendDataParent("p21",e.target.innerText);
-                    sendDataParent(e);
-                }}
-
             > 
                 {quota_label}
             </th>
@@ -41,7 +39,6 @@ const ExceededLeft =(props)=>{
     }
     
     const renderExceedBodyLeft =()=>{
-       
         return exceededLeft && exceededLeft.map(({ type_index,type_car,check})=>{
             return(
                     <tr key={type_index}>
@@ -52,7 +49,9 @@ const ExceededLeft =(props)=>{
                                 className="cell"
                                 onClick = {(e) => {
                                     sendDataParent(e);
+                                    props.onChoosingQuota(e)
                                 }}
+                                style={{backgroundColor: props.quotaClickStatus.status && props.quotaClickStatus.quotaLabel === check && "#7B2025" }}                              
                             >
                                 {count}
                             </td>
@@ -73,7 +72,6 @@ const ExceededLeft =(props)=>{
                 </thead>
                 <tbody>
                     {renderExceedBodyLeft()}
-                    
                 </tbody>
                 
                 

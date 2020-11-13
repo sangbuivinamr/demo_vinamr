@@ -6,14 +6,6 @@ import React,{useState} from "react";
 import './styles/Message.css';
 
 const Message=(props)=>{
-
-    //Initialize the states
-    // const [disable, setDisable] = useState(false);
-    // //Funtions handle
-    // const handleClick=(e)=>{
-    //     setDisable(!disable);
-    // }
-
     //Render to browser
     return(
         <div className="message">
