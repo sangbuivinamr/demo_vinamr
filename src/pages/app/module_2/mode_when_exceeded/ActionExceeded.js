@@ -1,8 +1,12 @@
 //Packages
 import React, { useState } from "react";
+import axios from "axios";
 
 //Styles
 import "./styles/ActionExceeded.css";
+
+//Default url
+const URL_POST_ACTIONEXCEEDED = "https://115.73.222.254:8000/";
 
 const ActionExceeded = (props) => {
   const [changePath, setChangePath] = useState();
@@ -14,8 +18,23 @@ const ActionExceeded = (props) => {
   const onChangeCode = (changeCode) => {
     setChangeCode(changeCode);
   };
-console.log("input",changeCode)
 
+  /**
+   *@summary This function will push the data from client side to server side
+   *@param  projectId This param will direct to the database
+   *@return void
+   */
+  const pushDataInput = (projectId) => {
+    if (changeCode !== "" || changeCode !== undefined) {
+      axios
+        .post(URL_POST_ACTIONEXCEEDED + `?projectId=${projectId}`, changeCode)
+        .then((res) => {
+          console.log(res);
+        });
+      console.log("change", changeCode);
+    }
+  };
+  console.log("code", changeCode);
   return (
     <div className="action-exceeded">
       <p className="action-p">Action when exceeded</p>
@@ -41,11 +60,12 @@ console.log("input",changeCode)
       </div>
 
       <div className="buttons">
-        <div className="apply">Apply</div>
+        <div className="apply" onClick={() => pushDataInput("1", changeCode)}>
+          Apply
+        </div>
         <div className="apply-all">Apply to All</div>
       </div>
     </div>
   );
-  
 };
 export default ActionExceeded;

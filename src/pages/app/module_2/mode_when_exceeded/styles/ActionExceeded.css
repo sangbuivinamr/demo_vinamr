@@ -13,7 +13,9 @@
 
 .action-p {
    margin-left: -10px;
-   margin-top: 10px
+   margin-top: 10px;
+   font-weight: bold;
+   color: #FCC216;
 }
 
 .jump-slide {
@@ -23,6 +25,9 @@
 .select-action {
    height: 30px;
    width: 80%;
+   background-color: rgb(77, 74, 74);
+   color: white;
+   cursor: pointer;
 }
 
 .input-exceeded {

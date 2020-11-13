@@ -7,6 +7,7 @@ import ExceededLeft from "./ExceededLeft";
 import QuotaName from "./QuotaName";
 import ActionExceeded from "./ActionExceeded";
 import Message from "./Message";
+import axios from "axios";
 
 //Styles
 import "./styles/QuotaExceeded.css";
@@ -146,6 +147,9 @@ const QuotaExceeded = (props) => {
     // getDataExpression("0515", code);
   }, []);
 
+  const getDataTableExceeded = () => {
+    axios.get();
+  }
   return (
     <div className="exceeded">
       <div className="exceeded exceeded-bar">
