@@ -33,7 +33,7 @@ const QuotaEditing = (props)=>{
     const [editingtable,setEditingTable] = useState([{
         columnList: [],
         rowList: [],
-        dataList: [[{rowID:"", columnID:"", quotaCount: 0}]]
+        dataList: []
         }]
         )
     const [addedRow,setAddedRow] = useState([]);
@@ -186,7 +186,7 @@ const handleAddToRow = (quotaLabel) => {
         
         return;
     }
-    const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel);
+    const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel); // This is just temporary
     
 for( const table of editingtable)
     for(const row of table.rowList)
@@ -202,8 +202,11 @@ for( const table of editingtable)
         let tempTable = editingtable;
         let indexOfTable = 0;
         tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
+        tempTable[indexOfTable].dataList.push([]);
         setEditingTable(tempTable)
+        
 }
+
 console.log("Changed table", editingtable)
 
 /**  
@@ -223,6 +226,7 @@ const handleAddToColumn = (quotaLabel) => {
         let indexOfTable = 0;
         tempTable[indexOfTable].columnList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
         setEditingTable(tempTable)
+        
 }
 
 /** 
@@ -238,6 +242,62 @@ const getUniqueIDByPassingQuotaLabel = (quotaLabel) => {
         return label.uniqueID;
         }
 }
+/**
+ * @summary This function is to return the quotaCount for the cell corresponding to the columnID and rowID by searching the whole dataList
+ * @param {string} rowID  
+ * @param {string} columnID
+ * @return {number} quotaCount that corresponds to the columnID and rowID
+ */
+const getTheQuotaCorrespondingtoColIDAndRowID = (rowID, columnID) => {
+    for (const row of EDITING_TABLE_DATA.dataList){
+        for(const cell of row)
+        {
+         if(cell.rowID === rowID && cell.columnID === columnID)
+         {
+            return cell.quotaCount;
+         }   
+         else if ( cell.rowID === columnID && cell.columnID === rowID){
+             return cell.quotaCount;
+         }
+        }
+    }
+      
+}
+/**
+ * @summary This function is to update the DataList of {editingTable}
+ */
+
+ const updatingTheEditingTable = (props) => {
+     const indexOfTable  = 0;
+    let indexOfRow;
+     let tempTable = props;
+     let quotaCount;
+    
+      for ( const row of props[indexOfTable].rowList)
+        for ( const column of props[indexOfTable].columnList)
+        {
+            quotaCount = getTheQuotaCorrespondingtoColIDAndRowID(row.uniqueID, column.uniqueID);
+            if (typeof quotaCount === "undefined") quotaCount = 0; //Check 
+            for (const subArray of props[indexOfTable].dataList){
+                indexOfRow = tempTable[indexOfTable].dataList.indexOf(subArray);
+            console.log("index of row ",indexOfRow)
+            }
+            tempTable[indexOfTable].dataList[indexOfRow].push({rowID: row.uniqueID, columnID: column.uniqueID, quotaCount: quotaCount })
+        }
+       
+        console.log("Temp table",tempTable)    
+    setEditingTable(tempTable);
+    
+ }
+ const updateColumn = (quotaLabel) => {
+    handleAddToColumn(quotaLabel);
+    updatingTheEditingTable(editingtable)
+}
+const updateRow = (quotaLabel) => {
+    handleAddToRow(quotaLabel);
+    updatingTheEditingTable(editingtable)
+}
+
     return(
         <div className="quota-page">
             <div className="quota-page default-bar">
@@ -281,10 +341,10 @@ const getUniqueIDByPassingQuotaLabel = (quotaLabel) => {
                     <h2 className="review">
                         QUOTA LABEL <br/> SELECTION
                     </h2>
-                    <button id ="quota--management--page--add--to-row--btn" onClick ={() =>handleAddToRow(quotaClickStatus)} >
+                    <button id ="quota--management--page--add--to-row--btn" onClick ={() =>updateRow(quotaClickStatus)} >
                     Add to <br/> Row
                     </button>
-                   <button id ="quota--management--page--add--to-column--btn" onClick ={() =>handleAddToColumn(quotaClickStatus)}>
+                   <button id ="quota--management--page--add--to-column--btn" onClick ={() => updateColumn(quotaClickStatus)}>
                     Add to <br/> Column
                    </button>
                 </div>
@@ -295,7 +355,7 @@ const getUniqueIDByPassingQuotaLabel = (quotaLabel) => {
                 
                 <div id = "quota--display--added--table">
                     <EditingTable  
-                     editingTableData={editingtable[0]}
+                     editingTableData={EDITING_TABLE_DATA}
                      ></EditingTable>
                 </div>
                 <div id ="quota--label--selection">
