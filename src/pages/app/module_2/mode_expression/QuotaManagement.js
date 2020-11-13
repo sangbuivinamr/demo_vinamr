@@ -277,7 +277,7 @@ const QuotaManagement = (props) => {
           </i>
         </div>
         <div className="mode">Mode:</div>
-        <select className="select" onChange={onChangeNav} selected={selected}>
+        <select className="select" onChange={onChangeNav}>
           <option value="">Expression</option>
           <option value="editing">Editing</option>
           <option value="exceeded">When Exceeded</option>
