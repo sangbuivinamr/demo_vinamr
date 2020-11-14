@@ -48,7 +48,7 @@ const QuotaEditing = (props)=>{
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
-    
+    console.log("editing table at the beginning",editingtable)
     console.log('addedRows', addedRow);
     console.log('addedCaddedColumns',addedColumn);
 
@@ -167,10 +167,12 @@ const QuotaEditing = (props)=>{
     *  
     **/
     const checkLabelValidity = (takenQuotaLabel) => {
+        //Check the Label is selected or not
         if (takenQuotaLabel==="") {
             alert("You haven't chosen any labels")
             return false;
         }
+        //The nested for loop is to check whether the label has already added or not. If the label is already added, return FALSE
         for( const table of editingtable)
             for(const column of table.columnList)
                 if (takenQuotaLabel === column.text)
@@ -185,7 +187,7 @@ const QuotaEditing = (props)=>{
                         alert("You have already added to row this quota Label")
                         return false;
                     }   
-            
+        //Returning TRUE as the label has not been added and is not added
         return true;
     }
 
@@ -397,6 +399,8 @@ for( const table of editingtable)
      */
 
     const updatingTheEditingTable = (props) => {
+        console.log("Flag editing table updated")
+        console.log("The editing table data at the beginning",props)
         const indexOfTable  = 0;
         let indexOfRow, indexOfColumn;
         let tempTable = props;
@@ -405,20 +409,32 @@ for( const table of editingtable)
         for ( const row of props[indexOfTable].rowList)
         for ( const column of props[indexOfTable].columnList)
         {
-            quotaCount = getTheQuotaCorrespondingtoColIDAndRowID(row.uniqueID, column.uniqueID);
+            quotaCount = getTheQuotaCorrespondingtoColIDAndRowID(row.uniqueID, column.uniqueID);  
        
             // for (const subArray of props[indexOfTable].dataList){
                 indexOfRow = tempTable[indexOfTable].rowList.indexOf(row);
                 indexOfColumn = tempTable[indexOfTable].columnList.indexOf(column);
-            console.log("index of row ",indexOfRow)
+           
             // }
             tempTable[indexOfTable].dataList[indexOfRow].splice(indexOfColumn, 1,{rowID: row.uniqueID, columnID: column.uniqueID, quotaCount: quotaCount })
         }
-        
-            console.log("Temp table",tempTable)    
+        /// This while loop is to handle deleting row as the above splice method above just replace the rows and columns due to their length
+        while (tempTable[indexOfTable].dataList.length > tempTable[indexOfTable].rowList.length) 
+        tempTable[indexOfTable].dataList.pop();
+        for ( const row of props[indexOfTable].dataList)
+        {
+            while(row.length > tempTable[indexOfTable].columnList.length)
+            {
+                row.pop();
+            }
+        }
+    
+        console.log("The editing table data at the end",tempTable)
         setEditingTable(tempTable);
         
     }
+    
+
     const updateColumn = (quotaLabel) => {
         handleAddToColumn(quotaLabel);
         updatingTheEditingTable(editingtable)
@@ -432,7 +448,10 @@ for( const table of editingtable)
         onMovingSelectedLabelUpDown(direction);
         updatingTheEditingTable(editingtable);
     }
-
+    const deleteQuota = () => {
+        onDeletingSelectedQuotaLabel();
+        updatingTheEditingTable(editingtable);
+    }
     return(
         <div className="quota-page">
             <div className="quota-page default-bar">
@@ -516,7 +535,9 @@ for( const table of editingtable)
                         </div>
                         <div className="display--square--button">
                         
-                            <IoMdClose onClick={onDeletingSelectedQuotaLabel} className="up icon" />
+                            <IoMdClose onClick={deleteQuota}
+                            //  onClick={onDeletingSelectedQuotaLabel} 
+                             className="up icon" />
                         
                         </div>
                         <div className="quota--management--add--total--cols-rows--btn">
