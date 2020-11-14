@@ -428,6 +428,11 @@ for( const table of editingtable)
         updatingTheEditingTable(editingtable)
     }
 
+    const moveQuota = (direction) => {
+        onMovingSelectedLabelUpDown(direction);
+        updatingTheEditingTable(editingtable);
+    }
+
     return(
         <div className="quota-page">
             <div className="quota-page default-bar">
@@ -499,11 +504,14 @@ for( const table of editingtable)
                 <div id= "quota--management--adjust--rows--cols">
                     <div id="quota--management--adjust--rows--cols--btn--div">
                         <div className="display--square--button">                
-                            <IoIosArrowRoundUp onClick={() => onMovingSelectedLabelUpDown(QUOTA_MOVING_DIRECTION.UP)} className="up icon" />
+                            <IoIosArrowRoundUp 
+                                onClick={() => moveQuota(QUOTA_MOVING_DIRECTION.UP)} 
+                                className="up icon" 
+                            />
                     
                     </div>
                         <div className="display--square--button">
-                            <IoIosArrowRoundDown onClick={() => onMovingSelectedLabelUpDown(QUOTA_MOVING_DIRECTION.DOWN)} className="up icon"/>
+                            <IoIosArrowRoundDown onClick={() => moveQuota(QUOTA_MOVING_DIRECTION.DOWN)} className="up icon"/>
                         
                         </div>
                         <div className="display--square--button">
