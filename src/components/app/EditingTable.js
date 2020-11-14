@@ -31,7 +31,7 @@ const EditingTable = (props) => {
         }
    
     }
-    handleTotalRow(tableData.dataList) /// Implement this function right away to calculate the sum of all row and columns 
+    // handleTotalRow(tableData.dataList) /// Implement this function right away to calculate the sum of all row and columns 
     const sumOfAllCells = totalRow.reduce((first,   last) => first+ last,0);
     
     const handleTotalColumn = (props) => {
@@ -45,13 +45,13 @@ const EditingTable = (props) => {
          }
     }
 
-    handleTotalColumn(tableData.dataList); ///Implement the function right away to calculate the sum of all row and columns 
+    // handleTotalColumn(tableData.dataList); ///Implement the function right away to calculate the sum of all row and columns 
 
     const renderTableRowOfColTotals = (props) => {
 
         return(
             <tr>
-                <td className="header-left-total"> Total</td>
+                {/* <td className="header-left-total"> Total</td> */}
                 {props.map (total =>{
                     return (
                         <td className="header-left-total">
@@ -87,7 +87,7 @@ const EditingTable = (props) => {
                                 </td>
                             )
                         })}
-                        <td className="header-left-total">{totalRow[i]}</td>
+                        {/* <td className="header-left-total">{totalRow[i]}</td> */}
                     </tr>
             )
                     }
@@ -107,7 +107,7 @@ const EditingTable = (props) => {
                 </thead>
                 <tbody>
                     {renderEditingBody(tableData)}
-                    {renderTableRowOfColTotals(totalCol)}
+                    {/* {renderTableRowOfColTotals(totalCol)} */}
                 </tbody>
                 
                 

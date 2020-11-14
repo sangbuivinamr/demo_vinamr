@@ -31,8 +31,9 @@ const QuotaEditing = (props)=>{
         status: false
     })
     const [editingtable,setEditingTable] = useState([{
-        columnList: [],
+        
         rowList: [],
+        columnList: [],
         dataList: []
         }]
         )
@@ -261,7 +262,7 @@ const getTheQuotaCorrespondingtoColIDAndRowID = (rowID, columnID) => {
          }
         }
     }
-      
+      return 0; 
 }
 /**
  * @summary This function is to update the DataList of {editingTable}
@@ -269,22 +270,23 @@ const getTheQuotaCorrespondingtoColIDAndRowID = (rowID, columnID) => {
 
  const updatingTheEditingTable = (props) => {
      const indexOfTable  = 0;
-    let indexOfRow;
+    let indexOfRow, indexOfColumn;
      let tempTable = props;
      let quotaCount;
-    
+  
       for ( const row of props[indexOfTable].rowList)
         for ( const column of props[indexOfTable].columnList)
         {
             quotaCount = getTheQuotaCorrespondingtoColIDAndRowID(row.uniqueID, column.uniqueID);
-            if (typeof quotaCount === "undefined") quotaCount = 0; //Check 
-            for (const subArray of props[indexOfTable].dataList){
-                indexOfRow = tempTable[indexOfTable].dataList.indexOf(subArray);
-            console.log("index of row ",indexOfRow)
-            }
-            tempTable[indexOfTable].dataList[indexOfRow].push({rowID: row.uniqueID, columnID: column.uniqueID, quotaCount: quotaCount })
-        }
        
+            // for (const subArray of props[indexOfTable].dataList){
+                indexOfRow = tempTable[indexOfTable].rowList.indexOf(row);
+                indexOfColumn = tempTable[indexOfTable].columnList.indexOf(column);
+            console.log("index of row ",indexOfRow)
+            // }
+            tempTable[indexOfTable].dataList[indexOfRow].splice(indexOfColumn, 1,{rowID: row.uniqueID, columnID: column.uniqueID, quotaCount: quotaCount })
+        }
+        
         console.log("Temp table",tempTable)    
     setEditingTable(tempTable);
     
@@ -355,7 +357,7 @@ const updateRow = (quotaLabel) => {
                 
                 <div id = "quota--display--added--table">
                     <EditingTable  
-                     editingTableData={EDITING_TABLE_DATA}
+                     editingTableData={editingtable[0]}
                      ></EditingTable>
                 </div>
                 <div id ="quota--label--selection">
