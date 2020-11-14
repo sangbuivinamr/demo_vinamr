@@ -189,51 +189,36 @@ const QuotaEditing = (props)=>{
         return true;
     }
 
-    /**  
-    * @summary handle add to row when clicked add to Row 
-    */
-    const handleAddToRow = (quotaLabel) => {
-        const {quotaLabel: takenQuotaLabel} = quotaLabel
-        if (!checkLabelValidity(takenQuotaLabel)) {
-            
-        const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel); // This is just temporary
+/**  
+* @summary handle add to row when clicked add to Row 
+*/
+const handleAddToRow = (quotaLabel) => {
+    const {quotaLabel: takenQuotaLabel} = quotaLabel
+    if (!checkLabelValidity(takenQuotaLabel)) {
         
-        for( const table of editingtable)
-            for(const row of table.rowList)
-                if (takenQuotaLabel === row)
-                {
-                    alert("You have already added to row this quota Label")
-                    return;
-                }
-        // const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel);
-        
-        // for( const table of editingtable)
-        //     for(const row of table.rowList)
-        //         if (takenQuotaLabel === row)
-        //         {
-        //             alert("You have already added to row this quota Label")
-        //             return;
-        //         }
-                
-        //         let tempArray = [].concat(addedRow);
-        //         console.log('takenQuotaLabel', takenQuotaLabel)
-        //         tempArray.push(takenQuotaLabel)
-        //         setAddedRow(tempArray);
-        //         let tempTable = editingtable;
-        //         let indexOfTable = 0;
-        //         tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-                // setEditingTable(tempTable)
+        return;
+    }
+    const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel); // This is just temporary
     
-                let tempArray = [].concat(addedRow);
-                tempArray.push(takenQuotaLabel)
-                setAddedRow(tempArray);
-                let tempTable = editingtable;
-                let indexOfTable = 0;
-                tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-                tempTable[indexOfTable].dataList.push([]);
-                setEditingTable(tempTable)
+for( const table of editingtable)
+    for(const row of table.rowList)
+        if (takenQuotaLabel === row)
+        {
+            alert("You have already added to row this quota Label")
+            return;
         }
+        
+        let tempArray = [].concat(addedRow);
+        tempArray.push(takenQuotaLabel)
+        setAddedRow(tempArray);
+        let tempTable = editingtable;
+        let indexOfTable = 0;
+        tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
+        tempTable[indexOfTable].dataList.push([]);
+        setEditingTable(tempTable)
+        
 }
+
 
 
     /**  
@@ -499,7 +484,7 @@ const QuotaEditing = (props)=>{
                 
                 <div id = "quota--display--added--table">
                     <EditingTable  
-                     editingTableData={EDITING_TABLE_DATA}
+                     editingTableData={editingtable[0]}
                      ></EditingTable>
                 </div>
                 <div id ="quota--label--selection">
