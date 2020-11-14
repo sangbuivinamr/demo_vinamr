@@ -34,12 +34,7 @@ const QuotaEditing = (props)=>{
         rowList: [],
         dataList: []
         }]
-        )
-    // const [editingtable,setEditingTable] = useState({
-    //         columnList: [],
-    //         rowList: [],
-    //         dataList: [[{rowID:"", columnID:"", quotaCount: 0}]]
-    //     })
+    )
     const [addedRow,setAddedRow] = useState([]);
     const [addedColumn,setAddedColumn] = useState([]);
     const [chosenRowStatus, setChosenRowStatus] = useState({
@@ -201,16 +196,7 @@ const QuotaEditing = (props)=>{
         const {quotaLabel: takenQuotaLabel} = quotaLabel
         if (!checkLabelValidity(takenQuotaLabel)) {
             
-    const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel); // This is just temporary
-    
-for( const table of editingtable)
-    for(const row of table.rowList)
-        if (takenQuotaLabel === row)
-        {
-            alert("You have already added to row this quota Label")
-            return;
-        }
-        const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel);
+        const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel); // This is just temporary
         
         for( const table of editingtable)
             for(const row of table.rowList)
@@ -219,28 +205,36 @@ for( const table of editingtable)
                     alert("You have already added to row this quota Label")
                     return;
                 }
+        // const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel);
+        
+        // for( const table of editingtable)
+        //     for(const row of table.rowList)
+        //         if (takenQuotaLabel === row)
+        //         {
+        //             alert("You have already added to row this quota Label")
+        //             return;
+        //         }
                 
+        //         let tempArray = [].concat(addedRow);
+        //         console.log('takenQuotaLabel', takenQuotaLabel)
+        //         tempArray.push(takenQuotaLabel)
+        //         setAddedRow(tempArray);
+        //         let tempTable = editingtable;
+        //         let indexOfTable = 0;
+        //         tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
+                // setEditingTable(tempTable)
+    
                 let tempArray = [].concat(addedRow);
-                console.log('takenQuotaLabel', takenQuotaLabel)
                 tempArray.push(takenQuotaLabel)
                 setAddedRow(tempArray);
                 let tempTable = editingtable;
                 let indexOfTable = 0;
                 tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
+                tempTable[indexOfTable].dataList.push([]);
                 setEditingTable(tempTable)
-    }
-        let tempArray = [].concat(addedRow);
-        tempArray.push(takenQuotaLabel)
-        setAddedRow(tempArray);
-        let tempTable = editingtable;
-        let indexOfTable = 0;
-        tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-        tempTable[indexOfTable].dataList.push([]);
-        setEditingTable(tempTable)
-        
+        }
 }
 
-console.log("Changed table", editingtable)
 
     /**  
     * @summary handle add to row when clicked add to Row 
@@ -390,63 +384,63 @@ console.log("Changed table", editingtable)
 
     }
         
-}
 
-/**
- * @summary This function is to return the quotaCount for the cell corresponding to the columnID and rowID by searching the whole dataList
- * @param {string} rowID  
- * @param {string} columnID
- * @return {number} quotaCount that corresponds to the columnID and rowID
- */
-const getTheQuotaCorrespondingtoColIDAndRowID = (rowID, columnID) => {
-    for (const row of EDITING_TABLE_DATA.dataList){
-        for(const cell of row)
-        {
-         if(cell.rowID === rowID && cell.columnID === columnID)
-         {
-            return cell.quotaCount;
-         }   
-         else if ( cell.rowID === columnID && cell.columnID === rowID){
-             return cell.quotaCount;
-         }
-        }
-    }
-      
-}
-/**
- * @summary This function is to update the DataList of {editingTable}
- */
 
- const updatingTheEditingTable = (props) => {
-     const indexOfTable  = 0;
-    let indexOfRow;
-     let tempTable = props;
-     let quotaCount;
-    
-      for ( const row of props[indexOfTable].rowList)
-        for ( const column of props[indexOfTable].columnList)
-        {
-            quotaCount = getTheQuotaCorrespondingtoColIDAndRowID(row.uniqueID, column.uniqueID);
-            if (typeof quotaCount === "undefined") quotaCount = 0; //Check 
-            for (const subArray of props[indexOfTable].dataList){
-                indexOfRow = tempTable[indexOfTable].dataList.indexOf(subArray);
-            console.log("index of row ",indexOfRow)
+    /**
+     * @summary This function is to return the quotaCount for the cell corresponding to the columnID and rowID by searching the whole dataList
+     * @param {string} rowID  
+     * @param {string} columnID
+     * @return {number} quotaCount that corresponds to the columnID and rowID
+     */
+    const getTheQuotaCorrespondingtoColIDAndRowID = (rowID, columnID) => {
+        for (const row of EDITING_TABLE_DATA.dataList){
+            for(const cell of row)
+            {
+            if(cell.rowID === rowID && cell.columnID === columnID)
+            {
+                return cell.quotaCount;
+            }   
+            else if ( cell.rowID === columnID && cell.columnID === rowID){
+                return cell.quotaCount;
             }
-            tempTable[indexOfTable].dataList[indexOfRow].push({rowID: row.uniqueID, columnID: column.uniqueID, quotaCount: quotaCount })
+            }
         }
-       
-        console.log("Temp table",tempTable)    
-    setEditingTable(tempTable);
-    
- }
- const updateColumn = (quotaLabel) => {
-    handleAddToColumn(quotaLabel);
-    updatingTheEditingTable(editingtable)
-}
-const updateRow = (quotaLabel) => {
-    handleAddToRow(quotaLabel);
-    updatingTheEditingTable(editingtable)
-}
+        
+    }
+    /**
+     * @summary This function is to update the DataList of {editingTable}
+     */
+
+    const updatingTheEditingTable = (props) => {
+        const indexOfTable  = 0;
+        let indexOfRow;
+        let tempTable = props;
+        let quotaCount;
+        
+        for ( const row of props[indexOfTable].rowList)
+            for ( const column of props[indexOfTable].columnList)
+            {
+                quotaCount = getTheQuotaCorrespondingtoColIDAndRowID(row.uniqueID, column.uniqueID);
+                if (typeof quotaCount === "undefined") quotaCount = 0; //Check 
+                for (const subArray of props[indexOfTable].dataList){
+                    indexOfRow = tempTable[indexOfTable].dataList.indexOf(subArray);
+                console.log("index of row ",indexOfRow)
+                }
+                tempTable[indexOfTable].dataList[indexOfRow].push({rowID: row.uniqueID, columnID: column.uniqueID, quotaCount: quotaCount })
+            }
+        
+            console.log("Temp table",tempTable)    
+        setEditingTable(tempTable);
+        
+    }
+    const updateColumn = (quotaLabel) => {
+        handleAddToColumn(quotaLabel);
+        updatingTheEditingTable(editingtable)
+    }
+    const updateRow = (quotaLabel) => {
+        handleAddToRow(quotaLabel);
+        updatingTheEditingTable(editingtable)
+    }
 
     return(
         <div className="quota-page">
