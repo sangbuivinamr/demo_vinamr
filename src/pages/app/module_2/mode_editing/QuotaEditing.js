@@ -390,7 +390,7 @@ for( const table of editingtable)
             }
             }
         }
-        
+       return 0; 
     }
     /**
      * @summary This function is to update the DataList of {editingTable}
