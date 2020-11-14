@@ -395,3 +395,262 @@ export const EDITING_TABLE_DATA = {
  {column:"Da Nang",row:"Intend. Other Models",quotaCount: 234}]
  
 ]}
+
+export const DATA_MODULE_4_COUNTED = [
+    {
+        data_index: 0,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Pending QC (1)",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 1,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Pending FW",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 2,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Approved",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 3,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Approved",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 4,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Pending FW",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 5,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Pending QC (2)",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 6,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Pending QC (2)",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+]
+export const DATA_MODULE_4_CANCELLED = [
+    {
+        data_index: 0,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Cancelled",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 1,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Pending FW",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 2,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Approved",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 3,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Approved",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 4,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Pending FW",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 5,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Pending QC (2)",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 6,
+        interviewId: "05991234",
+        completed:"Completed",
+        status:"Pending QC (2)",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+]
+export const DATA_MODULE_4_NOT_COMPLETED = [
+    {
+        data_index: 0,
+        interviewId: "05991234",
+        completed:"Not Completed",
+        status:"Exceeded Quota",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 1,
+        interviewId: "05991234",
+        completed:"Not Completed",
+        status:"Paused",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 2,
+        interviewId: "05991234",
+        completed:"Not Completed",
+        status:"Paused",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 3,
+        interviewId: "05991234",
+        completed:"Not Completed",
+        status:"Exceeded Quota",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 4,
+        interviewId: "05991234",
+        completed:"Not Completed",
+        status:"Terminate",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 5,
+        interviewId: "05991234",
+        completed:"Not Completed",
+        status:"Paused",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+    {
+        data_index: 6,
+        interviewId: "05991234",
+        completed:"Not Completed",
+        status:"Paused",
+        endTime:"2020/12/07 16:21",
+        audio:"Link",
+        photos:"Link",
+        latitude:"10.792647265",
+        longitude:"106.717709537",
+        duration:"00:30:51"
+    },
+]

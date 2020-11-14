@@ -5,18 +5,19 @@
 */
 
 //Packages
-import React, {useState} from "react";
-import {AiFillCaretRight,AiFillCaretDown} from "react-icons/ai";
-//Styles
-import "./RawData.css";
+import React, { useState } from "react";
+import { AiFillCaretRight } from "react-icons/ai";
+import CancelledInterview from "./CancelledInterview";
+import CountedInterview from "./CountedInterview";
+import NotCompleted from "./NotCompleted";
+import {DATA_MODULE_4_COUNTED, DATA_MODULE_4_CANCELLED, DATA_MODULE_4_NOT_COMPLETED} from "../../../data/testing-data";
 
+//Styles
+import "./styles/RawData.css";
+
+//Default URL
+const URL_MODULE_4 = "https://115.73.222.254:8000/rawDataCheck/getRawDataCheck";
 const RawData = (props) => {
-    const [clicked,setClicked] =useState(true);
-    const changeIcon =() => {
-        setClicked(!clicked)
-        return !clicked === false ? <div><i><AiFillCaretDown/></i></div> :null
-    }
-    console.log("tuu",!clicked)
   return (
     <div className="raw-data">
       <div className="content-raw-data">
@@ -47,27 +48,27 @@ const RawData = (props) => {
           <div className="button-3"> Change Interview Status</div>
           <div className="button-1">Export Data</div>
         </div>
-        <div className = "content-area"> 
-            <div id= "first-tab">
-                <div className = "first"> 
-                
-                    <h3 className = "header-first">Quota Counted Interviews</h3>
-                    <AiFillCaretRight className="icon-4" onClick={()=> {changeIcon(clicked)}} />
-                </div>
-                <div className = "tab-1"></div>
-            </div>
-            <div id = "second-tab"> 
-              <div className="second">
-                <h3 className= "header-first" >Cancelled Interviews</h3>
-                <AiFillCaretRight className="icon-4" onClick={()=> {changeIcon(clicked)}} />
-              </div>
-            </div>
-            <div id = "third-tab"> 
-              <div className="third">
-                <h3 className= "header-first" >Not Completed Interviews</h3>
-                <AiFillCaretRight className="icon-4" onClick={()=> {changeIcon(clicked)}} />
-              </div>
-            </div>
+        <div className="content-area">
+          <div className="item-1">
+            <label for="first" className="first-label">
+              Quota Counted Interviews
+            </label>
+            <input type="checkbox" id="first" />
+            <AiFillCaretRight className="arrow" />
+            <CountedInterview bodyCounted={DATA_MODULE_4_COUNTED} />
+          </div>
+          <div className="item-2">
+            <label for="second">Cancelled Interviews</label>
+            <input type="checkbox" id="second" />
+            <AiFillCaretRight className="arrow" />
+            <CancelledInterview bodyCounted={DATA_MODULE_4_CANCELLED}/>
+          </div>
+          <div className="item-3">
+            <label for="third">Not Completed Interviews</label>
+            <input type="checkbox" id="third" />
+            <AiFillCaretRight className="arrow" />
+            <NotCompleted bodyCounted={DATA_MODULE_4_NOT_COMPLETED}/>
+          </div>
         </div>
       </div>
     </div>
