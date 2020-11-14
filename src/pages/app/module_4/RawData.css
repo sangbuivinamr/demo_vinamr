@@ -1,0 +1,109 @@
+@import "../styles/GlobalStyles.css";
+.raw-data{
+    background-color: var(--global-background-color) ;
+    height: 100vh;
+    width: 100vw;
+    margin-top: -10px;
+    margin-left: -8px;
+    position: absolute;
+    display: grid;
+}
+.content-raw-data{
+
+}
+.header{
+    margin-left: 30px;
+    font-family: Segoe UI;
+}
+.text-list{
+    display: flex;
+    margin-left: 30px;
+}
+.total{
+    color:#7a818c;
+}
+.cancel{
+    color: #A50010;
+}
+.approved{
+    color: green;
+}
+.p-w{
+    color: #8f2887;
+}
+.pending-qc-1{
+    color: #1f1d19;
+}
+.pending-qc-2{
+    color:#7a818c;
+}
+.buttons-4{
+    display: flex;
+    margin-left: 600px;
+}
+.button-1{
+    height: 30px;
+    width: 100px;
+    margin-left: 50px;
+    background-color:#fcc216 ;
+    text-align: center;
+    border-radius: 5px;
+    padding-top: 5px;
+    cursor: pointer;
+}
+.button-2{
+    height: 30px;
+    width: 200px;
+    margin-left: 50px;
+    background-color:#fcc216 ;
+    text-align: center;
+    padding-top: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.button-3{
+    height: 30px;
+    width: 250px;
+    margin-left: 50px;
+    background-color:#fcc216 ;
+    text-align: center;
+    padding-top: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.content-area{
+    background-color: white;
+    margin-top: 20px;
+    height: 100%;
+}
+#first-tab{
+    padding-top: 2px;
+}
+
+#first-tab .header-first{
+    color: #c48f17;
+    margin-left: 30px;
+}
+.first{
+    display: flex;
+}
+.icon-4{
+    margin-top: 20px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+#second-tab .header-first {
+    color: #c48f17;
+    margin-left: 30px;
+}
+.second{
+    display: flex;
+}
+#third-tab .header-first{
+    color: #c48f17;
+    margin-left: 30px;
+}
+.third{
+    display: flex;
+}

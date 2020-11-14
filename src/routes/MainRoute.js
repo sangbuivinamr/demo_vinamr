@@ -16,8 +16,8 @@ const MainRoute = () => {
           <Route exact path="/exceeded" component={QuotaExceeded} />
           <Route exact path="/tracking" component={QuotaTracking} />
           <Route exact path="/interview" component={QuotaInterview} />
-          <Route exact path="/" component = {QuotaManagement}/>
-          <RawData exact path = "/rawData"/>
+          <Route exact path="/quotaManagement" component = {QuotaManagement}/>
+          <Route exact path="/" component = {RawData}/>
       </Switch>
     </Router>
   );

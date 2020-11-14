@@ -26,7 +26,7 @@ const QuotaTracking = (props) => {
               onChange={onChangeNav}
               value={selectedTracking} //Initialize state for the mode when user naivgate to this mode
             >
-              <option value="">Expression</option>
+              <option value="quotaManagement">Expression</option>
               <option value="editing">Editing</option>
               <option value="exceeded">When Exceeded</option>
               <option value="tracking">Tracking</option>
