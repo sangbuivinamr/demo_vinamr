@@ -51,6 +51,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 2px;
+  cursor: pointer;
 }
 .quota-management-page--adjust-rows-cols .sigma-icon {
   justify-items: center;

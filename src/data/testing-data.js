@@ -430,4 +430,4 @@ export const EDITING_TABLE_DATA = {
 
  
  
-]}
+    ]}
