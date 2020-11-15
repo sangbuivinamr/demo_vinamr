@@ -318,32 +318,32 @@ export const EXCEEDED_SEX_LEFT=[
 export const EXCEEDED_LAYOUT_LEFT = [
     
     {
-        type_index: 1,
+        type_index: 0,
         type_car: "Owner. Honda Accord",
         check:["Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách."]
     },
     {
-        type_index: 2,
+        type_index: 1,
         type_car: "Owner. Toyota Camry",
         check:["Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách."]
     },
     {
-        type_index: 3,
+        type_index: 2,
         type_car: "Owner. Other Models",
         check:["Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách."]
     },
     {
-        type_index: 4,
+        type_index: 3,
         type_car: "Intend. Honda Accord",
         check:["Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách."]
     },
     {
-        type_index: 5,
+        type_index: 4,
         type_car: "Intend. Toyota Camry",
         check:["Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách."]
     },
     {
-        type_index: 6,
+        type_index: 5,
         type_car:"Intend. Other Models",
         check:["Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách."]
     },

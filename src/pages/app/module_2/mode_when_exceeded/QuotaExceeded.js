@@ -20,6 +20,7 @@ import {
 } from "../../../../data/testing-data";
 
 const QuotaExceeded = (props) => {
+  //Initial States
   const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
   const [quotaInput, setQuotaInput] = useState({
     quota_index: null,
@@ -34,6 +35,9 @@ const QuotaExceeded = (props) => {
   const [notification, setNotification] = useState();
   const [city, setCity] = useState("");
   const [selectedExceeded, setSelectedExceeded] = useState("exceeded"); // Initialize the state, so when the user navigate to this mode, the mode will have the mode is interview in the option
+  const [messageCell, setMessageCell] = useState();
+  const [clicked, setClicked] = useState(false);
+
   const onCheckingNotAnyHighlightedQuota = () =>
     quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
   const onCheckingNotAnyInputtedQuota = () =>
@@ -120,11 +124,13 @@ const QuotaExceeded = (props) => {
    * @return void
    */
   const onChoosingCell = (e) => {
-    let type_car = e.target.parentNode.childNodes[0].innerText;
-    let notification = e.target.innerText;
-
     //The cellClicked will define which index the user clicked on the table to match with the header
     let cellClicked = e.target.cellIndex;
+
+    //The data cell in the table
+    let type_car = e.target.parentNode.childNodes[0].innerText;
+    let messageName = e.target.parentNode.childNodes[cellClicked].innerText;
+    let notification = e.target.innerText;
 
     //The header in the table
     let city =
@@ -137,19 +143,62 @@ const QuotaExceeded = (props) => {
 
     // set state for component Message
     setNotification(notification);
+
+    //Handle No Message
+    // console.log("no", cellClicked);
+    // console.log("testing", messageName);
+  };
+
+  /**
+   * @summary This function pass from children to parent
+   * @param {*} e The param pass from Exceeded Left component to parent component
+   * @return void
+   */
+  const handleClicked = (e) => {
+    setClicked(!clicked);
+    if (!clicked === true) {
+      if (notification !== "" && notification !== undefined) {
+        noMess(e);
+      }
+    }
+  };
+
+  /**
+   * @summary This function will clear the notifcation of the cell is clicked when onClick noMessage
+   * @return void
+   */
+  const noMess = () => {
+    setNotification("");
+  };
+
+  /**
+   * @summary This function will clear the data of the cell is clicked when onClick noMessage
+   * @param {*} e 
+   */
+  const deleteMessage = (e) => {
+    let cellClicked = e.target.cellIndex;
+    let currentData = EXCEEDED_LAYOUT_LEFT[cellClicked].check[cellClicked]; 
+    console.log("current",currentData)
+    let t =  EXCEEDED_LAYOUT_LEFT[cellClicked];
+
+    let newData = currentData.filter((data) => data.currentData !== t.check[cellClicked])
+    setMessageCell(newData);
+    console.log("new",newData)
+    // setMessageCell(currentData)
+    // console.log("run")
   };
   /**
    * @summary Function useEffect
    * @return void
    */
-  useEffect(() => {
+  useEffect((e) => {
     // getDataInformation("1");
     // getDataExpression("0515", code);
   }, []);
 
   const getDataTableExceeded = () => {
     axios.get();
-  }
+  };
   return (
     <div className="exceeded">
       <div className="exceeded exceeded-bar">
@@ -196,8 +245,9 @@ const QuotaExceeded = (props) => {
             exceededLeftHeader={QUOTA_OVERVIEW_DATA}
             exceededLeftSex={EXCEEDED_SEX_LEFT}
             onChoosingCell={(e) => onChoosingCell(e)}
-            setQuotaClickStatus={setQuotaClickStatus}
-            onChoosingQuota={(e) => onChoosingQuota(e)}
+            // deleteMessage={(e) => deleteMessage(e)}
+            // setQuotaClickStatus={setQuotaClickStatus}
+            // onChoosingQuota={(e) => onChoosingQuota(e)}
             quotaClickStatus={quotaClickStatus}
           />
         </div>
@@ -209,7 +259,11 @@ const QuotaExceeded = (props) => {
             <ActionExceeded />
           </div>
           <div>
-            <Message mess={notification} />
+            <Message
+              mess={notification}
+              noMess={(e) => noMess(e)}
+              handleClicked={(e) => handleClicked(e)}
+            />
           </div>
         </div>
       </div>

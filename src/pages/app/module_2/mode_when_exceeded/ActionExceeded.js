@@ -34,7 +34,6 @@ const ActionExceeded = (props) => {
       console.log("change", changeCode);
     }
   };
-  console.log("code", changeCode);
   return (
     <div className="action-exceeded">
       <p className="action-p">Action when exceeded</p>

@@ -5,19 +5,13 @@ import React, { useState } from "react";
 import "./styles/Message.css";
 
 const Message = (props) => {
-  const [noNotification, setNoNotification] = useState();
-  const [clicked, setClicked] = useState(false);
-  const handleClicked = (name) => {
-    setClicked(!clicked);
-    console.log("test", !clicked);
-    if (!clicked === true) {
-      noMess(name);
-      console.log("run");
-    }
-  };
-  const noMess = (name) => {
-    setNoNotification(noNotification);
-  };
+  const handleClicked = (e) => {
+    props.handleClicked (e)
+  }
+  
+  // const noMess = (e) => {
+  //   props.noMess (e)
+  // }
   return (
     <div className="message">
       <div className="two-mess">
@@ -26,15 +20,17 @@ const Message = (props) => {
           className="check"
           name="message"
           type="checkbox"
-          value={clicked}
-          onClick={() => handleClicked()}
+          onClick={(e) => {
+            handleClicked(e)
+            // noMess(e)
+          }}
         />
         <p className="no-mess">
           <i>No Message</i>
         </p>
       </div>
       <div className="notification-area">
-        <p className="notification" onChange={(props) => noMess(props.name)}>
+        <p className="notification" >
           {props.mess}
         </p>
       </div>
