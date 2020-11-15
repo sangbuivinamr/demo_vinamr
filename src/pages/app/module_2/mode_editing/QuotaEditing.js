@@ -47,7 +47,7 @@ const QuotaEditing = (props)=>{
     })
 
 
-    const [totalRows, setTotalRows] = useState([[{text:"Owner. Other Models", uniqueID: "42821bde-4a59-4b7e-b223-8de5249bd18c"},{text:"Intend. Honda Accord", uniqueID: "7a97ab6c-70f7-4b1b-92ec-c0e51a98e944"}]]);
+    const [totalRows, setTotalRows] = useState([]);
     /*
     []
     */
