@@ -46,6 +46,10 @@ const QuotaEditing = (props)=>{
         uniqueID: ""
     })
 
+    const [undoQuotaStack, setUndoQuotaStack] = useState([]);
+    const [redoQuotaStack, setRedoQuotaStack] = useState([]);
+    
+
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
     console.log("editing table at the beginning",editingtable)
@@ -191,35 +195,35 @@ const QuotaEditing = (props)=>{
         return true;
     }
 
-/**  
-* @summary handle add to row when clicked add to Row 
-*/
-const handleAddToRow = (quotaLabel) => {
-    const {quotaLabel: takenQuotaLabel} = quotaLabel
-    if (!checkLabelValidity(takenQuotaLabel)) {
-        
-        return;
-    }
-    const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel); // This is just temporary
-    
-for( const table of editingtable)
-    for(const row of table.rowList)
-        if (takenQuotaLabel === row)
-        {
-            alert("You have already added to row this quota Label")
+    /**  
+    * @summary handle add to row when clicked add to Row 
+    */
+    const handleAddToRow = (quotaLabel) => {
+        const {quotaLabel: takenQuotaLabel} = quotaLabel
+        if (!checkLabelValidity(takenQuotaLabel)) {
+            
             return;
         }
+        const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel); // This is just temporary
         
-        let tempArray = [].concat(addedRow);
-        tempArray.push(takenQuotaLabel)
-        setAddedRow(tempArray);
-        let tempTable = editingtable;
-        let indexOfTable = 0;
-        tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-        tempTable[indexOfTable].dataList.push([]);
-        setEditingTable(tempTable)
-        
-}
+        for( const table of editingtable)
+            for(const row of table.rowList)
+                if (takenQuotaLabel === row)
+                {
+                    alert("You have already added to row this quota Label")
+                    return;
+                }
+                
+                let tempArray = [].concat(addedRow);
+                tempArray.push(takenQuotaLabel)
+                setAddedRow(tempArray);
+                let tempTable = editingtable;
+                let indexOfTable = 0;
+                tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
+                tempTable[indexOfTable].dataList.push([]);
+                onChangeEditingTable(tempTable)
+            
+    }
 
 
 
@@ -239,7 +243,7 @@ for( const table of editingtable)
         let tempTable = editingtable;
         let indexOfTable = 0;
         tempTable[indexOfTable].columnList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-        setEditingTable(tempTable)
+        onChangeEditingTable(tempTable)
     }
 
    /**
@@ -317,7 +321,7 @@ for( const table of editingtable)
             newEditingTable[0].columnList = newChosenEditingList
         }
 
-        setEditingTable(newEditingTable);
+        onChangeEditingTable(newEditingTable);
         onResetChosenRowColumnStatus();
 
     }
@@ -366,7 +370,7 @@ for( const table of editingtable)
             currentEditingTableFull[0].columnList = currentChosenEditingList
         }
 
-        setEditingTable(currentEditingTableFull);
+        onChangeEditingTable(currentEditingTableFull);
         onResetChosenRowColumnStatus();
 
     }
@@ -430,7 +434,7 @@ for( const table of editingtable)
         }
     
         console.log("The editing table data at the end",tempTable)
-        setEditingTable(tempTable);
+        onChangeEditingTable(tempTable);
         
     }
     
@@ -452,6 +456,11 @@ for( const table of editingtable)
         onDeletingSelectedQuotaLabel();
         updatingTheEditingTable(editingtable);
     }
+
+    const onChangeEditingTable = (table) => {
+        setEditingTable(table)
+    }
+
     return(
         <div className="quota-page">
             <div className="quota-page default-bar">
