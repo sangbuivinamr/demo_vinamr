@@ -111,8 +111,9 @@ const EditingTable = (props) => {
                 <thead>
                     <tr>
                         <td></td>
-                        {renderHeaderLayoutLeft(tableData)}
-                        <td className="header-left-total"> Total</td>
+                        {(props.onRenderingHeader) && renderHeaderLayoutLeft(tableData)}
+                        {(props.onRenderingHeader) && <td className="header-left-total"> Total</td>}
+                        
                     </tr>
                 </thead>
                 <tbody>

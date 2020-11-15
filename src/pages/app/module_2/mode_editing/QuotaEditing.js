@@ -46,6 +46,16 @@ const QuotaEditing = (props)=>{
         uniqueID: ""
     })
 
+
+    const [totalRows, setTotalRows] = useState([[{text:"Owner. Other Models", uniqueID: "42821bde-4a59-4b7e-b223-8de5249bd18c"},{text:"Intend. Honda Accord", uniqueID: "7a97ab6c-70f7-4b1b-92ec-c0e51a98e944"}]]);
+    /*
+    []
+    */
+   const [totalColumns, setToTalColumns] = useState([]);
+   /* 
+   [{text:"", uniqueID: ""}, {text:"", uniqueID: ""}]
+   */ 
+
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
     console.log("editing table at the beginning",editingtable)
@@ -190,7 +200,7 @@ const QuotaEditing = (props)=>{
         //Returning TRUE as the label has not been added and is not added
         return true;
     }
-
+    
 /**  
 * @summary handle add to row when clicked add to Row 
 */
@@ -452,6 +462,10 @@ for( const table of editingtable)
         onDeletingSelectedQuotaLabel();
         updatingTheEditingTable(editingtable);
     }
+
+    const handleBreakRow = () => {
+
+    }
     return(
         <div className="quota-page">
             <div className="quota-page default-bar">
@@ -510,7 +524,11 @@ for( const table of editingtable)
                 <div id = "quota--display--added--table">
                     <EditingTable  
                      editingTableData={editingtable[0]}
+                     onRenderingHeader ={true}
                      ></EditingTable>
+                    
+                    
+
                 </div>
                 <div id ="quota--label--selection">
                  
@@ -540,11 +558,11 @@ for( const table of editingtable)
                              className="up icon" />
                         
                         </div>
-                        <div className="quota--management--add--total--cols-rows--btn">
+                        <div className="quota--management--add--total--cols-rows--btn" onClick ={() => console.log("Clicked Total")}>
                             <ImSigma className="sigma-icon" />
                             <text> Rows</text>
                         </div>
-                        <div className="quota--management--add--total--cols-rows--btn">
+                        <div className="quota--management--add--total--cols-rows--btn" onClick ={() => console.log("Clicked Total")}>
                             <ImSigma className="sigma-icon" />
                             <text> Columns</text>
                         </div>
@@ -552,10 +570,13 @@ for( const table of editingtable)
                     <QuotaRowColumnAdjustment 
                         rowData={editingtable[0]['rowList']} 
                         columnData={editingtable[0]['columnList']} 
+                        totalRowsData={totalRows}
+                        totalColumnsData={totalColumns}
                         onChoosingColumn={(col) => onChoosingColumn(col)}
                         onChoosingRow={(row) => onChoosingRow(row)}
                         chosenRowStatus={chosenRowStatus}
                         chosenColumnStatus={chosenColumnStatus}
+                     
                     />
               
                 </div>

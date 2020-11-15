@@ -82,7 +82,17 @@ export const QUOTA_LABEL_SELECTION_DATA = [
         uniqueID: "22910aea-7f3e-43ec-838f-6968a2ea08ee",
         quota_label: "Intend. Other Models",
         quota_expression: "S1=1"
-    }
+    },
+    // {
+    //     uniqueID: "ee207259-74c2-44c6-afc3-31a4ae3adfeb",
+    //     quota_label: "NAM",
+    //     quota_expression: "S1=3"
+    // },
+    // {
+    //     uniqueID: "fa65c4c0-e178-4dad-a1e4-904925833c95",
+    //     quota_label: "NỮ",
+    //     quota_expression: "S1=6"
+    // }
 ]
 
 export const EXPRESSION_REVIEW_DATA = [
@@ -363,7 +373,8 @@ export const EDITING_TABLE_DATA = {
         {text:"Owner. Other Models", uniqueID: "42821bde-4a59-4b7e-b223-8de5249bd18c"},
         {text:"Intend. Honda Accord", uniqueID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944"},
         {text:"Intend. Toyota Camry", uniqueID: "d39a6398-ce5e-4c92-8d60-41ddbf39edc8"},
-        {text: "Intend. Other Models", uniqueID: "22910aea-7f3e-43ec-838f-6968a2ea08ee"}
+        {text: "Intend. Other Models", uniqueID: "22910aea-7f3e-43ec-838f-6968a2ea08ee"},
+       
     ],
     columnList : [
         {text:"Ha Noi",uniqueID: "a1729b65-6865-42c2-9b35-66e7054309b7"},
@@ -381,6 +392,7 @@ export const EDITING_TABLE_DATA = {
             {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 80},
             {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 90},
             {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 90},
+            // {columnID:"123123",rowID:"123123",quotaCount: function(){ return 11;} }
         ],
 
         [
@@ -426,7 +438,9 @@ export const EDITING_TABLE_DATA = {
             {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 23},
             {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 32},
             {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 90}
-        ]
+        ],
+       
+  
 
  
  
