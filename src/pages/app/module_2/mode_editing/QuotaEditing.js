@@ -55,6 +55,9 @@ const QuotaEditing = (props)=>{
    /* 
    [{text:"", uniqueID: ""}, {text:"", uniqueID: ""}]
    */ 
+    const [undoQuotaStack, setUndoQuotaStack] = useState([]);
+    const [redoQuotaStack, setRedoQuotaStack] = useState([]);
+    
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
@@ -92,45 +95,8 @@ const QuotaEditing = (props)=>{
     //     setQuotaData(currentQuotaData)
     // }
 
-    /**
-     * @summary Add a quota row to the table
-     */
-    const onAddingQuota = () => {
 
-        // Check if the user has actually inputted a quota
-        if(onCheckingNotAnyInputtedQuota()){
-            alert("You haven't typed any quota")
-            return;
-        }
 
-        let newQuotaData = quotaData.concat(quotaInput);
-
-        setQuotaData(newQuotaData);
-
-        // After we've added a quota, the input will be cleaned up
-        setQuotaInput({
-            quota_index: null,
-            quota_label: "",
-            quota_expression: ""
-        })
-    }
-
-    /**
-     * @summary Handle the input change for the label input in the quota table
-     * @param {string} quota_label The label (aka value of the input at the label column)
-     */
-    const onAddingQuotaLabel = (quota_label) => {
-        let newQuotaInput = {
-            quota_index: quotaData.length,
-            quota_label: quota_label,
-            quota_expression: quotaInput.quota_expression
-        };
-
-        setQuotaInput(newQuotaInput)
-        
-    }
-    /*
-    */
 
     /**
      * @summary Make the selected (clicked) row to be highlighted
@@ -149,20 +115,6 @@ const QuotaEditing = (props)=>{
     /**
      * @summary Delete the selected quota row in the table
      */
-    const onDeletingQuota = () => {
-        if(onCheckingNotAnyHighlightedQuota()){
-            alert("Please indicate the quota you want to remove!")
-            return;
-        }
-        let currentQuotaData = [];
-        currentQuotaData = currentQuotaData.concat(quotaData);
-
-        // Filter out the selected quota row
-        let newQuotaData = currentQuotaData.filter(quota => quota.quota_label !== quotaClickStatus.quotaLabel)
-        setQuotaData(newQuotaData);
-
-    }
-
 
     const onChangeNavtoExpression=(e)=>{
           
@@ -200,36 +152,36 @@ const QuotaEditing = (props)=>{
         //Returning TRUE as the label has not been added and is not added
         return true;
     }
-    
-/**  
-* @summary handle add to row when clicked add to Row 
-*/
-const handleAddToRow = (quotaLabel) => {
-    const {quotaLabel: takenQuotaLabel} = quotaLabel
-    if (!checkLabelValidity(takenQuotaLabel)) {
-        
-        return;
-    }
-    const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel); // This is just temporary
-    
-for( const table of editingtable)
-    for(const row of table.rowList)
-        if (takenQuotaLabel === row)
-        {
-            alert("You have already added to row this quota Label")
+
+    /**  
+    * @summary handle add to row when clicked add to Row 
+    */
+    const handleAddToRow = (quotaLabel) => {
+        const {quotaLabel: takenQuotaLabel} = quotaLabel
+        if (!checkLabelValidity(takenQuotaLabel)) {
+            
             return;
         }
+        const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel); // This is just temporary
         
-        let tempArray = [].concat(addedRow);
-        tempArray.push(takenQuotaLabel)
-        setAddedRow(tempArray);
-        let tempTable = editingtable;
-        let indexOfTable = 0;
-        tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-        tempTable[indexOfTable].dataList.push([]);
-        setEditingTable(tempTable)
-        
-}
+        for( const table of editingtable)
+            for(const row of table.rowList)
+                if (takenQuotaLabel === row)
+                {
+                    alert("You have already added to row this quota Label")
+                    return;
+                }
+                
+                let tempArray = [].concat(addedRow);
+                tempArray.push(takenQuotaLabel)
+                setAddedRow(tempArray);
+                let tempTable = editingtable;
+                let indexOfTable = 0;
+                tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
+                tempTable[indexOfTable].dataList.push([]);
+                onChangeEditingTable(tempTable)
+            
+    }
 
 
 
@@ -249,7 +201,7 @@ for( const table of editingtable)
         let tempTable = editingtable;
         let indexOfTable = 0;
         tempTable[indexOfTable].columnList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-        setEditingTable(tempTable)
+        onChangeEditingTable(tempTable)
     }
 
    /**
@@ -327,7 +279,7 @@ for( const table of editingtable)
             newEditingTable[0].columnList = newChosenEditingList
         }
 
-        setEditingTable(newEditingTable);
+        onChangeEditingTable(newEditingTable);
         onResetChosenRowColumnStatus();
 
     }
@@ -376,7 +328,7 @@ for( const table of editingtable)
             currentEditingTableFull[0].columnList = currentChosenEditingList
         }
 
-        setEditingTable(currentEditingTableFull);
+        onChangeEditingTable(currentEditingTableFull);
         onResetChosenRowColumnStatus();
 
     }
@@ -440,7 +392,7 @@ for( const table of editingtable)
         }
     
         console.log("The editing table data at the end",tempTable)
-        setEditingTable(tempTable);
+        onChangeEditingTable(tempTable);
         
     }
     
@@ -466,6 +418,10 @@ for( const table of editingtable)
     const handleBreakRow = () => {
 
     }
+    const onChangeEditingTable = (table) => {
+        setEditingTable(table)
+    }
+
     return(
         <div className="quota-page">
             <div className="quota-page default-bar">
