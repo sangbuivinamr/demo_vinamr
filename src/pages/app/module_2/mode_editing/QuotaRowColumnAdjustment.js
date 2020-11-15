@@ -9,6 +9,9 @@ import {ImSigma} from "react-icons/im";
 
  const QuotaRowColumnAdjustment = (props) =>{
     const totalRows =  props.totalRowsData;
+    console.log("Total Row",totalRows)
+    const totalColumns = props.totalColumnsData;
+    console.log("Total Columns",totalColumns)
     const addedColumn = props.columnData;
     const addedRow = props.rowData;
     const renderHeader = () => {
@@ -29,20 +32,21 @@ import {ImSigma} from "react-icons/im";
                     <tr>
                         {/* This is the row adjustment's part */}
                         <td>
-                            {totalRows.map(total =>{
-                                return( <div>
+                            {totalRows.map(totalRow =>{
+                                return(
+                                    //  <div>
                                     <div className="sigma-total-rounded-box">
-                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <text> Total</text>
+                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <text> {totalRow.text}</text>
                                 
                             </div>
-                            {total.map(row => {
-                                return(  
-                                    <div style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenRowStatus, row)}} onClick={() => props.onChoosingRow(row)} className="selected--expression--box"> 
-                                        {row.text}
-                                    </div>
-                                )})
-                            }
-                                </div>
+                            // {/* {total.map(row => {
+                            //     return(  
+                            //         <div style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenRowStatus, row)}} onClick={() => props.onChoosingRow(row)} className="selected--expression--box"> 
+                            //             {row.text}
+                            //         </div>
+                            //     )})
+                            // } */}
+                            //     // </div>
                                      
                                 );
                             })}
@@ -57,9 +61,27 @@ import {ImSigma} from "react-icons/im";
                         </td>
                         {/* This is the column adjustment's part */}
                         <td>
-                            <div className="sigma-total-rounded-box">
+                                {/* <div className="sigma-total-rounded-box">
                                 <ImSigma className="sigma-icon" style={{size:"10px"}} /> Total
+                            </div> */}
+                            {totalColumns.map(totalColumn =>{
+                                return(
+                                    //  <div>
+                                    <div className="sigma-total-rounded-box">
+                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <text> {totalColumn.text}</text>
+                                
                             </div>
+                            // {/* {total.map(row => {
+                            //     return(  
+                            //         <div style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenRowStatus, row)}} onClick={() => props.onChoosingRow(row)} className="selected--expression--box"> 
+                            //             {row.text}
+                            //         </div>
+                            //     )})
+                            // } */}
+                            //     // </div>
+                                     
+                                );
+                            })}
                             {addedColumn.map(col => {
                                 return(
                                     <div style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenColumnStatus, col)}} onClick={() => props.onChoosingColumn(col)} className="selected--expression--box"> 
