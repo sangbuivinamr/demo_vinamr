@@ -61,7 +61,7 @@ const RawData = (props) => {
             <label for="second">Cancelled Interviews</label>
             <input type="checkbox" id="second" />
             <AiFillCaretRight className="arrow" />
-            <CancelledInterview bodyCounted={DATA_MODULE_4_CANCELLED}/>
+            <CancelledInterview bodyCancelled={DATA_MODULE_4_CANCELLED}/>
           </div>
           <div className="item-3">
             <label for="third">Not Completed Interviews</label>

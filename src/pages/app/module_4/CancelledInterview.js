@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./styles/CancelledInterview.css"
 const CancelledInterview = (props) => {
   const renderHeader = () => {
     let header = [
@@ -14,14 +14,26 @@ const CancelledInterview = (props) => {
       "Duration",
     ];
     return header.map((key, index) => {
-      return <th key={index}>{key}</th>;
+      return (
+        <tr className="cell-header">
+          <span>
+            <td key={index}>{key}</td>
+            <select className="select-option">
+              <option>hi</option>
+              <option>hi2</option>
+              <option>hi2</option>
+              <option>hi2</option>
+            </select>
+          </span>
+        </tr>
+      );
     });
   };
   const renderBody = () => {
-    const bodyCounted = props.bodyCounted;
+    const bodyCancelled = props.bodyCancelled;
     return (
-      bodyCounted &&
-      bodyCounted.map(
+      bodyCancelled &&
+      bodyCancelled.map(
         ({
           data_index,
           interviewId,
@@ -35,10 +47,20 @@ const CancelledInterview = (props) => {
           duration,
         }) => {
           return (
-            <tr key={data_index}>
-              <td></td>
+            <tr key={data_index} className="cell-body">
+              <td>
+                <div className=" check-area">
+                  <input type="checkbox" className="input-checkbox" />
+                </div>
+              </td>
+
               <td>{interviewId}</td>
-              <td>{completed}</td>
+              <td>
+                {completed}
+                <select>
+                  <option>hih</option>
+                </select>
+              </td>
               <td>{status}</td>
               <td>{endTime}</td>
               <td>{audio}</td>

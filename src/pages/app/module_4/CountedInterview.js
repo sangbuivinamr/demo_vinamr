@@ -2,6 +2,7 @@
 import React from "react";
 
 //Styles
+import "./styles/CountedInterview.css";
 
 const CountedInterview = (props) => {
   const bodyCounted = props.bodyCounted;
@@ -18,7 +19,19 @@ const CountedInterview = (props) => {
       "Duration",
     ];
     return header.map((key, index) => {
-      return <th key={index}>{key}</th>;
+      return (
+        <tr className="cell-header">
+          <span>
+            <td key={index}>{key}</td>
+            <select className="select-option">
+              <option>hi</option>
+              <option>hi2</option>
+              <option>hi2</option>
+              <option>hi2</option>
+            </select>
+          </span>
+        </tr>
+      );
     });
   };
   const renderBody = () => {
@@ -38,10 +51,20 @@ const CountedInterview = (props) => {
           duration,
         }) => {
           return (
-            <tr key={data_index}>
-              <td></td>
+            <tr key={data_index} className="cell-body">
+              <td>
+                <div className=" check-area">
+                  <input type="checkbox" className="input-checkbox" />
+                </div>
+              </td>
+
               <td>{interviewId}</td>
-              <td>{completed}</td>
+              <td>
+                {completed}
+                <select>
+                  <option>hih</option>
+                </select>
+              </td>
               <td>{status}</td>
               <td>{endTime}</td>
               <td>{audio}</td>
@@ -60,7 +83,7 @@ const CountedInterview = (props) => {
       <table>
         <tr>
           <thead>
-            <th></th>
+            <td></td>
             {renderHeader()}
           </thead>
         </tr>

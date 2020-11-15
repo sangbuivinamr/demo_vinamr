@@ -3,7 +3,7 @@
     - Tiến 14/11/2020
 */
 import React from "react";
-
+import "./styles/NotCompleted.css";
 const NotCompleted = (props) => {
   let bodyCounted = props.bodyCounted;
   const renderHeader = () => {
@@ -19,7 +19,19 @@ const NotCompleted = (props) => {
       "Duration",
     ];
     return header.map((key, index) => {
-      return <th key={index}>{key}</th>;
+      return (
+        <tr className="cell-header">
+          <span>
+            <td key={index}>{key}</td>
+            <select className="select-option">
+              <option>hi</option>
+              <option>hi2</option>
+              <option>hi2</option>
+              <option>hi2</option>
+            </select>
+          </span>
+        </tr>
+      );
     });
   };
   const renderBody = () => {
@@ -39,8 +51,12 @@ const NotCompleted = (props) => {
           duration,
         }) => {
           return (
-            <tr key={data_index}>
-              <td></td>
+            <tr key={data_index} className="cell-body">
+              <td>
+                <div className=" check-area">
+                  <input type="checkbox" className="input-checkbox" />
+                </div>
+              </td>
               <td>{interviewId}</td>
               <td>{completed}</td>
               <td>{status}</td>
