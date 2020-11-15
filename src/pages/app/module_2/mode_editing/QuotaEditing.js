@@ -47,11 +47,10 @@ const QuotaEditing = (props)=>{
     })
 
 
-    const [totalRows, setTotalRows] = useState([]);
-    /*
-    []
-    */
-   const [totalColumns, setToTalColumns] = useState([]);
+    const [totalRows, setTotalRows] = useState([]); //This state is to deal with break row feature
+    const [currentIndexTotalRows,  setCurrentIndexTotalRows] = useState(-1);
+   const [totalColumns, setToTalColumns] = useState([]); //This state is to deal with break column feature
+   const [currentIndexTotalColumns,  setCurrentIndexTotalColumns] = useState(-1);
    /* 
    [{text:"", uniqueID: ""}, {text:"", uniqueID: ""}]
    */ 
@@ -65,37 +64,19 @@ const QuotaEditing = (props)=>{
     console.log('addedRows', addedRow);
     console.log('addedCaddedColumns',addedColumn);
 
+
     /**
-     * @summary Swap the quota row in the table
-     * @param {string} swapType The type of the swap: UP/ DOWN
-     */
-    // const onSwappingQuotaRow = (swapType) => {
-
-    //     if(onCheckingNotAnyHighlightedQuota()) return;
-
-    //     const currentQuotaData = [].concat(quotaData);
-        
-    //     let selectedQuotaIndex;
-
-    //     // Finding the index of the highlighted quota row
-    //     for(let quotaIndex = 0; quotaIndex < currentQuotaData.length; quotaIndex++){
-    //         if(currentQuotaData[quotaIndex]["quota_label"] === quotaClickStatus.quotaLabel) selectedQuotaIndex = quotaIndex;
-    //     }
-
-    //     // Swapping
-    //     const tempQuota = currentQuotaData[selectedQuotaIndex];
-    //     if(swapType === "UP"){
-    //         currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex - 1]
-    //         currentQuotaData[selectedQuotaIndex - 1] = tempQuota
-    //     }else{
-    //         currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex + 1]
-    //         currentQuotaData[selectedQuotaIndex + 1] = tempQuota
-    //     }
-        
-    //     setQuotaData(currentQuotaData)
-    // }
-
-
+     * @sumary This function is just to generate universally unique id
+     *  */ 
+    const generate_uuid = () =>{
+        var dt = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = (dt + Math.random()*16)%16 | 0;
+            dt = Math.floor(dt/16);
+            return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+        });
+        return uuid;
+    }
 
 
     /**
@@ -171,7 +152,11 @@ const QuotaEditing = (props)=>{
                     alert("You have already added to row this quota Label")
                     return;
                 }
-                
+                //This is to deal with break rows
+                let tempTotalRows = totalRows;
+                tempTotalRows[currentIndexTotalRows].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
+                setTotalRows(tempTotalRows)
+
                 let tempArray = [].concat(addedRow);
                 tempArray.push(takenQuotaLabel)
                 setAddedRow(tempArray);
@@ -198,6 +183,10 @@ const QuotaEditing = (props)=>{
         let tempArray = [].concat(addedColumn);
         tempArray.push(takenQuotaLabel)
         setAddedColumn(tempArray);
+
+        let tempTotalColumns = totalColumns;
+        totalColumns[currentIndexTotalColumns].columnList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
+
         let tempTable = editingtable;
         let indexOfTable = 0;
         tempTable[indexOfTable].columnList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
@@ -415,9 +404,26 @@ const QuotaEditing = (props)=>{
         updatingTheEditingTable(editingtable);
     }
 
-    const handleBreakRow = () => {
-
+    const handleBreakRows = () => {
+        let tempArray = totalRows;
+        const uuid = generate_uuid();
+        setCurrentIndexTotalRows(count => count + 1 )
+        tempArray.push({text: "Total", uniqueID: uuid,rowList:[]});
+        setTotalRows(tempArray);
+        console.log("break rows successfully")
+       
     }
+    const handleBreakColumns = () => {
+        let tempArray = totalColumns;
+        const uuid = generate_uuid();
+        setCurrentIndexTotalColumns(count => count + 1 )
+        tempArray.push({text: "Total", uniqueID: uuid,columnList:[]});
+        setToTalColumns(tempArray);
+        console.log("break columns successfully")
+       
+    }
+    console.log("Current index of total Row", currentIndexTotalRows)
+    console.log("Total rows editing table",totalRows)
     const onChangeEditingTable = (table) => {
         setEditingTable(table)
     }
@@ -514,11 +520,11 @@ const QuotaEditing = (props)=>{
                              className="up icon" />
                         
                         </div>
-                        <div className="quota--management--add--total--cols-rows--btn" onClick ={() => console.log("Clicked Total")}>
+                        <div className="quota--management--add--total--cols-rows--btn" onClick ={handleBreakRows}>
                             <ImSigma className="sigma-icon" />
                             <text> Rows</text>
                         </div>
-                        <div className="quota--management--add--total--cols-rows--btn" onClick ={() => console.log("Clicked Total")}>
+                        <div className="quota--management--add--total--cols-rows--btn" onClick ={handleBreakColumns}>
                             <ImSigma className="sigma-icon" />
                             <text> Columns</text>
                         </div>
