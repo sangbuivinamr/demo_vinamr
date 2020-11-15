@@ -145,6 +145,10 @@ const QuotaEditing = (props)=>{
         }
         const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel); // This is just temporary
         
+        if (totalRows.length === 0){
+            alert("You  haven't chosen any the Sigma Total Row")
+            return;
+        }
         for( const table of editingtable)
             for(const row of table.rowList)
                 if (takenQuotaLabel === row)
@@ -175,10 +179,17 @@ const QuotaEditing = (props)=>{
     */
     const handleAddToColumn = (quotaLabel) => {
         const {quotaLabel: takenQuotaLabel} = quotaLabel
+        if (totalColumns.length === 0){
+            alert("You  haven't chosen any the Sigma Total Column")
+            return;
+        }
         if (!checkLabelValidity(takenQuotaLabel)) {
             
             return;
         }
+
+        
+
         const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel);
         let tempArray = [].concat(addedColumn);
         tempArray.push(takenQuotaLabel)
