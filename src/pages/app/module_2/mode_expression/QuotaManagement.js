@@ -28,15 +28,16 @@ import "./styles/QuotaManagementStyles.css";
 //Default url
 const URL_QUOTA_INFORMATION ="https://115.73.222.254:8000/quota/getQuotaInformation/"
 const URL_EXPRESSION="https://115.73.222.254:8000/expression/expressionReview/"
+const URL_POST_QUOTA_INFORMATION ="https://115.73.222.254:8000/quota/quotaInformation"
 
 const QuotaManagement = (props)=>{
     const [selectedExpression, setSelectedExpression] = useState("");
     const [highlightedSlide, setHightlightedSlide] = useState(1);
-    const [quotaData, setQuotaData] = useState([]);
+    const [quotaData, setQuotaData] = useState( [] );
     const [quotaInput, setQuotaInput] = useState([{
-        quota_index: null,
-        quota_label: "",
-        quota_expression: ""
+        id: null,
+        name: "",
+        expression: ""
     }])
     const [quotaClickStatus, setQuotaClickStatus] = useState({
         quotaLabel: "", 
@@ -46,13 +47,25 @@ const QuotaManagement = (props)=>{
     const [code , setCode] = useState();
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
-    const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
+    const onCheckingNotAnyInputtedQuota = () => (quotaInput.name === "" && quotaInput.expression === "") || (quotaInput.name === undefined && quotaInput.expression === undefined );
+    
+    // console.log()
+
+    /**
+     * @summary Function useEffect
+     * @return void
+     */
+    useEffect(()=>{
+        getDataInformation("1")
+        getDataExpression("0515",code)
+    },[])
+
+    
     /**
      * @summary Swap the quota row in the table
      * @param {string} swapType The type of the swap: UP/ DOWN
      */
     const onSwappingQuotaRow = (swapType) => {
-        axios.get(URL_QUOTA_INFORMATION).then((res) =>{
 
         if(onCheckingNotAnyHighlightedQuota()) return;
 
@@ -90,33 +103,38 @@ const QuotaManagement = (props)=>{
         }
         
         setQuotaData(currentQuotaData)
-    })
     }
 
     /**
      * @summary Add a quota row to the table
      */
-    const onAddingQuota = () => {
-        // axios.post(URL_QUOTA_INFORMATION).then((result) =>{
-        //     console.log(result)
-        // })
+    const onAddingQuota = (projectId) => {
+        let newQuotaData = quotaData.concat(quotaInput);
+        setQuotaData(newQuotaData);
+        console.log("quotaData",quotaData)
+        
+        // After we've added a quota, the input will be cleaned up
+        setQuotaInput({
+            id: null,
+            name: "",
+            expression: ""
+        })
+
+        console.log("input name", quotaInput.name)
+        console.log("input expression", quotaInput.expression)
 
         // Check if the user has actually inputted a quota
-        if(onCheckingNotAnyInputtedQuota()){
+        if(onCheckingNotAnyInputtedQuota() === true){
             alert("You haven't typed any quota")
             return;
         }
-
-        let newQuotaData = quotaData.concat(quotaInput);
-
-        setQuotaData(newQuotaData);
-
-        // After we've added a quota, the input will be cleaned up
-        setQuotaInput({
-            quota_index: null,
-            quota_label: "",
-            quota_expression: ""
-        })
+        else
+        {
+            axios.post(URL_POST_QUOTA_INFORMATION + `?projectId=${projectId}`,newQuotaData).then((res) =>{
+                console.log("res",res)
+            })
+        }
+       
     }
 
     /**
@@ -125,11 +143,10 @@ const QuotaManagement = (props)=>{
      */
     const onAddingQuotaLabel = (quota_label) => {
         let newQuotaInput = {
-            quota_index: quotaData.length,
-            quota_label: quota_label,
-            quota_expression: quotaInput.quota_expression
+            id: quotaData.length,
+            name: quota_label,
+            expression: quotaInput.quota_expression
         };
-
         setQuotaInput(newQuotaInput)
         
     }
@@ -140,9 +157,9 @@ const QuotaManagement = (props)=>{
      */
     const onAddingQuotaExpression = (quota_expression) => {
         let newQuotaInput = {
-            quota_index: quotaData.length,
-            quota_label: quotaInput.quota_label,
-            quota_expression: quota_expression
+            id: quotaData.length,
+            name: quotaInput.name,
+            expression: quota_expression
         }
         setQuotaInput(newQuotaInput)
     }
@@ -208,43 +225,38 @@ const QuotaManagement = (props)=>{
 
     }
 
-    /**
-     * @summary Function useEffect
-     * @return void
-     */
-    useEffect(()=>{
-        getDataInformation("1")
-        getDataExpression("0515",code)
-    },[])
+    
 
 
     // get data information from DB
     const getDataInformation =async (projectId)=>{
-
-        const response= await axios.get(URL_QUOTA_INFORMATION + `?projectId=${projectId}`)
-        setQuotaData(response.data)
+        const response= await axios.get( URL_QUOTA_INFORMATION + `?projectId=${projectId}`)
+        let unprocessedData = response.data;
+        for(let i=0; i < unprocessedData.length ; i++ )
+        {
+            unprocessedData[i].id = i;
+        }
+        setQuotaData(unprocessedData)
     }
 
 
     //Get data expression from DB
-    const getDataExpression =async (propjectId,code)=>{
-        const response = await axios.get(URL_EXPRESSION + `?projectId=${propjectId}&code=${code}`)
+    const getDataExpression =async (projectId,code)=>{
+        const response = await axios.get(URL_EXPRESSION + `?projectId=${projectId}&code=${code}`)
         setExpression(response.data)
     }
 
+
+    const onChangeNav=(e)=>{
+          
+        props.history.push(`/${e.target.value}`)
+  
+}
 
     //Function handle code submittion
     const onChangeCode =(code) =>{
         setCode(code);
     }
-
-
-    // const updateCode = (newCode) => {
-    //     let oldCode="";
-    //     let UpdateCode=oldCode.concat(oldcode);
-    //     setNewCode(UpdateCode)
-    // }
-
     return(
         
         <div className="quota-page">
@@ -281,18 +293,39 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoIosSave
                         className="up icon"
-                        onClick={onAddingQuota}
+                        onClick={() => onAddingQuota(1) }
                     />
                     </i>
                 </div>
                 <div className="mode">
                     Mode:
                 </div>
-                    <select className="select">
-                        <option value="Expression"> Expression </option>
-                        <option value="Editing"> Editing </option>
-                        <option value="When Exceeded"> When Exceeded </option>
-                        <option value="Tracking"> Tracking </option>
+                    <select className="select"onChange={onChangeNav}>
+                        <option
+                            value=""
+                        > 
+                            Expression 
+                        </option>
+                        <option 
+                            value="editing"
+                        >
+                            Editing 
+                        </option>
+                        <option
+                            value="exceeded"
+                        >
+                            When Exceeded 
+                        </option>
+                        <option 
+                            value="tracking"
+                        >
+                            Tracking
+                        </option>
+                        <option
+                            value="interview"
+                        >
+                            Interview Preview
+                        </option>
                     </select>
                 <div className="expression-review">
                     <h2 className="review">
@@ -333,5 +366,5 @@ const QuotaManagement = (props)=>{
             </div>
         </div>
     );
-};
+}
 export default QuotaManagement;

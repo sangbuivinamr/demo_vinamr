@@ -1,0 +1,79 @@
+@import "../../../styles/GlobalStyles.css";
+
+.message{
+    width: 300px;
+    border-top: 2px solid #FCC216;
+    border-bottom: 2px solid #FCC216;
+    border-right: 2px solid #FCC216;
+    border-left: 2px solid #FCC216;
+    margin-top: -20px;
+    display: grid;
+    background-color: white;
+    height: 250px;
+}
+.two-mess{
+    display: flex;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.p-mess{
+    font-family: var(--global-font-family);
+    color: #ffd066;
+    margin-right: 50px;
+}
+.check{
+    margin-top: 23px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.no-mess{
+    font-family: var(--global-font-family);
+    color: #4F3C06;
+}
+.textarea{
+    outline: none;
+    resize: none;
+    
+}
+.notification-area{
+    margin-top:-10px;
+    background-color: var(--global-background-color);
+    width: 270px;
+    height: 120px;
+    margin-left: 10px;
+    background-color: var(--global-background-color);
+}
+.notification{
+    margin-left: 20px;
+    font-size: 15px;
+    font-family: var(--global-font-family);
+}
+.button-mess{
+    display: flex;
+    justify-content: center;
+}
+.apply-mess{
+    background-color: #ffd066;
+    margin-right: 10px;
+    border-radius: 5px;
+    height: 30px;
+    width: 100px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+}
+.apply-mess:hover{
+    opacity: 0.75;
+}
+.apply-all-mess{
+    background-color: #ffd066;
+    border-radius: 5px;
+    height: 30px;
+    width: 130px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+}
+.apply-all-mess:hover{
+    opacity: 0.75;
+ }

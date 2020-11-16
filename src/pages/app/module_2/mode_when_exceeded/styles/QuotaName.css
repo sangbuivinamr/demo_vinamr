@@ -1,0 +1,22 @@
+@import "../../../styles/GlobalStyles.css";
+
+.quota-name{
+    border-top: 2px solid #FCC216;
+    border-right: 2px solid #FCC216;
+    border-left: 2px solid #FCC216;
+    width: 300px;
+    height: 80px;
+    background-color: white;
+}
+.quota-name-p{
+    margin-top: 10px;
+    margin-left:10px;
+    font-family:var(--global-font-family) ;
+    color: #FCC216;
+}
+.name{
+    margin-left:10px;
+    color: #4F3C06; 
+    font-size: 15px;
+    font-family:var(--global-font-family) ;
+}
