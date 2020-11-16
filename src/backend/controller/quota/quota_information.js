@@ -14,7 +14,6 @@ module.exports.getAllQuota = async (req, res, next) => {
                 message: "nothing in database"
             })
         }
-        console.log(getVersion[0].version)
         //query tất cả các cột theo projectId truyền vào với version mới nhất
         let query = 'SELECT * FROM `quota-expression` WHERE (projectID="' + projectId + '" AND version=' + getVersion[0].version + ')'
         let result = await sqlQuery(connection, query)
