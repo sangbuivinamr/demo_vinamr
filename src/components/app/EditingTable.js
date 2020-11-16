@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { EDITING_TABLE_DATA } from '../../data/testing-data';
 import "./styles/EditingTable.css";
 const EditingTable = (props) => {
-    
+    console.log("Props of editing table",props)
     
     let totalCol = [];  ///This is an array that each value is the sum of all cells in a column
     let totalRow =[]; // This is an array that each value is the sum of all cells in a row
@@ -10,7 +10,6 @@ const EditingTable = (props) => {
     //The testing data, will move to testing data later
     const [tableData,setTableData] = useState(props.editingTableData);
 
-   
     const renderHeaderLayoutLeft =(props) =>{
         console.log(" Render column props", props)
         return props.columnList && props.columnList.map((row)=>
@@ -31,21 +30,31 @@ const EditingTable = (props) => {
         }
    
     }
-    handleTotalRow(tableData.dataList) /// Implement this function right away to calculate the sum of all row and columns 
+    // handleTotalRow(tableData.dataList) /// Implement this function right away to calculate the sum of all row and columns 
     const sumOfAllCells = totalRow.reduce((first,   last) => first+ last,0);
     
     const handleTotalColumn = (props) => {
-      
-         for(var i = 0; i < props.length;i++){
-             totalCol.push(0);
-             for(var j  =0; j< props[i].length;j++){
-            totalCol[i] +=props[j][i].quotaCount;
-             
-                }
-         }
-    }
+        console.log("Handle Total Column props", props)
+        let indexOfRow, indexOfColumn;
 
-    handleTotalColumn(tableData.dataList); ///Implement the function right away to calculate the sum of all row and columns 
+        for(const column of props.columnList){
+            totalCol.push(0);
+            for (const row of props.rowList)
+            {
+                indexOfColumn = props.columnList.indexOf(column);
+                indexOfRow = props.rowList.indexOf(row)
+                totalCol[indexOfColumn] +=props.dataList[indexOfRow][indexOfColumn].quotaCount;
+            }
+        }
+      
+   
+           
+             
+                
+         }
+    
+
+    // handleTotalColumn(tableData); ///Implement the function right away to calculate the sum of all row and columns 
 
     const renderTableRowOfColTotals = (props) => {
 
@@ -75,9 +84,8 @@ const EditingTable = (props) => {
     const renderEditingBody =(props)=>{
         let i = -1; // Need i to print out the rowList 
         console.log("render Editing body",props)
-        return props.dataList.map(row=>{
-            i++;
-           
+        return props.dataList && props.dataList.map(row=>{
+          {  i++;
             return(
                     <tr>
                         <td className="body-exceeded-left">{props.rowList[i].text}</td>
@@ -88,24 +96,29 @@ const EditingTable = (props) => {
                                 </td>
                             )
                         })}
-                        <td className="header-left-total">{totalRow[i]}</td>
+                        {/* <td className="header-left-total">{totalRow[i]}</td> */}
+                       
                     </tr>
-            )})
+            )
+                    }
+        })
     }
     if (tableData.columnList.length < 1 || tableData.rowList.length < 1 ) return (null)
-   else return  (
+    else return  (
         <div className="main-table">
+
             <table>
                 <thead>
                     <tr>
                         <td></td>
-                        {renderHeaderLayoutLeft(tableData)}
-                        <td className="header-left-total"> Total</td>
+                        {(props.onRenderingHeader) && renderHeaderLayoutLeft(tableData)}
+                        {(props.onRenderingHeader) && <td className="header-left-total"> Total</td>}
+                        
                     </tr>
                 </thead>
                 <tbody>
                     {renderEditingBody(tableData)}
-                    {renderTableRowOfColTotals(totalCol)}
+                    {/* {renderTableRowOfColTotals(totalCol)} */}
                 </tbody>
                 
                 

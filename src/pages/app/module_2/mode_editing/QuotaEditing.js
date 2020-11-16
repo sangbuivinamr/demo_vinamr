@@ -1,12 +1,9 @@
 //Packages
 import React,{useState} from "react";
-import { IoIosArrowRoundUp } from "react-icons/io";
-import {IoIosArrowRoundDown} from "react-icons/io";
-import {IoMdClose} from "react-icons/io";
-import {IoIosSave} from "react-icons/io";
-import {IoIosUndo} from "react-icons/io";
-import {IoIosRedo} from "react-icons/io";
+
+import {IoMdClose, IoIosSave, IoIosUndo, IoIosRedo, IoIosArrowRoundDown, IoIosArrowRoundUp} from "react-icons/io";
 import {ImSigma} from "react-icons/im";
+
 import QuotaLabelSelection from "./QuotaLabelSelection";
 import QuotaRowColumnAdjustment from "./QuotaRowColumnAdjustment";
 import EditingTable from "../../../../components/app/EditingTable";
@@ -14,10 +11,12 @@ import EditingTable from "../../../../components/app/EditingTable";
 //Styles
 import "./styles/QuotaEditing.css";
 /*  exceededLeft={ EXCEEDED_LAYOUT_LEFT}
-                        exceededLeftHeader={QUOTA_OVERVIEW_DATA}
-                        exceededLeftSex={EXCEEDED_SEX_LEFT}  */
-//Data
+    exceededLeftHeader={QUOTA_OVERVIEW_DATA}
+    exceededLeftSex={EXCEEDED_SEX_LEFT}  
+*/
+// Data
 import {QUOTA_LABEL_SELECTION_DATA, EDITING_TABLE_DATA} from "../../../../data/testing-data";
+import { QUOTA_MOVING_DIRECTION, TABLE_TYPE } from "./config";
 
 const QuotaEditing = (props)=>{
     const [quotaData, setQuotaData] = useState(QUOTA_LABEL_SELECTION_DATA);
@@ -33,83 +32,52 @@ const QuotaEditing = (props)=>{
     const [editingtable,setEditingTable] = useState([{
         columnList: [],
         rowList: [],
-        dataList: [[{rowID:"", columnID:"", quotaCount: 0}]]
+        dataList: []
         }]
-        )
+    )
     const [addedRow,setAddedRow] = useState([]);
     const [addedColumn,setAddedColumn] = useState([]);
+    const [chosenRowStatus, setChosenRowStatus] = useState({
+        text: "",
+        uniqueID: ""
+    })
+    const [chosenColumnStatus, setChosenColumnStatus] = useState({
+        text: "",
+        uniqueID: ""
+    })
+
+
+    const [totalRows, setTotalRows] = useState([]); //This state is to deal with break row feature
+    const [currentIndexTotalRows,  setCurrentIndexTotalRows] = useState(-1);
+   const [totalColumns, setToTalColumns] = useState([]); //This state is to deal with break column feature
+   const [currentIndexTotalColumns,  setCurrentIndexTotalColumns] = useState(-1);
+   /* 
+   [{text:"", uniqueID: ""}, {text:"", uniqueID: ""}]
+   */ 
+    const [undoQuotaStack, setUndoQuotaStack] = useState([]);
+    const [redoQuotaStack, setRedoQuotaStack] = useState([]);
+    
+
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
-    
-    /**
-     * @summary Swap the quota row in the table
-     * @param {string} swapType The type of the swap: UP/ DOWN
-     */
-    // const onSwappingQuotaRow = (swapType) => {
+    console.log("editing table at the beginning",editingtable)
+    console.log('addedRows', addedRow);
+    console.log('addedCaddedColumns',addedColumn);
 
-    //     if(onCheckingNotAnyHighlightedQuota()) return;
-
-    //     const currentQuotaData = [].concat(quotaData);
-        
-    //     let selectedQuotaIndex;
-
-    //     // Finding the index of the highlighted quota row
-    //     for(let quotaIndex = 0; quotaIndex < currentQuotaData.length; quotaIndex++){
-    //         if(currentQuotaData[quotaIndex]["quota_label"] === quotaClickStatus.quotaLabel) selectedQuotaIndex = quotaIndex;
-    //     }
-
-    //     // Swapping
-    //     const tempQuota = currentQuotaData[selectedQuotaIndex];
-    //     if(swapType === "UP"){
-    //         currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex - 1]
-    //         currentQuotaData[selectedQuotaIndex - 1] = tempQuota
-    //     }else{
-    //         currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex + 1]
-    //         currentQuotaData[selectedQuotaIndex + 1] = tempQuota
-    //     }
-        
-    //     setQuotaData(currentQuotaData)
-    // }
 
     /**
-     * @summary Add a quota row to the table
-     */
-    const onAddingQuota = () => {
-
-        // Check if the user has actually inputted a quota
-        if(onCheckingNotAnyInputtedQuota()){
-            alert("You haven't typed any quota")
-            return;
-        }
-
-        let newQuotaData = quotaData.concat(quotaInput);
-
-        setQuotaData(newQuotaData);
-
-        // After we've added a quota, the input will be cleaned up
-        setQuotaInput({
-            quota_index: null,
-            quota_label: "",
-            quota_expression: ""
-        })
+     * @sumary This function is just to generate universally unique id
+     *  */ 
+    const generate_uuid = () =>{
+        var dt = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = (dt + Math.random()*16)%16 | 0;
+            dt = Math.floor(dt/16);
+            return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+        });
+        return uuid;
     }
 
-    /**
-     * @summary Handle the input change for the label input in the quota table
-     * @param {string} quota_label The label (aka value of the input at the label column)
-     */
-    const onAddingQuotaLabel = (quota_label) => {
-        let newQuotaInput = {
-            quota_index: quotaData.length,
-            quota_label: quota_label,
-            quota_expression: quotaInput.quota_expression
-        };
-
-        setQuotaInput(newQuotaInput)
-        
-    }
-    /*
-    */
 
     /**
      * @summary Make the selected (clicked) row to be highlighted
@@ -128,20 +96,6 @@ const QuotaEditing = (props)=>{
     /**
      * @summary Delete the selected quota row in the table
      */
-    const onDeletingQuota = () => {
-        if(onCheckingNotAnyHighlightedQuota()){
-            alert("Please indicate the quota you want to remove!")
-            return;
-        }
-        let currentQuotaData = [];
-        currentQuotaData = currentQuotaData.concat(quotaData);
-
-        // Filter out the selected quota row
-        let newQuotaData = currentQuotaData.filter(quota => quota.quota_label !== quotaClickStatus.quotaLabel)
-        setQuotaData(newQuotaData);
-
-    }
-
 
     const onChangeNavtoExpression=(e)=>{
           
@@ -149,95 +103,342 @@ const QuotaEditing = (props)=>{
   
 }
 
-/** 
- * @summary This function is to check whether the label has been selected or not, having already added to row/columns or not
- *@param {string} takenQuotaLabel is the name of the selected quota
- * @return {boolean} false if the label is not valid, true if the label is valid 
- *  **/
-const checkLabelValidity = (takenQuotaLabel) => {
-    if (takenQuotaLabel==="") {
-        alert("You haven't chosen any labels")
-        return false;
-    }
-for( const table of editingtable)
-    for(const column of table.columnList)
-        if (takenQuotaLabel === column.text)
-        {
-            alert("You have already added to column this quota Label")
+    /** 
+    * @summary This function is to check whether the label has been selected or not, having already added to row/columns or not
+    * @param {string} takenQuotaLabel is the name of the selected quota
+    * @return {boolean} false if the label is not valid, true if the label is valid 
+    *  
+    **/
+    const checkLabelValidity = (takenQuotaLabel) => {
+        //Check the Label is selected or not
+        if (takenQuotaLabel==="") {
+            alert("You haven't chosen any labels")
             return false;
         }
-for( const table of editingtable)
-    for(const row of table.rowList)
-            if (takenQuotaLabel === row.text)
-            {
-                alert("You have already added to row this quota Label")
-                return false;
-            }   
-    
-return true;
-}
-
-/**  
-* @summary handle add to row when clicked add to Row 
-*/
-const handleAddToRow = (quotaLabel) => {
-    const {quotaLabel: takenQuotaLabel} = quotaLabel
-    if (!checkLabelValidity(takenQuotaLabel)) {
-        
-        return;
+        //The nested for loop is to check whether the label has already added or not. If the label is already added, return FALSE
+        for( const table of editingtable)
+            for(const column of table.columnList)
+                if (takenQuotaLabel === column.text)
+                {
+                    alert("You have already added to column this quota Label")
+                    return false;
+                }
+        for( const table of editingtable)
+            for(const row of table.rowList)
+                    if (takenQuotaLabel === row.text)
+                    {
+                        alert("You have already added to row this quota Label")
+                        return false;
+                    }   
+        //Returning TRUE as the label has not been added and is not added
+        return true;
     }
-    const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel);
-    
-for( const table of editingtable)
-    for(const row of table.rowList)
-        if (takenQuotaLabel === row)
-        {
-            alert("You have already added to row this quota Label")
+
+    /**  
+    * @summary handle add to row when clicked add to Row 
+    */
+    const handleAddToRow = (quotaLabel) => {
+        const {quotaLabel: takenQuotaLabel} = quotaLabel
+        if (!checkLabelValidity(takenQuotaLabel)) {
+            
             return;
         }
+        const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel); // This is just temporary
         
-        let tempArray = [].concat(addedRow);
-        tempArray.push(takenQuotaLabel)
-        setAddedRow(tempArray);
-        let tempTable = editingtable;
-        let indexOfTable = 0;
-        tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-        setEditingTable(tempTable)
-}
-console.log("Changed table", editingtable)
+        if (totalRows.length === 0){
+            alert("You  haven't chosen any the Sigma Total Row")
+            return;
+        }
+        for( const table of editingtable)
+            for(const row of table.rowList)
+                if (takenQuotaLabel === row)
+                {
+                    alert("You have already added to row this quota Label")
+                    return;
+                }
+                //This is to deal with break rows
+                let tempTotalRows = totalRows;
+                tempTotalRows[currentIndexTotalRows].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
+                setTotalRows(tempTotalRows)
 
-/**  
-* @summary handle add to row when clicked add to Row 
-*/
-const handleAddToColumn = (quotaLabel) => {
-    const {quotaLabel: takenQuotaLabel} = quotaLabel
-    if (!checkLabelValidity(takenQuotaLabel)) {
-        
-        return;
+                let tempArray = [].concat(addedRow);
+                tempArray.push(takenQuotaLabel)
+                setAddedRow(tempArray);
+                let tempTable = editingtable;
+                let indexOfTable = 0;
+                tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
+                tempTable[indexOfTable].dataList.push([]);
+                onChangeEditingTable(tempTable)
+            
     }
-    const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel);
+
+
+
+    /**  
+    * @summary handle add to row when clicked add to Row 
+    */
+    const handleAddToColumn = (quotaLabel) => {
+        const {quotaLabel: takenQuotaLabel} = quotaLabel
+        if (totalColumns.length === 0){
+            alert("You  haven't chosen any the Sigma Total Column")
+            return;
+        }
+        if (!checkLabelValidity(takenQuotaLabel)) {
+            
+            return;
+        }
+
+        
+
+        const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel);
         let tempArray = [].concat(addedColumn);
         tempArray.push(takenQuotaLabel)
         setAddedColumn(tempArray);
+
+        let tempTotalColumns = totalColumns;
+        totalColumns[currentIndexTotalColumns].columnList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
+
         let tempTable = editingtable;
         let indexOfTable = 0;
         tempTable[indexOfTable].columnList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-        setEditingTable(tempTable)
-}
+        onChangeEditingTable(tempTable)
+    }
 
-/** 
-@summary This function is just a temporary function. It is to return the id of the selected quota Label 
-@param {string} quotaLabel The name of the selected quota Label
-@return {string} the uniqueID of the label that is passed to the function
-**/
-const getUniqueIDByPassingQuotaLabel = (quotaLabel) => {
-    for( const label of QUOTA_LABEL_SELECTION_DATA)
-        {
-            if (quotaLabel === label.quota_label)
-          
-        return label.uniqueID;
+   /**
+    * @summary This function is a temporary function. It is to return the id of the selected quota Label 
+    * @param {string} quotaLabel The name of the selected quota Label
+    * @return {string} the uniqueID of the label that is passed to the function
+    */
+    const getUniqueIDByPassingQuotaLabel = (quotaLabel) => {
+        for( const label of QUOTA_LABEL_SELECTION_DATA)
+            {
+                if (quotaLabel === label.quota_label)
+            
+            return label.uniqueID;
+            }
+    }
+
+    const onChoosingRow = (rowData) => {
+        console.log('row data', rowData);
+        setChosenRowStatus(rowData);
+    }
+    
+    const onChoosingColumn = (colData) => {
+        console.log('col data', colData);
+        setChosenColumnStatus(colData)
+    }
+
+    const getCurrentEditingTable = (tableType) => tableType === TABLE_TYPE.ROW ?  [].concat(editingtable[0].rowList) : [].concat(editingtable[0].columnList);
+    const getChosenRowColumnStatus = (tableType) => tableType === TABLE_TYPE.ROW ? chosenRowStatus : TABLE_TYPE.COLUMN ? chosenColumnStatus : "";
+
+    const isChosenRowStatus = () => chosenRowStatus.text !== "" && chosenRowStatus.uniqueID !== "" && chosenColumnStatus.text === "" && chosenColumnStatus.uniqueID === "";
+    const isChosenColumnStatus = () => chosenColumnStatus.text !== "" && chosenColumnStatus.uniqueID !== "" && chosenRowStatus.text === "" && chosenRowStatus.uniqueID === "";
+
+    const getCurrentTableType = () => isChosenRowStatus() ? TABLE_TYPE.ROW : isChosenColumnStatus() ? TABLE_TYPE.COLUMN : "";
+
+    /**
+     * @summary Reset the initial clicked row/ column in the total section
+     */
+    const onResetChosenRowColumnStatus = () => {
+        let initialChosenRowColumnStatus = {
+            text: "",
+            uniqueID: ""
+        };
+        setChosenColumnStatus(initialChosenRowColumnStatus);
+        setChosenRowStatus(initialChosenRowColumnStatus);
+    }
+
+    /**
+     * @summary Check if the move is valid
+     * @param {number} index The index of the quota label
+     * @param {string} dir The direction of the move
+     * @param {number} tableLength The length of the table (rowList/ columnList)
+     * @returns {boolean}
+     */
+    const isMovingQuotaLabelValid = (index, dir, tableLength) => (index === 0 && dir === QUOTA_MOVING_DIRECTION.UP) || (index === tableLength - 1 && dir === QUOTA_MOVING_DIRECTION.DOWN) || index === -1 || tableLength <= 1
+
+    const onDeletingSelectedQuotaLabel = () => {
+        // Type of clicked total board (the row or column section)
+        const tableType = getCurrentTableType();
+
+        // Get the clicked row/ column quota label array
+        const quotaLabelId = getChosenRowColumnStatus(tableType);
+
+        if(tableType === "" || quotaLabelId === "") return;
+
+        // Get the current quota label array, which depends on the tableType. If tableType is Row, we'll get the rowList property of the editingTable, etc...
+        const currentChosenEditingList = getCurrentEditingTable(tableType);
+
+        const newChosenEditingList = currentChosenEditingList.filter(el => el !== quotaLabelId);
+
+        const newEditingTable = [].concat(editingtable)
+
+        if(tableType === TABLE_TYPE.ROW){
+            newEditingTable[0].rowList = newChosenEditingList;
+        }else if(tableType === TABLE_TYPE.COLUMN){
+            newEditingTable[0].columnList = newChosenEditingList
         }
-}
+
+        onChangeEditingTable(newEditingTable);
+        onResetChosenRowColumnStatus();
+
+    }
+
+    /**
+     * @summary Move the quota label in the total area up/ down
+     * @param {string} direction The direction of the move (UP or DOWN)
+     */
+    const onMovingSelectedLabelUpDown = (direction) => {
+
+        // Type of clicked total board (the row or column section)
+        const tableType = getCurrentTableType();
+
+        // Get the clicked row/ column quota label array
+        const quotaLabelId = getChosenRowColumnStatus(tableType);
+
+        // Get the current quota label array, which depends on the tableType. If tableType is Row, we'll get the rowList property of the editingTable, etc...
+        const currentChosenEditingList = getCurrentEditingTable(tableType)
+        // Get the index of the clicked row/ column quota label
+        const selectedQuotaIndex = currentChosenEditingList.indexOf(quotaLabelId);
+        
+        // Check if the move is valid
+        if(isMovingQuotaLabelValid(selectedQuotaIndex, direction, currentChosenEditingList.length)){
+            onResetChosenRowColumnStatus();
+            return;
+        }
+
+        // Get the index of the DESIRED quota label to shift
+        const selectedQuotaToShiftIndex = direction === QUOTA_MOVING_DIRECTION.UP ? selectedQuotaIndex - 1 : selectedQuotaIndex + 1;
+
+        // Swap the labels
+        [
+            currentChosenEditingList[selectedQuotaIndex], 
+            currentChosenEditingList[selectedQuotaToShiftIndex]
+        ] = [
+            currentChosenEditingList[selectedQuotaToShiftIndex], 
+            currentChosenEditingList[selectedQuotaIndex]
+        ];
+
+        // Set state for the new table
+        const currentEditingTableFull = [].concat(editingtable);
+
+        if(tableType === TABLE_TYPE.ROW){
+            currentEditingTableFull[0].rowList = currentChosenEditingList;
+        }else if(tableType === TABLE_TYPE.COLUMN){
+            currentEditingTableFull[0].columnList = currentChosenEditingList
+        }
+
+        onChangeEditingTable(currentEditingTableFull);
+        onResetChosenRowColumnStatus();
+
+    }
+        
+
+
+    /**
+     * @summary This function is to return the quotaCount for the cell corresponding to the columnID and rowID by searching the whole dataList
+     * @param {string} rowID  
+     * @param {string} columnID
+     * @return {number} quotaCount that corresponds to the columnID and rowID
+     */
+    const getTheQuotaCorrespondingtoColIDAndRowID = (rowID, columnID) => {
+        for (const row of EDITING_TABLE_DATA.dataList){
+            for(const cell of row)
+            {
+            if(cell.rowID === rowID && cell.columnID === columnID)
+            {
+                return cell.quotaCount;
+            }   
+            else if ( cell.rowID === columnID && cell.columnID === rowID){
+                return cell.quotaCount;
+            }
+            }
+        }
+       return 0; 
+    }
+    /**
+     * @summary This function is to update the DataList of {editingTable}
+     */
+
+    const updatingTheEditingTable = (props) => {
+        console.log("Flag editing table updated")
+        console.log("The editing table data at the beginning",props)
+        const indexOfTable  = 0;
+        let indexOfRow, indexOfColumn;
+        let tempTable = props;
+        let quotaCount;
+        
+        for ( const row of props[indexOfTable].rowList)
+        for ( const column of props[indexOfTable].columnList)
+        {
+            quotaCount = getTheQuotaCorrespondingtoColIDAndRowID(row.uniqueID, column.uniqueID);  
+       
+            // for (const subArray of props[indexOfTable].dataList){
+                indexOfRow = tempTable[indexOfTable].rowList.indexOf(row);
+                indexOfColumn = tempTable[indexOfTable].columnList.indexOf(column);
+           
+            // }
+            tempTable[indexOfTable].dataList[indexOfRow].splice(indexOfColumn, 1,{rowID: row.uniqueID, columnID: column.uniqueID, quotaCount: quotaCount })
+        }
+        /// This while loop is to handle deleting row as the above splice method above just replace the rows and columns due to their length
+        while (tempTable[indexOfTable].dataList.length > tempTable[indexOfTable].rowList.length) 
+        tempTable[indexOfTable].dataList.pop();
+        for ( const row of props[indexOfTable].dataList)
+        {
+            while(row.length > tempTable[indexOfTable].columnList.length)
+            {
+                row.pop();
+            }
+        }
+    
+        console.log("The editing table data at the end",tempTable)
+        onChangeEditingTable(tempTable);
+        
+    }
+    
+
+    const updateColumn = (quotaLabel) => {
+        handleAddToColumn(quotaLabel);
+        updatingTheEditingTable(editingtable)
+    }
+    const updateRow = (quotaLabel) => {
+        handleAddToRow(quotaLabel);
+        updatingTheEditingTable(editingtable)
+    }
+
+    const moveQuota = (direction) => {
+        onMovingSelectedLabelUpDown(direction);
+        updatingTheEditingTable(editingtable);
+    }
+    const deleteQuota = () => {
+        onDeletingSelectedQuotaLabel();
+        updatingTheEditingTable(editingtable);
+    }
+
+    const handleBreakRows = () => {
+        let tempArray = totalRows;
+        const uuid = generate_uuid();
+        setCurrentIndexTotalRows(count => count + 1 )
+        tempArray.push({text: "Total", uniqueID: uuid,rowList:[]});
+        setTotalRows(tempArray);
+        console.log("break rows successfully")
+       
+    }
+    const handleBreakColumns = () => {
+        let tempArray = totalColumns;
+        const uuid = generate_uuid();
+        setCurrentIndexTotalColumns(count => count + 1 )
+        tempArray.push({text: "Total", uniqueID: uuid,columnList:[]});
+        setToTalColumns(tempArray);
+        console.log("break columns successfully")
+       
+    }
+    console.log("Current index of total Row", currentIndexTotalRows)
+    console.log("Total rows editing table",totalRows)
+    const onChangeEditingTable = (table) => {
+        setEditingTable(table)
+    }
+
     return(
         <div className="quota-page">
             <div className="quota-page default-bar">
@@ -281,10 +482,10 @@ const getUniqueIDByPassingQuotaLabel = (quotaLabel) => {
                     <h2 className="review">
                         QUOTA LABEL <br/> SELECTION
                     </h2>
-                    <button id ="quota--management--page--add--to-row--btn" onClick ={() =>handleAddToRow(quotaClickStatus)} >
+                    <button id ="quota--management--page--add--to-row--btn" onClick ={() =>updateRow(quotaClickStatus)} >
                     Add to <br/> Row
                     </button>
-                   <button id ="quota--management--page--add--to-column--btn" onClick ={() =>handleAddToColumn(quotaClickStatus)}>
+                   <button id ="quota--management--page--add--to-column--btn" onClick ={() => updateColumn(quotaClickStatus)}>
                     Add to <br/> Column
                    </button>
                 </div>
@@ -296,7 +497,11 @@ const getUniqueIDByPassingQuotaLabel = (quotaLabel) => {
                 <div id = "quota--display--added--table">
                     <EditingTable  
                      editingTableData={editingtable[0]}
+                     onRenderingHeader ={true}
                      ></EditingTable>
+                    
+                    
+
                 </div>
                 <div id ="quota--label--selection">
                  
@@ -309,28 +514,43 @@ const getUniqueIDByPassingQuotaLabel = (quotaLabel) => {
                 <div id= "quota--management--adjust--rows--cols">
                     <div id="quota--management--adjust--rows--cols--btn--div">
                         <div className="display--square--button">                
-                            <IoIosArrowRoundUp className="up icon" />
+                            <IoIosArrowRoundUp 
+                                onClick={() => moveQuota(QUOTA_MOVING_DIRECTION.UP)} 
+                                className="up icon" 
+                            />
                     
                     </div>
                         <div className="display--square--button">
-                            <IoIosArrowRoundDown className="up icon"/>
+                            <IoIosArrowRoundDown onClick={() => moveQuota(QUOTA_MOVING_DIRECTION.DOWN)} className="up icon"/>
                         
                         </div>
                         <div className="display--square--button">
                         
-                            <IoMdClose className="up icon" />
+                            <IoMdClose onClick={deleteQuota}
+                            //  onClick={onDeletingSelectedQuotaLabel} 
+                             className="up icon" />
                         
                         </div>
-                        <div className="quota--management--add--total--cols-rows--btn">
+                        <div className="quota--management--add--total--cols-rows--btn" onClick ={handleBreakRows}>
                             <ImSigma className="sigma-icon" />
                             <text> Rows</text>
                         </div>
-                        <div className="quota--management--add--total--cols-rows--btn">
+                        <div className="quota--management--add--total--cols-rows--btn" onClick ={handleBreakColumns}>
                             <ImSigma className="sigma-icon" />
                             <text> Columns</text>
                         </div>
                     </div>
-                    <QuotaRowColumnAdjustment rowData={addedRow} columnData={addedColumn} />
+                    <QuotaRowColumnAdjustment 
+                        rowData={editingtable[0]['rowList']} 
+                        columnData={editingtable[0]['columnList']} 
+                        totalRowsData={totalRows}
+                        totalColumnsData={totalColumns}
+                        onChoosingColumn={(col) => onChoosingColumn(col)}
+                        onChoosingRow={(row) => onChoosingRow(row)}
+                        chosenRowStatus={chosenRowStatus}
+                        chosenColumnStatus={chosenColumnStatus}
+                     
+                    />
               
                 </div>
             </div>
