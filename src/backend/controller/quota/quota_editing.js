@@ -7,7 +7,7 @@ module.exports.getTable = async (req, res, next) => {
     try {
         let response = {}
         let connection = await dbConnection()
-        let query = "SELECT * FROM `sys`.`quota_editing` WHERE projectID=?"
+        let query = "SELECT * FROM `sys`.`quota_editing` WHERE projectID=? ORDER BY `id` DESC LIMIT 1"
         let result = await sqlQuery(connection, query, [projectId])
         console.log(result)
         connection.end()
@@ -18,6 +18,7 @@ module.exports.getTable = async (req, res, next) => {
             })
         } else {
             //do dữ liệu được lưu trong db bằng string nên ta parse string sang Object bằng JSON.parse
+            response.id = result[0].id
             response.rowList = JSON.parse(result[0].rows)
             response.colList = JSON.parse(result[0].columns)
             response.data = JSON.parse(result[0].data)
