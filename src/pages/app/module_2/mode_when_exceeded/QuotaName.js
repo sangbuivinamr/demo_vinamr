@@ -13,8 +13,8 @@ import './styles/QuotaName.css';
 const QuotaName = (props)=>{
     return (
         <div className="quota-name">
-           <p className="quota-name-p">Quota Name</p>
-           <p className="name">test</p>
+            <p className="quota-name-p">Quota Name</p>
+            <p className="name">{props.name}</p>
         </div>
     )
 }

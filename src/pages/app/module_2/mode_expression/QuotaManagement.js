@@ -5,7 +5,7 @@
 */
 
 //Packages
-import React,{useState,useEffect}  from "react";
+import React,{useState}  from "react";
 import QuotaOverview from "./QuotaOverview";
 import ExpressionReview from "./ExpressionReview";
 import { IoIosArrowRoundUp } from "react-icons/io";

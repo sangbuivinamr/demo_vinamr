@@ -330,38 +330,32 @@ export const EXCEEDED_LAYOUT_LEFT = [
     {
         type_index: 1,
         type_car: "Owner. Honda Accord",
-        check:"Đã hết quota. Liên hệ F0 phụ trách",
-        data: [{place: "HA NOI", count:12},{place: "HA NOI", count:12},{place: "HA NOI", count:12}]
+        check:["Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách."]
     },
     {
         type_index: 2,
         type_car: "Owner. Toyota Camry",
-        check:"Đã hết quota. Liên hệ F1 phụ trách",
-        quota_count: 30 
+        check:["Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách."]
     },
     {
         type_index: 3,
         type_car: "Owner. Other Models",
-        check:"Đã hết quota. Liên hệ F2 phụ trách",
-        quota_count: 29 
+        check:["Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách."]
     },
     {
         type_index: 4,
         type_car: "Intend. Honda Accord",
-        check:"Đã hết quota. Liên hệ F3 phụ trách",
-        quota_count: 26 
+        check:["Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách."]
     },
     {
         type_index: 5,
         type_car: "Intend. Toyota Camry",
-        check:"Đã hết quota. Liên hệ F5 phụ trách",
-        quota_count: 45
+        check:["Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách."]
     },
     {
         type_index: 6,
         type_car:"Intend. Other Models",
-        check:"Đã hết quota. Liên hệ F6 phụ trách",
-        quota_count: 23
+        check:["Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách.","Đã hết quota. Liên hệ F0 phụ trách."]
     },
 ]
 
