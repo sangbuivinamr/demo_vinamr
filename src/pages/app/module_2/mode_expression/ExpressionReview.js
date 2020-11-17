@@ -50,20 +50,20 @@ const ExpressionReview = (props) => {
 
 return(
     <div className="">
-    <table className="quota-management-page--expression-review--tables">
-        <thead>
-        {renderExpressionHeader()}
-        </thead>
+        <table className="quota-management-page--expression-review--tables">
+            <thead>
+            {renderExpressionHeader()}
+            </thead>
 
-        {/* The code and the discription  */}
-        <tr>
-            <td className ="slide--index">{expression_code}</td>
-            <td id="des">{expressionReviewData.description}</td>
-        </tr>
+            {/* The code and the discription  */}
+            <tr>
+                <td className ="slide--index">{expression_code}</td>
+                <td id="des">{expressionReviewData.description}</td>
+            </tr>
 
-        {/* Render layout_left body */}
-        {renderExpressionBody(highlightedSlide)}
-    </table>
+            {/* Render layout_left body */}
+            {renderExpressionBody(highlightedSlide)}
+        </table>
     </div>
 )
 }
