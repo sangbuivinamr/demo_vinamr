@@ -9,4 +9,6 @@ router.post('/quotaInformation/', quotaInfomation.postQuota)
 
 router.post('/quotaTable', quotaEditing.postTable)
 
+router.get('/quotaTable', quotaEditing.getTable)
+
 module.exports = router
