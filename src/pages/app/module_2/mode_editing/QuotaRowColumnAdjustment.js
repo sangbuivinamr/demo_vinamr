@@ -9,9 +9,9 @@ import {ImSigma} from "react-icons/im";
 
  const QuotaRowColumnAdjustment = (props) =>{
     const totalRows =  props.totalRowsData;
-    console.log("Total Row",totalRows)
+    // console.log("Total Row",totalRows)
     const totalColumns = props.totalColumnsData;
-    console.log("Total Columns",totalColumns)
+    // console.log("Total Columns",totalColumns)
     const addedColumn = props.columnData;
     const addedRow = props.rowData;
     const renderHeader = () => {
@@ -35,8 +35,8 @@ import {ImSigma} from "react-icons/im";
                             {totalRows.map(totalRow =>{
                                 return(
                                     //  <div>
-                                    <div className="sigma-total-rounded-box">
-                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <text> {totalRow.text}</text>
+                                    <div key={parseInt(Math.random() * 10000)} className="sigma-total-rounded-box">
+                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <p> {totalRow.text}</p>
                                 
                             </div>
                             // {/* {total.map(row => {
@@ -53,7 +53,7 @@ import {ImSigma} from "react-icons/im";
                            
                             {addedRow.map(row => {
                                 return(  
-                                    <div style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenRowStatus, row)}} onClick={() => props.onChoosingRow(row)} className="selected--expression--box"> 
+                                    <div key={parseInt(Math.random() * 10000)} style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenRowStatus, row)}} onClick={() => props.onChoosingRow(row)} className="selected--expression--box"> 
                                         {row.text}
                                     </div>
                                 )})
@@ -67,8 +67,8 @@ import {ImSigma} from "react-icons/im";
                             {totalColumns.map(totalColumn =>{
                                 return(
                                     //  <div>
-                                    <div className="sigma-total-rounded-box">
-                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <text> {totalColumn.text}</text>
+                                    <div key={parseInt(Math.random() * 10000)} className="sigma-total-rounded-box">
+                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <p> {totalColumn.text}</p>
                                 
                             </div>
                             // {/* {total.map(row => {
@@ -84,7 +84,7 @@ import {ImSigma} from "react-icons/im";
                             })}
                             {addedColumn.map(col => {
                                 return(
-                                    <div style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenColumnStatus, col)}} onClick={() => props.onChoosingColumn(col)} className="selected--expression--box"> 
+                                    <div key={parseInt(Math.random() * 10000)} style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenColumnStatus, col)}} onClick={() => props.onChoosingColumn(col)} className="selected--expression--box"> 
                                         {col.text}
                                     </div>
                                 )})

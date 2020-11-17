@@ -19,6 +19,7 @@ import {QUOTA_LABEL_SELECTION_DATA, EDITING_TABLE_DATA} from "../../../../data/t
 import { QUOTA_MOVING_DIRECTION, TABLE_TYPE } from "./config";
 
 const QuotaEditing = (props)=>{
+
     const [quotaData, setQuotaData] = useState(QUOTA_LABEL_SELECTION_DATA);
     const [quotaInput, setQuotaInput] = useState({
         quota_index: null,
@@ -49,20 +50,20 @@ const QuotaEditing = (props)=>{
 
     const [totalRows, setTotalRows] = useState([]); //This state is to deal with break row feature
     const [currentIndexTotalRows,  setCurrentIndexTotalRows] = useState(-1);
-   const [totalColumns, setToTalColumns] = useState([]); //This state is to deal with break column feature
-   const [currentIndexTotalColumns,  setCurrentIndexTotalColumns] = useState(-1);
-   /* 
-   [{text:"", uniqueID: ""}, {text:"", uniqueID: ""}]
-   */ 
+    const [totalColumns, setToTalColumns] = useState([]); //This state is to deal with break column feature
+    const [currentIndexTotalColumns,  setCurrentIndexTotalColumns] = useState(-1);
+    /* 
+    [{text:"", uniqueID: ""}, {text:"", uniqueID: ""}]
+    */ 
     const [undoQuotaStack, setUndoQuotaStack] = useState([]);
     const [redoQuotaStack, setRedoQuotaStack] = useState([]);
     
 
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
-    console.log("editing table at the beginning",editingtable)
-    console.log('addedRows', addedRow);
-    console.log('addedCaddedColumns',addedColumn);
+    console.log("editing table at the beginning",editingtable[0])
+    // console.log('addedRows', addedRow);
+    // console.log('addedCaddedColumns',addedColumn);
 
 
     /**
@@ -138,6 +139,10 @@ const QuotaEditing = (props)=>{
     * @summary handle add to row when clicked add to Row 
     */
     const handleAddToRow = (quotaLabel) => {
+
+        alert(JSON.stringify(editingtable[0]))
+        console.log('Editing table in handleAddToRow', editingtable[0])
+
         const {quotaLabel: takenQuotaLabel} = quotaLabel
         if (!checkLabelValidity(takenQuotaLabel)) {
             
@@ -157,18 +162,26 @@ const QuotaEditing = (props)=>{
                     return;
                 }
                 //This is to deal with break rows
-                let tempTotalRows = totalRows;
-                tempTotalRows[currentIndexTotalRows].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-                setTotalRows(tempTotalRows)
+        
+        console.log('Editing table after loop', editingtable[0]);
+                
+        let tempTotalRows = [].concat(totalRows);
+        tempTotalRows[currentIndexTotalRows].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID });
+        setTotalRows(tempTotalRows)
 
-                let tempArray = [].concat(addedRow);
-                tempArray.push(takenQuotaLabel)
-                setAddedRow(tempArray);
-                let tempTable = editingtable;
-                let indexOfTable = 0;
-                tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-                tempTable[indexOfTable].dataList.push([]);
-                onChangeEditingTable(tempTable)
+        let tempArray = [].concat(addedRow);
+        tempArray.push(takenQuotaLabel)
+        setAddedRow(tempArray);
+
+        const tempTable = [].concat(editingtable);
+        console.log('tempTable', tempTable[0])
+        console.log('Editing table after some setStates', editingtable[0]);
+        let indexOfTable = 0;
+        tempTable[indexOfTable]['rowList'].push({text: takenQuotaLabel, uniqueID: getUniqueID })
+        tempTable[indexOfTable].dataList.push([]);
+        console.log('temp table in handleAddToRow', tempTable[0], 'vs editing table', editingtable[0]);
+        // setEditingTable(tempTable);
+        return true;
             
     }
 
@@ -198,10 +211,11 @@ const QuotaEditing = (props)=>{
         let tempTotalColumns = totalColumns;
         totalColumns[currentIndexTotalColumns].columnList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
 
-        let tempTable = editingtable;
+        let tempTable = [].concat(editingtable);
         let indexOfTable = 0;
         tempTable[indexOfTable].columnList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-        onChangeEditingTable(tempTable)
+        setEditingTable(tempTable);
+        return true;
     }
 
    /**
@@ -219,12 +233,12 @@ const QuotaEditing = (props)=>{
     }
 
     const onChoosingRow = (rowData) => {
-        console.log('row data', rowData);
+        // console.log('row data', rowData);
         setChosenRowStatus(rowData);
     }
     
     const onChoosingColumn = (colData) => {
-        console.log('col data', colData);
+        // console.log('col data', colData);
         setChosenColumnStatus(colData)
     }
 
@@ -279,7 +293,7 @@ const QuotaEditing = (props)=>{
             newEditingTable[0].columnList = newChosenEditingList
         }
 
-        onChangeEditingTable(newEditingTable);
+        setEditingTable(newEditingTable);
         onResetChosenRowColumnStatus();
 
     }
@@ -328,7 +342,7 @@ const QuotaEditing = (props)=>{
             currentEditingTableFull[0].columnList = currentChosenEditingList
         }
 
-        onChangeEditingTable(currentEditingTableFull);
+        setEditingTable(currentEditingTableFull);
         onResetChosenRowColumnStatus();
 
     }
@@ -361,11 +375,11 @@ const QuotaEditing = (props)=>{
      */
 
     const updatingTheEditingTable = (props) => {
-        console.log("Flag editing table updated")
+        // console.log("Flag editing table updated")
         console.log("The editing table data at the beginning",props)
         const indexOfTable  = 0;
         let indexOfRow, indexOfColumn;
-        let tempTable = props;
+        let tempTable = [].concat(props)
         let quotaCount;
         
         for ( const row of props[indexOfTable].rowList)
@@ -391,19 +405,20 @@ const QuotaEditing = (props)=>{
             }
         }
     
-        console.log("The editing table data at the end",tempTable)
+        console.log("The editing table data at the end",tempTable[0], 'vs the current one', editingtable[0])
         onChangeEditingTable(tempTable);
         
     }
     
 
     const updateColumn = (quotaLabel) => {
-        handleAddToColumn(quotaLabel);
-        updatingTheEditingTable(editingtable)
+        if(handleAddToColumn(quotaLabel)) updatingTheEditingTable(editingtable)
     }
     const updateRow = (quotaLabel) => {
-        handleAddToRow(quotaLabel);
-        updatingTheEditingTable(editingtable)
+
+        alert(JSON.stringify(editingtable[0]));
+        handleAddToRow(quotaLabel)
+        //if() updatingTheEditingTable(editingtable)
     }
 
     const moveQuota = (direction) => {
@@ -421,7 +436,6 @@ const QuotaEditing = (props)=>{
         setCurrentIndexTotalRows(count => count + 1 )
         tempArray.push({text: "Total", uniqueID: uuid,rowList:[]});
         setTotalRows(tempArray);
-        console.log("break rows successfully")
        
     }
     const handleBreakColumns = () => {
@@ -430,13 +444,65 @@ const QuotaEditing = (props)=>{
         setCurrentIndexTotalColumns(count => count + 1 )
         tempArray.push({text: "Total", uniqueID: uuid,columnList:[]});
         setToTalColumns(tempArray);
-        console.log("break columns successfully")
        
     }
-    console.log("Current index of total Row", currentIndexTotalRows)
-    console.log("Total rows editing table",totalRows)
+    // console.log("Current index of total Row", currentIndexTotalRows)
+    // console.log("Total rows editing table",totalRows)
+    // console.log('editingTable fuck', editingtable)
     const onChangeEditingTable = (table) => {
-        setEditingTable(table)
+
+        console.log('future table', table[0], 'vs editing table', editingtable[0]);
+
+        // console.log('undoQuotaStack before added', undoQuotaStack);
+        // const afterChangedEditingTable = [].concat(undoQuotaStack);
+        // afterChangedEditingTable.push(editingtable[0]);
+        // console.log('old editingTable', editingtable, 'undoQuotaStack inside', undoQuotaStack, 'afterChangedEditingTable', afterChangedEditingTable);
+
+        let afterChangedEditingTable = [].concat(undoQuotaStack);
+        console.log('Current editing table', editingtable[0]);
+        let currentEditingTable = Object.assign(editingtable[0]);
+        afterChangedEditingTable.push(currentEditingTable);
+
+        setUndoQuotaStack(afterChangedEditingTable);
+        if(redoQuotaStack.length) setRedoQuotaStack([]);
+
+        setEditingTable(table);
+    }
+
+    // console.log('undoQuotaStack outside', undoQuotaStack);
+    // console.log('redoQuotaStack outside', redoQuotaStack);
+
+    const onUndoingEditingTable = () => {
+
+        // console.log('undo bro', undoQuotaStack)
+
+        if(!undoQuotaStack.length) return;
+
+        let currentEditingTable = [].concat(redoQuotaStack);
+        currentEditingTable.push(editingtable[0]);
+        setRedoQuotaStack(currentEditingTable);
+        
+        const newUndoQuotaStack = [].concat(undoQuotaStack);
+        newUndoQuotaStack.pop();
+        setUndoQuotaStack(newUndoQuotaStack);
+        
+        const poppedEditingTable = [].concat(undoQuotaStack).pop();
+        // console.log('popped', poppedEditingTable);
+        const newEditingTable = [].concat(editingtable);
+        newEditingTable[0] = poppedEditingTable;
+        // console.log('newEditingTable here', newEditingTable);
+        setEditingTable(newEditingTable);
+    }
+
+    const onRedoingEditingTable = () => {
+
+        if(!redoQuotaStack.length) return;
+
+        let currentEditingTable = [].concat(undoQuotaStack);
+        currentEditingTable.push(editingtable);
+        setUndoQuotaStack(currentEditingTable);
+        const newEditingTable = [].concat(redoQuotaStack[redoQuotaStack.length - 1]);
+        setEditingTable(newEditingTable);
     }
 
     return(
@@ -444,7 +510,7 @@ const QuotaEditing = (props)=>{
             <div className="quota-page default-bar">
                 <h2 className="h2-default">QUOTA SETTINGS</h2>
                 <div className="display--square--button">
-                    <i><IoIosUndo className="up icon"/></i>
+                    <i onClick={onUndoingEditingTable}><IoIosUndo className="up icon"/></i>
                 </div>
                 <div className="display--square--button">
                     <i><IoIosRedo className="up icon"/></i>
@@ -509,7 +575,7 @@ const QuotaEditing = (props)=>{
                         quotaData ={quotaData} 
                         onChoosingQuota={onChoosingQuota}
                         quotaClickStatus={quotaClickStatus}
-                        setQuotaClickStatus={setQuotaClickStatus}/>
+                    />
                 </div>
                 <div id= "quota--management--adjust--rows--cols">
                     <div id="quota--management--adjust--rows--cols--btn--div">
@@ -531,13 +597,13 @@ const QuotaEditing = (props)=>{
                              className="up icon" />
                         
                         </div>
-                        <div className="quota--management--add--total--cols-rows--btn" onClick ={handleBreakRows}>
+                        <div className="quota--management--add--total--cols-rows--btn" onClick ={() => handleBreakRows()}>
                             <ImSigma className="sigma-icon" />
-                            <text> Rows</text>
+                            <p> Rows</p>
                         </div>
-                        <div className="quota--management--add--total--cols-rows--btn" onClick ={handleBreakColumns}>
+                        <div className="quota--management--add--total--cols-rows--btn" onClick ={() => handleBreakColumns()}>
                             <ImSigma className="sigma-icon" />
-                            <text> Columns</text>
+                            <p> Columns</p>
                         </div>
                     </div>
                     <QuotaRowColumnAdjustment 
