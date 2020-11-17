@@ -43,7 +43,14 @@
     width: 270px;
     height: 120px;
     margin-left: 15px;
+    resize: none;
     background-color: var(--global-background-color);
+}
+.notification-area::placeholder{
+    padding-left: 10px;
+    padding-top: 5px;
+    font-family: var(--global-font-family);
+    font-weight: bold;
 }
 
 .notification {
