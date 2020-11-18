@@ -8,6 +8,7 @@ import "./styles/QuotaRowColumnAdjustment.css";
 import {ImSigma} from "react-icons/im";
 
  const QuotaRowColumnAdjustment = (props) =>{
+     console.log(" Props quota props",props)
     const totalRows =  props.totalRowsData;
     console.log("Total Row",totalRows)
     const totalColumns = props.totalColumnsData;
@@ -36,7 +37,7 @@ import {ImSigma} from "react-icons/im";
                                 return(
                                     //  <div>
                                     <div className="sigma-total-rounded-box">
-                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <text> {totalRow.text}</text>
+                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <text> Total</text>
                                 
                             </div>
                             // {/* {total.map(row => {
@@ -68,7 +69,7 @@ import {ImSigma} from "react-icons/im";
                                 return(
                                     //  <div>
                                     <div className="sigma-total-rounded-box">
-                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <text> {totalColumn.text}</text>
+                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <text> Total</text>
                                 
                             </div>
                             // {/* {total.map(row => {
