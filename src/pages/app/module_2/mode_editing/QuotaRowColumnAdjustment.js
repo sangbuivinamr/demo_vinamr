@@ -10,9 +10,9 @@ import {ImSigma} from "react-icons/im";
  const QuotaRowColumnAdjustment = (props) =>{
      console.log(" Props quota props",props)
     const totalRows =  props.totalRowsData;
-    console.log("Total Row",totalRows)
+    // console.log("Total Row",totalRows)
     const totalColumns = props.totalColumnsData;
-    console.log("Total Columns",totalColumns)
+    // console.log("Total Columns",totalColumns)
     const addedColumn = props.columnData;
     const addedRow = props.rowData;
     const renderHeader = () => {
@@ -54,7 +54,7 @@ import {ImSigma} from "react-icons/im";
                            
                             {addedRow.map(row => {
                                 return(  
-                                    <div style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenRowStatus, row)}} onClick={() => props.onChoosingRow(row)} className="selected--expression--box"> 
+                                    <div key={parseInt(Math.random() * 10000)} style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenRowStatus, row)}} onClick={() => props.onChoosingRow(row)} className="selected--expression--box"> 
                                         {row.text}
                                     </div>
                                 )})
@@ -85,7 +85,7 @@ import {ImSigma} from "react-icons/im";
                             })}
                             {addedColumn.map(col => {
                                 return(
-                                    <div style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenColumnStatus, col)}} onClick={() => props.onChoosingColumn(col)} className="selected--expression--box"> 
+                                    <div key={parseInt(Math.random() * 10000)} style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenColumnStatus, col)}} onClick={() => props.onChoosingColumn(col)} className="selected--expression--box"> 
                                         {col.text}
                                     </div>
                                 )})

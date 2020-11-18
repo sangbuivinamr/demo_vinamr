@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { EDITING_TABLE_DATA } from '../../data/testing-data';
 import "./styles/EditingTable.css";
 const EditingTable = (props) => {
-    console.log("Props of editing table",props)
+    // console.log("Props of editing table",props)
     
     let totalCol = [];  ///This is an array that each value is the sum of all cells in a column
     let totalRow =[]; // This is an array that each value is the sum of all cells in a row
@@ -11,7 +11,7 @@ const EditingTable = (props) => {
     const [tableData,setTableData] = useState(props.editingTableData);
     //Rendering the header of the table 
     const renderHeaderLayoutLeft =(props) =>{
-     
+        // console.log(" Render column props", props)
         return props.columnList && props.columnList.map((row)=>
         {   
             return ((
@@ -34,7 +34,7 @@ const EditingTable = (props) => {
     const sumOfAllCells = totalRow.reduce((first,   last) => first+ last,0);
     
     const handleTotalColumn = (props) => {
-        console.log("Handle Total Column props", props)
+        // console.log("Handle Total Column props", props)
         let indexOfRow, indexOfColumn;
 
         for(const column of props.columnList){
@@ -83,7 +83,7 @@ const EditingTable = (props) => {
 
     const renderEditingBody =(props)=>{
         let i = -1; // Need i to print out the rowList 
-        console.log("render Editing body",props)
+        // console.log("render Editing body",props)
         return props.dataList && props.dataList.map(row=>{
           {  i++;
             return(
