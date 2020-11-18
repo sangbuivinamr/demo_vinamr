@@ -185,13 +185,19 @@ const QuotaEditing = (props)=>{
                 //This is to deal with the dataList of editing Table
                 let tempTable = [].concat(editingtable);
                 let indexOfTable = 0;
-                tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-                tempTable[indexOfTable].dataList.push([]);
-               
-                // totalRows.map( totalRow => {
-                //     tempTable[indexOfTable].rowList.push.apply([tempTable[indexOfTable].rowList], totalRow.rowList)
-                //     tempTable[indexOfTable].dataList.push([]);
-                // })
+                // tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
+                // tempTable[indexOfTable].dataList.push([]);
+             
+                tempTable[indexOfTable].rowList = []
+                tempTotalRows.map( totalRow => {
+                    totalRow.rowList.map( row => // row of the rowList
+                        {
+                            tempTable[indexOfTable].rowList.push(row);
+                            tempTable[indexOfTable].dataList.push([]);
+                        }
+                        )
+                   
+                })
                 onChangeEditingTable(tempTable)
 
             
@@ -220,12 +226,20 @@ const QuotaEditing = (props)=>{
         tempArray.push(takenQuotaLabel)
         setAddedColumn(tempArray);
 
-        let temp = [].concat(totalColumns);
-        temp[currentIndexTotalColumns].columnList.splice(0,-1,{text: takenQuotaLabel, uniqueID: getUniqueID})
-        
+        let tempTotalColumns = [].concat(totalColumns);
+        tempTotalColumns[currentIndexTotalColumns].columnList.splice(0,-1,{text: takenQuotaLabel, uniqueID: getUniqueID})
+        setToTalColumns(tempTotalColumns)
+
+
         let tempTable = [].concat(editingtable);
         let indexOfTable = 0;
-        tempTable[indexOfTable].columnList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
+        tempTable[indexOfTable].columnList = [] //Empty the columnList array to add to column from the beginning
+        tempTotalColumns.map( totalColumn => {
+            totalColumn.columnList.map( col => {
+            tempTable[indexOfTable].columnList.push(col)
+            })
+        })
+       
         setEditingTable(tempTable);
         return true;
     }
