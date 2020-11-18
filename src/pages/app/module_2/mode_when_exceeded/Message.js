@@ -43,7 +43,8 @@ const Message = (props) => {
    * @param {*} text 
    * @return void
    */
-    
+  let indexCellClick = props.mess.notification.index;
+  let message = props.mess.notification.notification;
   return (
     <div className="message">
       <div className="two-mess">
@@ -65,7 +66,7 @@ const Message = (props) => {
         className="notification-area"
         type="text"
         disabled={disabled}
-        placeholder={props.mess}
+        placeholder={message}
         value={props.text}
         onChange={(text) => onChangText(text.target.value)}
       />

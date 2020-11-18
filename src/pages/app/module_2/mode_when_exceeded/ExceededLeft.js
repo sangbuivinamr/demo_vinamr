@@ -28,6 +28,7 @@ const ExceededLeft = (props) => {
   let dataBodyBE = props.dataExceeded;
   if(dataFromBE.length === 0)
   {
+    sendIndex(props.indexCell)
     return (<div></div>)
   }
   return (

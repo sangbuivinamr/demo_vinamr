@@ -30,7 +30,10 @@ const QuotaExceeded = (props) => {
     status: false,
   });
   const [typeCar, setTypeCar] = useState("");
-  const [notification, setNotification] = useState();
+  const [notification, setNotification] = useState({
+    notification: "",
+    index: "",
+  });
   const [city, setCity] = useState("");
   const [selectedExceeded, setSelectedExceeded] = useState("exceeded"); // Initialize the state, so when the user navigate to this mode, the mode will have the mode is interview in the option
   const [clicked, setClicked] = useState(false);
@@ -49,17 +52,21 @@ const QuotaExceeded = (props) => {
    * @summary Function useEffect
    * @return void
    */
-  useEffect((e) => {
+  useEffect(() => {
     getDataExceeded("1");
   }, []);
 
   const getDataExceeded = async (projectId) => {
-    await axios
-      .get(URL_DATA_EXCEEDED + `?projectId=${projectId}`)
-      .then((res) => {
-        let dataTable = res.data;
-        setDataExceeded(dataTable);
-      });
+    const response = await axios.get(
+      URL_DATA_EXCEEDED + `?projectId=${projectId}`
+    );
+    let dataTable = response.data
+    setDataExceeded(dataTable);
+  };
+
+  const sendIndex = (indexCell) => {
+    console.log("hih",indexCell)
+    setIndexCell(indexCell);
   };
 
   /**
@@ -78,17 +85,13 @@ const QuotaExceeded = (props) => {
     props.history.push(`/${e.target.value}`);
   };
 
-  const sendIndex = (indexCell) => {
-      setIndexCell(indexCell);
-  };
-  console.log("chec", indexCell);
   // console.log("dd", dataExceeded.data[indexCell])
   /**
    * @summary This function take the data from chilren to parent
    * @param {*} e took from table layout left
    * @return void
    */
-  const onChoosingCell = async (e) => {
+  const onChoosingCell = (e) => {
     //The cellClicked will define which index the user clicked on the table to match with the header
     let cellClicked = e.target.cellIndex;
 
@@ -100,20 +103,19 @@ const QuotaExceeded = (props) => {
     let city =
       e.target.offsetParent.childNodes[0].childNodes[0].cells[cellClicked]
         .innerText;
-      const  rowTitle = async () =>
-      {
-     let rowTitleList = dataExceeded.data[indexCell]; 
-     console.log("row",rowTitleList)
 
-    }
-        rowTitle()
+    console.log("index", indexCell);
+    let rowTitleList = dataExceeded.data[indexCell];
+    console.log("row", rowTitleList);
     // set 2 state for compononent QuotaName
     setTypeCar(type_car);
     setCity(city);
 
     // set state for component Message
-    setNotification(notification);
-
+    setNotification({
+      notification: notification,
+      index: indexCell,
+    });
   };
 
   /**
@@ -148,10 +150,11 @@ const QuotaExceeded = (props) => {
   const deleteCell = () => {
     console.log("test", indexCell);
   };
-  
+
   const onChangText = (text) => {
     setText(text);
   };
+  console.log("et", notification);
   return (
     <div className="exceeded">
       <div className="exceeded exceeded-bar">
@@ -197,7 +200,7 @@ const QuotaExceeded = (props) => {
           </div>
           <div>
             <Message
-              mess={notification}
+              mess={{ notification }}
               handleClicked={(e) => handleClicked(e)}
               deleteCell={(e) => deleteCell(e)}
               onChangText={(e) => onChangText(e)}

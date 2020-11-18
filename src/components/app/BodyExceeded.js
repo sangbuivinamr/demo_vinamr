@@ -19,7 +19,7 @@ export default function BodyExceeded(props) {
   const sendIndex = (indexCell) => {
     props.sendIndex(indexCell);
   };
-
+  console.log("textarea",stateTextArea)
   return (
     dataBodyExceeded.rowList &&
     dataBodyExceeded.rowList.map(({ text }, uniqueID) => {
@@ -41,7 +41,6 @@ export default function BodyExceeded(props) {
                 key={index}
               >
                 {maxQuota}
-                {index}
               </td>
             );
           })}
