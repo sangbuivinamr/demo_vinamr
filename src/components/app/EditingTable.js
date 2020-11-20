@@ -12,14 +12,19 @@ const EditingTable = (props) => {
 
     const renderHeaderLayoutLeft =(props) =>{
         // console.log(" Render column props", props)
-        return props.columnList && props.columnList.map((row)=>
+        return props.columnList && props.columnList.map((col)=>
         {   
             return ((
-            <th className="header-left"> {row.text}</th>
+            <th className="header-left"> {col.text}</th>
             
             ))
         })
     }
+
+    const renderTotalColumn = (table) => {
+        return props
+    }
+
     const handleTotalRow = (props) =>{
        
         let tempTotal;
@@ -30,6 +35,12 @@ const EditingTable = (props) => {
         }
    
     }
+
+    const sumOfRowQuotaCount = (table) => {
+        let totalQuotaCount = 0;
+
+    }
+
     // handleTotalRow(tableData.dataList) /// Implement this function right away to calculate the sum of all row and columns 
     const sumOfAllCells = totalRow.reduce((first,   last) => first+ last,0);
     
@@ -85,7 +96,8 @@ const EditingTable = (props) => {
         let i = -1; // Need i to print out the rowList 
         // console.log("render Editing body",props)
         return props.dataList && props.dataList.map(row=>{
-          {  i++;
+            console.log('data list', totalRow)
+            i++;
             return(
                     <tr>
                         <td className="body-exceeded-left">{props.rowList[i].text}</td>
@@ -96,11 +108,11 @@ const EditingTable = (props) => {
                                 </td>
                             )
                         })}
-                        {/* <td className="header-left-total">{totalRow[i]}</td> */}
+                        <td className="header-left-total">{totalRow[i]}</td>
                        
                     </tr>
             )
-                    }
+            
         })
     }
     if (tableData.columnList.length < 1 || tableData.rowList.length < 1 ) return (null)
