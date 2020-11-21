@@ -2,13 +2,17 @@ import React, {useState, useEffect} from 'react';
 import { EDITING_TABLE_DATA } from '../../data/testing-data';
 import "./styles/EditingTable.css";
 const EditingTable = (props) => {
-    // console.log("Props of editing table",props)
+    console.log("Props of editing table",props)
     
     let totalCol = [];  ///This is an array that each value is the sum of all cells in a column
     let totalRow =[]; // This is an array that each value is the sum of all cells in a row
     
-    //The testing data, will move to testing data later
+    
     const [tableData,setTableData] = useState(props.editingTableData);
+    //The useEfect is to make sure the state is updating
+    useEffect(() => {
+        setTableData(props.editingTableData);
+      }, [props.editingTableData]);
     //Rendering the header of the table 
     const renderHeaderLayoutLeft =(props) =>{
         // console.log(" Render column props", props)
@@ -20,47 +24,51 @@ const EditingTable = (props) => {
             ))
         })
     }
-    const handleTotalRow = (props) =>{
+    // const handleTotalRow = (props) =>{
        
-        let tempTotal;
-        for(const row of props)
-        {   
-            tempTotal = row.reduce((first,{quotaCount}) => first + quotaCount,0);
-            totalRow.push(tempTotal);
-        }
+    //     let tempTotal;
+    //     for(const row of props)
+    //     {   
+    //         tempTotal = row.reduce((first,{quotaCount}) => first + quotaCount,0);
+    //         totalRow.push(tempTotal);
+    //     }
    
-    }
-    handleTotalRow(tableData.dataList) /// Implement this function right away to calculate the sum of all row and columns 
-    const sumOfAllCells = totalRow.reduce((first,   last) => first+ last,0);
+    // }
+  
+    // const sumOfAllCells = totalRow.reduce((first,   last) => first+ last,0);
     
-    const handleTotalColumn = (props) => {
-        // console.log("Handle Total Column props", props)
-        let indexOfRow, indexOfColumn;
+    // const handleTotalColumn = (props) => {
+    //     console.log("Handle Total Column props", props)
+    //     // let indexOfRow, indexOfColumn;
 
-        for(const column of props.columnList){
-            totalCol.push(0);
-            for (const row of props.rowList)
-            {
-                indexOfColumn = props.columnList.indexOf(column);
-                indexOfRow = props.rowList.indexOf(row)
-                totalCol[indexOfColumn] += props.dataList[indexOfRow][indexOfColumn].quotaCount;
-            }
-        }
-      
-   
-           
-             
-                
-         }
+    //     // for(const column of props.columnList){
+    //     //     totalCol.push(0);
+    //     //     for (const row of props.rowList)
+    //     //     {
+    //     //         indexOfColumn = props.columnList.indexOf(column);
+    //     //         indexOfRow = props.rowList.indexOf(row)
+    //     //         totalCol[indexOfColumn] += props.dataList[indexOfRow][indexOfColumn].quotaCount;
+    //     //     }
+    //     // }
+    //     // totalCol.splice(0,props.columnList.length,0);
+    //     totalCol = []
+    //     for ( let i = 0; i< props.columnList.length; i++)
+    //     {   totalCol.push(0);
+    //         for (let j = 0; j < props.rowList.length; j++ )
+    //     {
+    //         totalCol[i]+= props.dataList[j][i].quotaCount;
+    //     }
+    //     }       
+    //      }
     
 
-    handleTotalColumn(tableData); ///Implement the function right away to calculate the sum of all row and columns 
+    // handleTotalColumn(tableData); ///Implement the function right away to calculate the sum of all row and columns 
 
     const renderTableRowOfColTotals = (props) => {
 
         return(
             <tr>
-                <td className="header-left-total"> Total</td>
+                {/* <td className="header-left-total"> Total</td> */}
                 {props.map (total =>{
                     return (
                         <td className="header-left-total">
@@ -68,7 +76,7 @@ const EditingTable = (props) => {
                         </td>
                     )
                 })}
-              <td className = "sum-all-cols-rows-cell">{sumOfAllCells}</td>
+              {/* <td className = "sum-all-cols-rows-cell">{sumOfAllCells}</td> */}
             </tr>
         )
     }
@@ -86,6 +94,7 @@ const EditingTable = (props) => {
         // console.log("render Editing body",props)
         return props.dataList && props.dataList.map(row=>{
           {  i++;
+           
             return(
                     <tr>
                         <td className="body-exceeded-left">{props.rowList[i].text}</td>
@@ -96,7 +105,7 @@ const EditingTable = (props) => {
                                 </td>
                             )
                         })}
-                        <td className="header-left-total">{totalRow[i]}</td>
+                        {/* <td className="header-left-total">{totalRow[i]}</td> */}
                        
                     </tr>
             )
@@ -112,13 +121,13 @@ const EditingTable = (props) => {
                     <tr>
                         <td></td>
                         {(props.onRenderingHeader) && renderHeaderLayoutLeft(tableData)}
-                        {(props.onRenderingHeader) && <td className="header-left-total"> Total</td>}
+                        {/* {(props.onRenderingHeader) && <td className="header-left-total"> Total</td>} */}
                         
                     </tr>
                 </thead>
                 <tbody>
                     {renderEditingBody(tableData)}
-                    {renderTableRowOfColTotals(totalCol)}
+                    {/* {renderTableRowOfColTotals(totalCol)} */}
                 </tbody>
                 
                 
