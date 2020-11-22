@@ -4,9 +4,7 @@ import "./styles/EditingTable.css";
 const EditingTable = (props) => {
     console.log("Props of editing table",props)
     
-    let totalCol = [];  ///This is an array that each value is the sum of all cells in a column
-    let totalRow =[]; // This is an array that each value is the sum of all cells in a row
-    
+  
     
     const [tableData,setTableData] = useState(props.editingTableData);
     //The useEfect is to make sure the state is updating
