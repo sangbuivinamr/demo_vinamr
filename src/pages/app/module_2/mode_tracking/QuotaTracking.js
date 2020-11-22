@@ -12,22 +12,43 @@ import FileSaver from "file-saver";
 //Styles
 import "./styles/QuotaTracking.css";
 
+ /**
+  * @summary Render the tracking mode of module 2
+  * @param {object} props JSX Props
+  */
 const QuotaTracking = (props) => {
   const [tableSpread, setTableSpread] = React.useState({});
   const [quotaTable, setQuotaTable] = React.useState(null);
   const [convertedTable, setConvertedTable] = React.useState(null);
 
+  /**
+   * @summary Navigate modes of module 2
+   * @param {object} e 
+   */
   const onChangeNav = (e) => {
     props.history.push(`/${e.target.value}`);
   };
 
+  /**
+   * @summary A callback used to fetch the quota table
+   */
   const getQuotaTable = React.useCallback(() => {
+    console.log('bitch')
     const projectId = localStorage.getItem("currentprojectid");
-    getQuotaTableTrackingMode(projectId).then((table) => setQuotaTable(table))
+    getQuotaTableTrackingMode(projectId).then((table) => {
+      console.log('table', table)
+      setQuotaTable(table.data)
+    })
   });
 
   React.useEffect(() => getQuotaTable(), []);
 
+  /**
+   * @summary Export the table object to a CSV file
+   * @param {object} csvData The table needed to be exported
+   * @param {string} fileName The name of the file we want to save
+   * @param {string} fileExtension Extension of the file
+   */
   const exportToCSV = (csvData, fileName, fileExtension) => {
     const ws = XLSX.utils.json_to_sheet(csvData);
 
@@ -43,19 +64,30 @@ const QuotaTracking = (props) => {
     FileSaver.saveAs(data, fileName + fileExtension);
   };
 
+  /**
+   * @summary Convert the current table structure into a proper one for Excel requirements
+   * @param {object} table The table needed to be converted
+   * @returns {object} A new converted table which will be used for CSV exporting
+   */
   const convertEditingTableStructure = (table) => {
     let newTable = [];
 
+    /**
+     * @summary Retrieve the quotaCount in the table based on the ids of a row and a column
+     * @param {string} rowId Id of the row
+     * @param {string} columnId Id of the column
+     * @returns {number} The quotaCount of the row and corresponding column
+     */
     const retrieveQuotaCount = (rowId, columnId) => {
       let quotaCount;
 
-      for (let data in table.dataList) {
-        for (let info in table.dataList[data]) {
+      for (let data in table.data) {
+        for (let info in table.data[data]) {
           if (
-            table.dataList[data][info]["rowID"] === rowId &&
-            table.dataList[data][info]["columnID"] === columnId
+            table.data[data][info]["row"] === rowId &&
+            table.data[data][info]["column"] === columnId
           ) {
-            quotaCount = table.dataList[data][info]["quotaCount"];
+            quotaCount = table.data[data][info]["maxQuota"];
             break;
           }
         }
@@ -73,8 +105,8 @@ const QuotaTracking = (props) => {
       tableRow[""] = rowList[i]["text"];
       rowTitleId = rowList[i]["uniqueID"];
 
-      for (let j = 0; j < table.columnList.length; j++) {
-        let tableColumn = table.columnList;
+      for (let j = 0; j < table.colList.length; j++) {
+        let tableColumn = table.colList;
         let columnTitleId = tableColumn[j]["uniqueID"];
         tableRow[`${tableColumn[j]["text"]}`] = retrieveQuotaCount(
           rowTitleId,
@@ -95,7 +127,7 @@ const QuotaTracking = (props) => {
         <button
           id="ss"
           onClick={() => {
-            const newTable = convertEditingTableStructure(EDITING_TABLE_DATA);
+            const newTable = convertEditingTableStructure(quotaTable);
 
             exportToCSV(newTable);
           }}
@@ -114,16 +146,14 @@ const QuotaTracking = (props) => {
             <option value="tracking">Tracking</option>
           </select>
         </div>
-        <div className="quota-tracking--refresh-icon">
-          <img src={REFRESH} onClick={getQuotaTable} />
-        </div>
-        <p>Last Update: 6:41AM Thu 14 May 2020</p>
+        <img className="quota-tracking--refresh-icon" src={REFRESH} onClick={getQuotaTable} />
+        <p className="quota-tracking--update-date">Last Update: 6:41AM Thu 14 May 2020</p>
       </div>
       <div>
-        <EditingTable
-          editingTableData={EDITING_TABLE_DATA}
+        {quotaTable  && <EditingTable
+          editingTableData={quotaTable}
           onRenderingHeader={true}
-        />
+        />}
       </div>
     </div>
   );

@@ -12,38 +12,38 @@ const EditingTable = (props) => {
     //Rendering the header of the table 
     const renderHeaderLayoutLeft =(props) =>{
         // console.log(" Render column props", props)
-        return props.columnList && props.columnList.map((row)=>
+        return props.colList && props.colList.map((col)=>
         {   
             return ((
-            <th className="header-left"> {row.text}</th>
+            <th className="header-left"> {col.text}</th>
             
             ))
         })
     }
     const handleTotalRow = (props) =>{
-       
+        
         let tempTotal;
         for(const row of props)
         {   
-            tempTotal = row.reduce((first,{quotaCount}) => first + quotaCount,0);
+            tempTotal = row.reduce((first,{maxQuota}) => first + maxQuota,0);
             totalRow.push(tempTotal);
         }
    
     }
-    handleTotalRow(tableData.dataList) /// Implement this function right away to calculate the sum of all row and columns 
+    handleTotalRow(tableData.data) /// Implement this function right away to calculate the sum of all row and columns 
     const sumOfAllCells = totalRow.reduce((first,   last) => first+ last,0);
     
     const handleTotalColumn = (props) => {
         // console.log("Handle Total Column props", props)
         let indexOfRow, indexOfColumn;
 
-        for(const column of props.columnList){
+        for(const column of props.colList){
             totalCol.push(0);
             for (const row of props.rowList)
             {
-                indexOfColumn = props.columnList.indexOf(column);
+                indexOfColumn = props.colList.indexOf(column);
                 indexOfRow = props.rowList.indexOf(row)
-                totalCol[indexOfColumn] += props.dataList[indexOfRow][indexOfColumn].quotaCount;
+                totalCol[indexOfColumn] += props.data[indexOfRow][indexOfColumn].maxQuota;
             }
         }
       
@@ -84,15 +84,15 @@ const EditingTable = (props) => {
     const renderEditingBody =(props)=>{
         let i = -1; // Need i to print out the rowList 
         // console.log("render Editing body",props)
-        return props.dataList && props.dataList.map(row=>{
+        return props.data && props.data.map(row=>{
           {  i++;
             return(
                     <tr>
                         <td className="body-exceeded-left">{props.rowList[i].text}</td>
-                        {row.map(({quotaCount}) => {
+                        {row.map(({maxQuota}) => {
                             return(
                                 <td className="cell">
-                                    {quotaCount}
+                                    {maxQuota}
                                 </td>
                             )
                         })}
@@ -103,7 +103,7 @@ const EditingTable = (props) => {
                     }
         })
     }
-    if (tableData.columnList.length < 1 || tableData.rowList.length < 1 ) return (null)
+    if (tableData.colList.length < 1 || tableData.rowList.length < 1 ) return (null)
     else return  (
         <div className="main-table">
 
@@ -117,7 +117,7 @@ const EditingTable = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {renderEditingBody(tableData)}
+                    {renderEditingBody(tableData)}  
                     {renderTableRowOfColTotals(totalCol)}
                 </tbody>
                 
