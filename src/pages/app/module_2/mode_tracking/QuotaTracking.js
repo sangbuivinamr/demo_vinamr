@@ -24,13 +24,11 @@ const QuotaTracking = (props) => {
   React.useEffect(() => {
     const projectId = localStorage.getItem("currentprojectid");
 
-    console.log("projectid", projectId);
-
     getQuotaTableTrackingMode(projectId).then((table) => {
       console.log("fetched table", table);
       setQuotaTable(table);
     });
-  },[]);
+  }, []);
 
   const exportToCSV = (csvData, fileName, fileExtension) => {
     const ws = XLSX.utils.json_to_sheet(csvData);
@@ -100,7 +98,7 @@ const QuotaTracking = (props) => {
           id="ss"
           onClick={() => {
             const newTable = convertEditingTableStructure(EDITING_TABLE_DATA);
-            
+
             exportToCSV(newTable);
           }}
         >
