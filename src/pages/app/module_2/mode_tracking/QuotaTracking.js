@@ -21,14 +21,12 @@ const QuotaTracking = (props) => {
     props.history.push(`/${e.target.value}`);
   };
 
-  React.useEffect(() => {
+  const getQuotaTable = React.useCallback(() => {
     const projectId = localStorage.getItem("currentprojectid");
+    getQuotaTableTrackingMode(projectId).then((table) => setQuotaTable(table))
+  });
 
-    getQuotaTableTrackingMode(projectId).then((table) => {
-      console.log("fetched table", table);
-      setQuotaTable(table);
-    });
-  }, []);
+  React.useEffect(() => getQuotaTable(), []);
 
   const exportToCSV = (csvData, fileName, fileExtension) => {
     const ws = XLSX.utils.json_to_sheet(csvData);
@@ -117,7 +115,7 @@ const QuotaTracking = (props) => {
           </select>
         </div>
         <div className="quota-tracking--refresh-icon">
-          <img src={REFRESH} />
+          <img src={REFRESH} onClick={getQuotaTable} />
         </div>
         <p>Last Update: 6:41AM Thu 14 May 2020</p>
       </div>
