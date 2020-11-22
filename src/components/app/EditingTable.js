@@ -2,66 +2,61 @@ import React, {useState, useEffect} from 'react';
 import { EDITING_TABLE_DATA } from '../../data/testing-data';
 import "./styles/EditingTable.css";
 const EditingTable = (props) => {
+    const TOTAL = "Total" // In case of changing TOTAL into "Tổng Cộng"
     console.log("Props of editing table",props)
-    
-  
-    
     const [tableData,setTableData] = useState(props.editingTableData);
     //The useEfect is to make sure the state is updating
     useEffect(() => {
         setTableData(props.editingTableData);
       }, [props.editingTableData]);
     //Rendering the header of the table 
+    let totalRowIDList = []
+    let totalColIDList = []
+
+    const getTotalID = (table) =>{
+       totalRowIDList = table.rowList.filter(row => (row.uniqueID)&&(row.text === TOTAL))
+       totalColIDList = table.columnList.filter(col => (col.uniqueID)&&(col.text === TOTAL))
+    }
+   
+    getTotalID(tableData);
+    const isToTalRowID = (id) => {
+        for( const row of totalRowIDList)
+        if(id === row.uniqueID)
+        return true;
+
+        return false;
+    }
+    const isToTalColID = (id) => {
+        for( const col of totalColIDList)
+        if(id === col.uniqueID)
+        return true;
+
+        return false;
+    }
+    
+
+    console.log("Editing Table - totalRowID ",totalRowIDList);
+    console.log("Editing Table - totalColID ",totalColIDList);
+
     const renderHeaderLayoutLeft =(props) =>{
         // console.log(" Render column props", props)
         return props.columnList && props.columnList.map((row)=>
-        {   
-            return ((
+        {  if (row.text === TOTAL) //Styling the total Row
+        return[
+     
+             <th className="header-left-total" >{TOTAL}</th>,
+             ,
+                    <td className="editing-empty-td"></td>
+     
+        ];
+           else return ((
             <th className="header-left"> {row.text}</th>
             
             ))
         })
     }
-    // const handleTotalRow = (props) =>{
-       
-    //     let tempTotal;
-    //     for(const row of props)
-    //     {   
-    //         tempTotal = row.reduce((first,{quotaCount}) => first + quotaCount,0);
-    //         totalRow.push(tempTotal);
-    //     }
-   
-    // }
-  
-    // const sumOfAllCells = totalRow.reduce((first,   last) => first+ last,0);
+
     
-    // const handleTotalColumn = (props) => {
-    //     console.log("Handle Total Column props", props)
-    //     // let indexOfRow, indexOfColumn;
-
-    //     // for(const column of props.columnList){
-    //     //     totalCol.push(0);
-    //     //     for (const row of props.rowList)
-    //     //     {
-    //     //         indexOfColumn = props.columnList.indexOf(column);
-    //     //         indexOfRow = props.rowList.indexOf(row)
-    //     //         totalCol[indexOfColumn] += props.dataList[indexOfRow][indexOfColumn].quotaCount;
-    //     //     }
-    //     // }
-    //     // totalCol.splice(0,props.columnList.length,0);
-    //     totalCol = []
-    //     for ( let i = 0; i< props.columnList.length; i++)
-    //     {   totalCol.push(0);
-    //         for (let j = 0; j < props.rowList.length; j++ )
-    //     {
-    //         totalCol[i]+= props.dataList[j][i].quotaCount;
-    //     }
-    //     }       
-    //      }
-    
-
-    // handleTotalColumn(tableData); ///Implement the function right away to calculate the sum of all row and columns 
-
     const renderTableRowOfColTotals = (props) => {
 
         return(
@@ -89,35 +84,58 @@ const EditingTable = (props) => {
 
     const renderEditingBody =(props)=>{
         let i = -1; // Need i to print out the rowList 
-        // console.log("render Editing body",props)
+       
         return props.dataList && props.dataList.map(row=>{
           {  i++;
            
-            return(
-                    <tr>
-                        <td className="body-exceeded-left">{props.rowList[i].text}</td>
-                        {row.map(({quotaCount}) => {
-                            return(
-                                <td className="cell">
-                                    {quotaCount}
-                                </td>
+            return[
+                    <tr key={row.columnID}>
+                        {props.rowList[i].text === TOTAL ? (<td className="header-left-total">{TOTAL}</td>) : 
+                        (<td className="editing-table-label">{props.rowList[i].text}</td>)}
+                        
+                        {row.map(cell => {
+                            if( isToTalRowID(cell.rowID) && isToTalColID(cell.columnID))
+                            return[
+                                <td key={cell.columnID} className = "sum-all-cols-rows-cell">{cell.quotaCount}</td>,
+                                <td className="editing-empty-td"></td>
+                        ];
+                            else if (isToTalRowID(cell.rowID) )
+                            return[ <td key={cell.columnID} className="header-left-total">
+                            {cell.quotaCount}
+                        </td>]
+                        // <td className="editing-empty-td"></td>]
+                        else if (isToTalColID(cell.columnID))
+                        return[<td key={cell.columnID} className="header-left-total">
+                        {cell.quotaCount}
+                    </td>,
+                    <td className="editing-empty-td"></td>]
+                                    
+                                
+                               
+                            
+                            else return(
+                                <td key={cell.columnID} className="cell">
+                                {cell.quotaCount}
+                            </td>
                             )
                         })}
                         {/* <td className="header-left-total">{totalRow[i]}</td> */}
                        
-                    </tr>
-            )
+                    </tr>,
+                   <tr> {props.rowList[i].text === TOTAL ? (<td style={{height:"10px"}}></td>) : 
+                   (<td style ={{display: "none"}}></td>)}</tr>
+            ]
                     }
         })
     }
     if (tableData.columnList.length < 1 || tableData.rowList.length < 1 ) return (null)
     else return  (
-        <div className="main-table">
+        <div className="main-editing-table">
 
             <table>
                 <thead>
                     <tr>
-                        <td></td>
+                        <td className = "editing-empty-td"></td>
                         {(props.onRenderingHeader) && renderHeaderLayoutLeft(tableData)}
                         {/* {(props.onRenderingHeader) && <td className="header-left-total"> Total</td>} */}
                         

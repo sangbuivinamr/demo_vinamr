@@ -392,7 +392,7 @@ export const EDITING_TABLE_DATA = {
             {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 80},
             {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 90},
             {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 90},
-            // {columnID:"123123",rowID:"123123",quotaCount: function(){ return 11;} }
+            
         ],
 
         [

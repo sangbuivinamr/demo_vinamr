@@ -33,6 +33,7 @@ import {ImSigma} from "react-icons/im";
                     <tr>
                         {/* This is the row adjustment's part */}
                         <td>
+                            <div className ="quota-label-selection-table-div-inside-td">
                             {totalRows.map(totalRow =>{
                                 return(
                                     //  <div>
@@ -54,11 +55,12 @@ import {ImSigma} from "react-icons/im";
                            
                             {addedRow.map(row => {
                                 return(  
-                                    <div key={parseInt(Math.random() * 10000)} style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenRowStatus, row)}} onClick={() => props.onChoosingRow(row)} className="selected--expression--box"> 
+                                    <div key={parseInt(Math.random() * 10000)} style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenRowStatus, row)}} onClick={() => props.onChoosingRow(row)} className="selected--editing--box"> 
                                         {row.text}
                                     </div>
                                 )})
                             }
+                            </div>
                         </td>
                         {/* This is the column adjustment's part */}
                         <td>
@@ -85,7 +87,7 @@ import {ImSigma} from "react-icons/im";
                             })}
                             {addedColumn.map(col => {
                                 return(
-                                    <div key={parseInt(Math.random() * 10000)} style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenColumnStatus, col)}} onClick={() => props.onChoosingColumn(col)} className="selected--expression--box"> 
+                                    <div key={parseInt(Math.random() * 10000)} style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenColumnStatus, col)}} onClick={() => props.onChoosingColumn(col)} className="selected--editing--box"> 
                                         {col.text}
                                     </div>
                                 )})

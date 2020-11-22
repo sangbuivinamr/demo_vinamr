@@ -175,7 +175,7 @@ const QuotaEditing = (props)=>{
                 //This is to deal with break rows
                 let tempTotalRows = [].concat(totalRows);
                 //the second parameter "-1" of splice method means that it will insert at the position of the second last element
-                tempTotalRows[currentIndexTotalRows].rowList.splice(0,-1,{text: takenQuotaLabel, uniqueID: getUniqueID })
+                tempTotalRows[currentIndexTotalRows].rowList.splice(-1,0,{text: takenQuotaLabel, uniqueID: getUniqueID })
                 // setTotalRows(tempTotalRows)
 
                 //This is to deal with the addedRow (unneccesary)
@@ -184,10 +184,7 @@ const QuotaEditing = (props)=>{
                 setAddedRow(tempArray);
                 //This is to deal with the dataList of editing Table
                 let tempTable = [].concat(editingtable);    //NEED DELETING 
-                let indexOfTable = 0;
-                // tempTable[indexOfTable].rowList.push({text: takenQuotaLabel, uniqueID: getUniqueID })
-                // tempTable[indexOfTable].dataList.push([]);
-             
+                let indexOfTable = 0;             
                 tempTable[indexOfTable].rowList = []
                 tempTotalRows.map( totalRow => {
                     totalRow.rowList.map( row => // row of the rowList
@@ -228,7 +225,7 @@ const QuotaEditing = (props)=>{
         setAddedColumn(tempArray);
 
         let tempTotalColumns = [].concat(totalColumns);
-        tempTotalColumns[currentIndexTotalColumns].columnList.splice(0,-1,{text: takenQuotaLabel, uniqueID: getUniqueID})
+        tempTotalColumns[currentIndexTotalColumns].columnList.splice(-1,0,{text: takenQuotaLabel, uniqueID: getUniqueID})
         setToTalColumns(tempTotalColumns)
 
 
@@ -478,23 +475,57 @@ const QuotaEditing = (props)=>{
         updatingTheTotalRowOfTable(editingtable);
     }
 
+    const isBreakRowValid = (array) => {
+        if(array.length > 1 ){
+            const index = array.length - 2
+            if(array[index].rowList.length === 1)
+            {
+                alert("You haven't added any rows yet");
+                return false;
+            }
+        } 
+        return true;
+    }
+    
     const handleBreakRows = () => {
         console.log("Break row ")
         let tempArray = [].concat(totalRows);
         const uuid = generate_uuid();
-        setCurrentIndexTotalRows(count => count + 1 ) //Iterating the selected table
-        tempArray.push({uniqueID: uuid,rowList:[{text:"Total", uniqueID: uuid}]});
-        setTotalRows(tempArray);
-        console.log(totalRows)
        
+      
+        console.log("QuotaEditing - handleBreakRows", currentIndexTotalRows)
+        tempArray.push({uniqueID: uuid,rowList:[{text:"Total", uniqueID: uuid}]});
+        if(isBreakRowValid(tempArray))
+        {
+            setCurrentIndexTotalRows(count => count + 1 ) //Iterating the selected table
+            setTotalRows(tempArray);
+            console.log(totalRows)
+        }        
+     
+       
+    }
+    const isBreakColValid = (array) => {
+        if(array.length > 1 ){
+            const index = array.length - 2
+            if(array[index].columnList.length === 1)
+            {
+                alert("You haven't added any columns yet");
+                return false;
+            }
+        } 
+        return true;
     }
     const handleBreakColumns = () => {
         console.log("Break column ")
         let tempArray = [].concat(totalColumns);
         const uuid = generate_uuid();
-        setCurrentIndexTotalColumns(count => count + 1 )
+      
         tempArray.push({uniqueID: uuid,columnList:[{text:"Total", uniqueID: uuid}]});
-        setToTalColumns(tempArray);
+        if (isBreakColValid(tempArray)){
+            setCurrentIndexTotalColumns(count => count + 1 )
+            setToTalColumns(tempArray);
+        }
+       
        
     }
     const handleTotalColumn = (table,preTotalRowIndex,curTotalRowIndex,preTotalColIndex, curTotalColIndex) => {
@@ -520,8 +551,6 @@ const QuotaEditing = (props)=>{
              tempTotal+= table.dataList[iterRow][iterCol].quotaCount;
             }  
             table.dataList[iterRow][curTotalColIndex].quotaCount = tempTotal;
-            console.log("QuotaEditing.js - handleTotalColumn - var: iterRow",iterRow)
-            console.log("QuotaEditing.js - handleTotalColumn - var: tempTotal",tempTotal)
             tempTotal = 0;
             }
             
@@ -678,7 +707,7 @@ const QuotaEditing = (props)=>{
                 </select>
                 <div className="expression-review">
                     <h2 className="review">
-                        QUOTA LABEL <br/> SELECTION
+                       <text>QUOTA LABEL<br/> SELECTION</text> 
                     </h2>
                     <button id ="quota--management--page--add--to-row--btn" onClick ={() =>updateRow(quotaClickStatus)} >
                     Add to <br/> Row
