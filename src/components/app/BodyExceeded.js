@@ -6,44 +6,40 @@
 import React from "react";
 
 export default function BodyExceeded(props) {
-  let stateTextArea = props.value;
   let dataBodyExceeded = props.dataBody;
-
+  let apply = props.apply;
+  let applyAll = props.applyAll;
   //Function send data of the table to parent component
-  const sendDataFromBody = (e) => {
-    props.sendDataParent(e);
-  };
-  const deleteCell = (e) => {
-    props.deleteCell(e);
+  const sendDataFromBody = (e, indexCell) => {
+    props.sendDataParent(e, indexCell);
   };
   const sendIndex = (indexCell) => {
     props.sendIndex(indexCell);
   };
-  console.log("textarea",stateTextArea)
   return (
     dataBodyExceeded.rowList &&
-    dataBodyExceeded.rowList.map(({ text }, uniqueID) => {
+    dataBodyExceeded.rowList.map(({ text }) => {
       return (
         <tr>
-          <td className="body-exceeded-left" key={uniqueID}>
+          <td className="body-exceeded-left">
             {text}
           </td>
-          {dataBodyExceeded.data.map(({ maxQuota }, index) => {
-            return (
-              <td
-                className="cell"
-                onClick={(e) => {
-                  sendDataFromBody(e);
-                  sendIndex(index);
-                }}
-                value={props.value}
-                onChange={(e) => deleteCell(e.target.value)}
-                key={index}
-              >
-                {maxQuota}
-              </td>
-            );
-          })}
+            {dataBodyExceeded.data.map(({ row, maxQuota }, index) => {
+              if (row === text) {
+                return (
+                  <td
+                    className="cell"
+                    onClick={(e) => {
+                      sendDataFromBody(e, index);
+                      sendIndex(index);
+                    }}
+                  >
+                    {applyAll === undefined ? maxQuota : applyAll}
+                  </td>
+                  
+                );
+              }
+            })}
         </tr>
       );
     })

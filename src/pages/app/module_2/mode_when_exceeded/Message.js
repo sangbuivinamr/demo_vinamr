@@ -16,6 +16,34 @@ const Message = (props) => {
   };
 
   /**
+   * @summary The function for button Apply and the function will be called in the parent component
+   * @param text
+   * @return void
+   */
+  const onApply = (text) => {
+    props.onApply(text);
+  };
+
+  /**
+   * @summary The function for button Apply and the function will be called in the parent component
+   * @param text
+   * @return void
+   */
+  const onApplyAll = (text) => {
+    props.onApplyAll(text);
+  };
+
+
+  /**
+   * @summary The function onChange to get the input to push the data
+   * @param {*} e
+   * @return void
+   */
+  const onChangeText = (e) => {
+    props.onChangeText(e);
+  };
+
+  /**
    * @summary The function will be called when tick on check box then make the textarea cannot be typed
    * @return void
    */
@@ -23,58 +51,46 @@ const Message = (props) => {
     setDisabled(!disabled);
   };
 
-  /**
-   * @summary The function will be call when tick on check box and it is be ran by parent component
-   * @param {*} e
-   * @return void
-   */
-  const deleteCell = (indexCell) => {
-    props.deleteCell(indexCell);
-  };
-    const onChangText = (e) => {
-      props.onChangText(e);
-    };
-    const sendIndex = (indexCell) => {
-      props.sendIndex(indexCell)
-    }
-    
-  /**
-   * @summary The function onChange to get the input to push the data
-   * @param {*} text 
-   * @return void
-   */
-  let indexCellClick = props.mess.notification.index;
-  let message = props.mess.notification.notification;
+  let message = props.mess;
+  let valueText = props.value
   return (
-    <div className="message">
-      <div className="two-mess">
-        <p className="p-mess">Message</p>
+    <div className = "message">
+      <div className = "two-mess">
+        <p className = "p-mess">Message</p>
         <input
-          className="check"
-          name="message"
-          type="checkbox"
-          onClick={(e) => {
+          className = "check"
+          name = "message"
+          type = "checkbox"
+          onClick = {(e) => {
             handleClicked(e);
             handleDisable(e);
           }}
         />
-        <p className="no-mess">
+        <p className = "no-mess">
           <i>No Message</i>
         </p>
       </div>
       <textarea
-        className="notification-area"
-        type="text"
-        disabled={disabled}
-        placeholder={message}
-        value={props.text}
-        onChange={(text) => onChangText(text.target.value)}
+        className = "notification-area"
+        type = "text"
+        disabled = {disabled}
+        placeholder = {message}
+        value = {valueText}
+        onChange = {(text) => onChangeText(text)}
       />
-      <div className="button-mess">
-        <div className="apply-mess" onClick={(e) => deleteCell(e)}>Apply</div>
-        <div className="apply-all-mess" onClick={indexCell => sendIndex(indexCell)}>Apply to All</div>
+      <div className = "button-mess">
+        <div className = "apply-mess" onClick = {(text) => onApply(text)}>
+          Apply
+        </div>
+        <div className = "apply-all-mess" onClick = {(text) => onApplyAll(text)}>
+          Apply to All
+        </div>
       </div>
     </div>
   );
 };
 export default Message;
+
+  // const sendIndex = (indexCell) => {
+  //   props.sendIndex(indexCell);
+  // };

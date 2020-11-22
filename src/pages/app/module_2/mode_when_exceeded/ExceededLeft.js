@@ -12,24 +12,21 @@ import HeaderExceeded from "../../../../components/app/HeaderExceeded";
 import "./styles/ExceededLeft.css";
 
 const ExceededLeft = (props) => {
- 
-  //Function send data of the table to parent component
-  const sendDataParent = (e) => {
-    props.onChoosingCell(e);
-  };
-  const deleteCell = (e) => {
-    props.deleteCell(e)
-  }
-  const sendIndex = (indexCell) => {
-    props.sendIndex(indexCell)
-  }
   let dataFromBE = props.dataExceeded;
   let dataHeaderBE = props.dataExceeded.colList;
   let dataBodyBE = props.dataExceeded;
-  if(dataFromBE.length === 0)
-  {
-    sendIndex(props.indexCell)
-    return (<div></div>)
+  let apply = props.apply;
+  let applyAll = props.applyAll;
+
+  //Function send data of the table to parent component
+  const sendDataParent = (e, indexCell) => {
+    props.onChoosingCell(e, indexCell);
+  };
+  const sendIndex = (indexCell) => {
+    props.sendIndex(indexCell);
+  };
+  if (dataFromBE.length === 0) {
+    return <div></div>;
   }
   return (
     <div className="main-table">
@@ -42,11 +39,14 @@ const ExceededLeft = (props) => {
         </thead>
         <tbody>
           <BodyExceeded
-           dataBody = {dataBodyBE}
-           value = {props.value}
-           onChange = {e => deleteCell(e.target.value)}
-           sendDataParent = {(e) => {sendDataParent(e)}} 
-           sendIndex = {(indexCell) => sendIndex(indexCell)}
+            dataBody={dataBodyBE}
+            value={props.value}
+            apply={apply}
+            applyAll={applyAll}
+            sendDataParent={(e, indexCell) => {
+              sendDataParent(e, indexCell);
+            }}
+            sendIndex={(indexCell) => sendIndex(indexCell)}
           />
         </tbody>
       </table>
