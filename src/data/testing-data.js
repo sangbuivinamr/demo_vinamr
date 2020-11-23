@@ -386,58 +386,58 @@ export const EDITING_TABLE_DATA = {
     ] ,
     dataList: [ 
         [
-            {columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 45},
-            {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 40},
-            {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 60},
-            {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 80},
-            {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 90},
-            {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",quotaCount: 90},
+            {columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",maxQuota: 45},
+            {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",maxQuota: 40},
+            {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",maxQuota: 60},
+            {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",maxQuota: 80},
+            {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",maxQuota: 90},
+            {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"5f2e335c-0119-4b8f-973e-71f7e913b6d1",maxQuota: 90},
             
         ],
 
         [
-            {columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",quotaCount: 50},
-            {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",quotaCount: 60},
-            {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",quotaCount: 30},
-            {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",quotaCount: 20},
-            {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",quotaCount: 40},
-            {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",quotaCount: 90}
+            {columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",maxQuota: 50},
+            {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",maxQuota: 60},
+            {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",maxQuota: 30},
+            {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",maxQuota: 20},
+            {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",maxQuota: 40},
+            {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"878ab427-f5ef-488d-a356-d709f7f4c84e",maxQuota: 90}
         ],
     
         [
-            {columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",quotaCount: 60},
-            {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",quotaCount: 42},
-            {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",quotaCount: 12},
-            {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",quotaCount: 23},
-            {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",quotaCount: 32},
-            {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",quotaCount: 90}
+            {columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",maxQuota: 60},
+            {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",maxQuota: 42},
+            {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",maxQuota: 12},
+            {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",maxQuota: 23},
+            {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",maxQuota: 32},
+            {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"42821bde-4a59-4b7e-b223-8de5249bd18c",maxQuota: 90}
         ],
 
         [
-            {columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",quotaCount: 60},
-            {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",quotaCount: 42},
-            {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",quotaCount: 12},
-            {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",quotaCount: 23},
-            {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",quotaCount: 32},
-            {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",quotaCount: 90}
+            {columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",maxQuota: 60},
+            {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",maxQuota: 42},
+            {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",maxQuota: 12},
+            {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",maxQuota: 23},
+            {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",maxQuota: 32},
+            {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"7a97ab6c-70f7-4b1b-92ec-c0e51a98e944",maxQuota: 90}
         ],
 
         [
-            {columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",quotaCount: 60},
-            {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",quotaCount: 42},
-            {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",quotaCount: 12},
-            {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",quotaCount: 23},
-            {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",quotaCount: 32},
-            {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",quotaCount: 90}
+            {columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",maxQuota: 60},
+            {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",maxQuota: 42},
+            {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",maxQuota: 12},
+            {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",maxQuota: 23},
+            {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",maxQuota: 32},
+            {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"d39a6398-ce5e-4c92-8d60-41ddbf39edc8",maxQuota: 90}
         ],
 
         [
-            {columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 60},
-            {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 42},
-            {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 12},
-            {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 23},
-            {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 32},
-            {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",quotaCount: 90}
+            {columnID:"a1729b65-6865-42c2-9b35-66e7054309b7",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",maxQuota: 60},
+            {columnID:"d4e872fc-0613-4606-b400-49f3ecb7751c",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",maxQuota: 42},
+            {columnID:"d0199501-25d1-4e26-bc41-190b078febe0",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",maxQuota: 12},
+            {columnID:"0f09c642-813c-40e5-b7a1-6cb9ef05d417",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",maxQuota: 23},
+            {columnID:"8b4301a5-71ce-45d9-8dfc-7b69cedd77ae",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",maxQuota: 32},
+            {columnID:"74ecd576-4f9a-4c70-a56e-56aac7ca5b39",rowID:"22910aea-7f3e-43ec-838f-6968a2ea08ee",maxQuota: 90}
         ],
        
   

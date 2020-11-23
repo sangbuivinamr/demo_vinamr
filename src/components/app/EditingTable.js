@@ -96,17 +96,17 @@ const EditingTable = (props) => {
                         {row.map(cell => {
                             if( isToTalRowID(cell.rowID) && isToTalColID(cell.columnID))
                             return[
-                                <td key={cell.columnID} className = "sum-all-cols-rows-cell">{cell.quotaCount}</td>,
+                                <td key={cell.columnID} className = "sum-all-cols-rows-cell">{cell.maxQuota}</td>,
                                 <td className="editing-empty-td"></td>
                         ];
                             else if (isToTalRowID(cell.rowID) )
                             return[ <td key={cell.columnID} className="header-left-total">
-                            {cell.quotaCount}
+                            {cell.maxQuota}
                         </td>]
                         // <td className="editing-empty-td"></td>]
                         else if (isToTalColID(cell.columnID))
                         return[<td key={cell.columnID} className="header-left-total">
-                        {cell.quotaCount}
+                        {cell.maxQuota}
                     </td>,
                     <td className="editing-empty-td"></td>]
                                     
@@ -115,7 +115,7 @@ const EditingTable = (props) => {
                             
                             else return(
                                 <td key={cell.columnID} className="cell">
-                                {cell.quotaCount}
+                                {cell.maxQuota}
                             </td>
                             )
                         })}
@@ -137,13 +137,13 @@ const EditingTable = (props) => {
                     <tr>
                         <td className = "editing-empty-td"></td>
                         {(props.onRenderingHeader) && renderHeaderLayoutLeft(tableData)}
-                        {/* {(props.onRenderingHeader) && <td className="header-left-total"> Total</td>} */}
+                       
                         
                     </tr>
                 </thead>
                 <tbody>
                     {renderEditingBody(tableData)}
-                    {/* {renderTableRowOfColTotals(totalCol)} */}
+                 
                 </tbody>
                 
                 

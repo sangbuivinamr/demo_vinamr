@@ -1,6 +1,6 @@
 //Packages
-import React,{useState} from "react";
-
+import React,{useState,useEffect} from "react";
+import axios from 'axios';
 import {IoMdClose, IoIosSave, IoIosUndo, IoIosRedo, IoIosArrowRoundDown, IoIosArrowRoundUp} from "react-icons/io";
 import {ImSigma} from "react-icons/im";
 
@@ -13,10 +13,12 @@ import "./styles/QuotaEditing.css";
 
 // Data
 import {QUOTA_LABEL_SELECTION_DATA, EDITING_TABLE_DATA} from "../../../../data/testing-data";
-import { QUOTA_MOVING_DIRECTION, TABLE_TYPE } from "./config";
+import { QUOTA_MOVING_DIRECTION, TABLE_TYPE,  QUOTA_EDITING_TABLE} from "./config";
+
+
 
 const QuotaEditing = (props)=>{
-
+    const PROJECT_ID = '0560';
     const [quotaData, setQuotaData] = useState(QUOTA_LABEL_SELECTION_DATA);
 
     const [quotaClickStatus, setQuotaClickStatus] = useState({
@@ -47,7 +49,8 @@ const QuotaEditing = (props)=>{
     const [currentIndexTotalRows,  setCurrentIndexTotalRows] = useState(-1);
     const [totalColumns, setToTalColumns] = useState([]); //This state is to deal with break column feature
     const [currentIndexTotalColumns,  setCurrentIndexTotalColumns] = useState(-1);
- 
+    const [tempData, setTempData] = useState({});
+
     const [undoQuotaStack, setUndoQuotaStack] = useState([]);
     const [redoQuotaStack, setRedoQuotaStack] = useState([]);
     
@@ -56,8 +59,24 @@ const QuotaEditing = (props)=>{
     console.log("Total Row", totalRows)
     console.log("Total column",totalColumns)
    
-   
+    const getDataFromBE = async (projectId) => {
+        const response = await axios.get(QUOTA_EDITING_TABLE + `?projectId=${projectId}`)
+        setTempData(response.data)
+        console.log("result", response)
+        
+    //     // const result = await axios.post([ip] , {JSON});
+    }
+    const postDataToBE = async () => {
+        const post = await axios.post(QUOTA_EDITING_TABLE +`?projectId=${PROJECT_ID}`,tempData).then(res=> console.log(res))
+        console.log("post successfully")
+    }
 
+    useEffect(() => {
+        getDataFromBE(PROJECT_ID)}
+    , []);
+ 
+    
+console.log("TempData", tempData)
     /**
      * @sumary This function is to generate universally unique id for the Total Row/Columns
      *  */ 
@@ -89,7 +108,7 @@ const QuotaEditing = (props)=>{
         for (const totalColumn of totalColumns)
         {
             if (uniqueID === totalColumn.uniqueID)
-            return true;
+            return true;    
         }
         return false;
     }
@@ -151,7 +170,7 @@ const QuotaEditing = (props)=>{
     */
     const handleAddToRow = (quotaLabel) => {
 
-        // alert(JSON.stringify(editingtable[0]))
+       
         console.log('Editing table in handleAd  dToRow', editingtable[0]) //NEED DELETING
 
         const {quotaLabel: takenQuotaLabel} = quotaLabel
@@ -257,12 +276,10 @@ const QuotaEditing = (props)=>{
     }
 
     const onChoosingRow = (rowData) => {
-        
         setChosenRowStatus(rowData);
     }
     
     const onChoosingColumn = (colData) => {
-     
         setChosenColumnStatus(colData)
     }
 
@@ -374,10 +391,10 @@ const QuotaEditing = (props)=>{
 
 
     /**
-     * @summary This function is to return the quotaCount for the cell corresponding to the columnID and rowID by searching the whole dataList
+     * @summary This function is to return the maxQuota for the cell corresponding to the columnID and rowID by searching the whole dataList
      * @param {string} rowID  
      * @param {string} columnID
-     * @return {number} quotaCount that corresponds to the columnID and rowID
+     * @return {number} maxQuota that corresponds to the columnID and rowID
      */
     const getTheQuotaCorrespondingtoColIDAndRowID = (rowID, columnID) => {
         for (const row of EDITING_TABLE_DATA.dataList){
@@ -385,10 +402,10 @@ const QuotaEditing = (props)=>{
             {
             if(cell.rowID === rowID && cell.columnID === columnID)
             {
-                return cell.quotaCount;
+                return cell.maxQuota;
             }   
             else if ( cell.rowID === columnID && cell.columnID === rowID){
-                return cell.quotaCount;
+                return cell.maxQuota;
             }
             }
         }
@@ -404,20 +421,20 @@ const QuotaEditing = (props)=>{
         const indexOfTable  = 0;
         let indexOfRow, indexOfColumn; 
         let tempTable = [].concat(props);   //NEED DELETING
-        let quotaCount;
+        let maxQuota;
         
         for ( const row of tempTable[indexOfTable].rowList) //NEED DELETING
         for ( const column of tempTable[indexOfTable].columnList)   //NEED DELETING
         {
-            //Initially the quotaCount corresponding to current column's unique Id and current row's uniqueId 
-            quotaCount = getTheQuotaCorrespondingtoColIDAndRowID(row.uniqueID, column.uniqueID);  
+            //Initially the maxQuota corresponding to current column's unique Id and current row's uniqueId 
+            maxQuota = getTheQuotaCorrespondingtoColIDAndRowID(row.uniqueID, column.uniqueID);  
        
             //Get the index of the curent row and the current Column
                 indexOfRow = tempTable[indexOfTable].rowList.indexOf(row);      //NEED DELETING
                 indexOfColumn = tempTable[indexOfTable].columnList.indexOf(column);     //NEED DELETING
            
             //This splice method is to update the current editing table by replacing each element corresponding to column's uniqueId and row's uniqueId
-            tempTable[indexOfTable].dataList[indexOfRow].splice(indexOfColumn, 1,{rowID: row.uniqueID, columnID: column.uniqueID, quotaCount: quotaCount })     //NEED DELETING
+            tempTable[indexOfTable].dataList[indexOfRow].splice(indexOfColumn, 1,{rowID: row.uniqueID, columnID: column.uniqueID, maxQuota: maxQuota })     //NEED DELETING
         }
         // This while loop is to handle deleting row as the above splice method above just replace the rows and columns due to their length. The deleting function 
         // just delete the {row} in the rowList or {column} of the ColumnList of the editingTable 
@@ -535,22 +552,22 @@ const QuotaEditing = (props)=>{
         {  tempTotal = 0;
             for (let iterRow = preTotalRowIndex+1; iterRow < curTotalRowIndex; iterRow++ )
         {
-           tempTotal+= table.dataList[iterRow][iterCol].quotaCount;
+           tempTotal+= table.dataList[iterRow][iterCol].maxQuota;
         }
-        table.dataList[curTotalRowIndex][iterCol].quotaCount = tempTotal;
+        table.dataList[curTotalRowIndex][iterCol].maxQuota = tempTotal;
         }  
         console.log("QuotaEditing.js - handleTotalColumn - var: table", table)
         return table;
          }
+
          const handleTotalRow = (table,preTotalColIndex, curTotalColIndex) => {
             let tempTotal = 0;
-            
             for (let iterRow = 0; iterRow < table.rowList.length; iterRow++ ){
                 for ( let iterCol = preTotalColIndex+1; iterCol < curTotalColIndex; iterCol++)
             {  
-             tempTotal+= table.dataList[iterRow][iterCol].quotaCount;
+             tempTotal+= table.dataList[iterRow][iterCol].maxQuota;
             }  
-            table.dataList[iterRow][curTotalColIndex].quotaCount = tempTotal;
+            table.dataList[iterRow][curTotalColIndex].maxQuota = tempTotal;
             tempTotal = 0;
             }
             
@@ -558,7 +575,8 @@ const QuotaEditing = (props)=>{
             return table;
              }
     
-             const updatingTheTotalRowOfTable = (props) => {
+
+        const updatingTheTotalRowOfTable = (props) => {
                  console.log("QuotaEditing - updatingTheTotalRowOfTable - var: props:", props)
                 let arrayOfTables = props   //NEED DELETING
                 let tempTable = {}
@@ -678,7 +696,7 @@ const QuotaEditing = (props)=>{
                 </div>
            
                 <div className="display--square--button">
-                    <i><IoIosSave className="up icon"/></i>
+                    <i><IoIosSave className="up icon" onClick = {postDataToBE}/></i>
                 </div>
                 <div className="mode">
                     Mode: 
