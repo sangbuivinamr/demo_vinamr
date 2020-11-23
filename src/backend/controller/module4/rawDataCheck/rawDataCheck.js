@@ -43,6 +43,7 @@ module.exports.changeStatus = async (req, res, next) => {
         let changeRow = result[0]
         //thêm mới nên stt +1
         changeRow.stt += 1
+        changeRow.complete = req.body.status
         console.log(changeRow)
         //lấy từng giá trị trong result để đẩy vào làm queryVariables.
         let queryVariables = []

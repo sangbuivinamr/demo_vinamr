@@ -4,7 +4,7 @@ const rawDataCheck = require('../../controller/module4/rawDataCheck/rawDataCheck
 const uploadFile = require('../../controller/module4/rawDataCheck/uploadFile')
 const media = require('./mediaRoute/mediaRoute')
 
-router.get('/getRawDataCheck', rawDataCheck.getData)
+router.get('/getRawData', rawDataCheck.getData)
 
 router.post('/changeStatus', rawDataCheck.changeStatus)
 
