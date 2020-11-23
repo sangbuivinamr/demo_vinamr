@@ -37,7 +37,6 @@ const QuotaExceeded = (props) => {
   const [dataExceeded, setDataExceeded] = useState([]);
   const [text, setText] = useState();
   const [indexCell, setIndexCell] = useState();
-  const [apply, setApply] = useState([]);
   const [applyAll, setApplyAll] = useState();
   const [placeHolder, setPlaceHolder] = useState();
 
@@ -72,7 +71,6 @@ const QuotaExceeded = (props) => {
     );
     let dataTable = response.data;
     setDataExceeded(dataTable);
-    setApply(dataTable)
   };
 
   /*************************************************************************/
@@ -93,7 +91,7 @@ const QuotaExceeded = (props) => {
     //The data cell in the table
     let type_car = e.target.parentNode.childNodes[0].innerText;
     let notification = e.target.innerText;
-
+    console.log("e",e)
     //The header in the table
     let city =
       e.target.offsetParent.childNodes[0].childNodes[0].cells[cellClicked]
@@ -131,37 +129,43 @@ const QuotaExceeded = (props) => {
    *@summary The function onClick Apply button
    *@return void
    */
-  if(apply.length !== 0){
-    console.log("app",apply)
-
-  }
   const onApply = () => {
-    
+    let i;
     let dataLength = dataExceeded.length;
-    let itemCol = dataExceeded.data[indexCell].maxQuota;
+    let arrayLength = dataExceeded.data.length
+    
 
     //Clear the data cell when user click on checkbox
     if (dataLength !== 0) {
       if (indexCell !== undefined && clicked === true) {
-          setApply("");
-      console.log("currentData2",apply)
-
+        for(i = 0; i < arrayLength; i++) {
+          if(indexCell === i ){
+            let temp = dataExceeded;
+            temp.data[i].maxQuota = ""
+            setDataExceeded(temp);
+        }
       }
+    }
+
+
       //Update the cell in the table when user input
       if (indexCell !== undefined && clicked === false) {
-          setApply(text);
+        for (let i = 0; i < arrayLength; i++ ) {
+          if(indexCell === i ) {
+            let newData = dataExceeded;
+            newData.data[i].maxQuota = text
+            setDataExceeded(newData);
+          }
+        }
       }
-      if(indexCell !== undefined && clicked === true) {
-        setApply("")
-      }
-      
 
       //The alert will be shown when user neither choosing a cell on table nor clicked check box
       if (indexCell === undefined && clicked !== true) {
         alert("CHOOSE THE CELL YOU WANT TO CHANGE!");
       }
     }
-  };
+  }
+
   const onApplyAll = () => {
     // User can input and apply All to change the cell in the table without clicking check box
     if (clicked === true) {
@@ -170,6 +174,7 @@ const QuotaExceeded = (props) => {
       setApplyAll(text);
     }
   };
+
   return (
     <div className="exceeded">
       <div className="exceeded exceeded-bar">
@@ -197,7 +202,6 @@ const QuotaExceeded = (props) => {
         <div className="layout-left">
           <ExceededLeft
             dataExceeded={dataExceeded}
-            apply={apply}
             applyAll={applyAll}
             onChoosingCell={(e, indexCell) => onChoosingCell(e, indexCell)}
             value={text}
@@ -217,7 +221,6 @@ const QuotaExceeded = (props) => {
           <div>
             <Message
               mess={placeHolder}
-              apply={apply}
               applyAll={applyAll}
               onApply={() => onApply(text)}
               onApplyAll={() => onApplyAll(text)}
