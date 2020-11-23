@@ -45,16 +45,26 @@ const QuotaEditing = (props)=>{
     })
 
 
+    //Change input of quota rows
+    const [inputData , setInputData] = useState([])
+
     const [totalRows, setTotalRows] = useState([]); //This state is to deal with break row feature
     const [currentIndexTotalRows,  setCurrentIndexTotalRows] = useState(-1);
     const [totalColumns, setToTalColumns] = useState([]); //This state is to deal with break column feature
     const [currentIndexTotalColumns,  setCurrentIndexTotalColumns] = useState(-1);
-    const [tempData, setTempData] = useState({});
+    const [tempData, setTempData] = useState([{
+        columnList: [],
+        rowList: [],
+        dataList: []
+        }]);
 
     const [undoQuotaStack, setUndoQuotaStack] = useState([]);
     const [redoQuotaStack, setRedoQuotaStack] = useState([]);
     
 
+    const [, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), [])
+    
     console.log("editing table at the beginning of the rendering",editingtable[0]) //NEED DELETING
     console.log("Total Row", totalRows)
     console.log("Total column",totalColumns)
@@ -62,7 +72,12 @@ const QuotaEditing = (props)=>{
     const getDataFromBE = async (projectId) => {
         const response = await axios.get(QUOTA_EDITING_TABLE + `?projectId=${projectId}`)
         setTempData(response.data)
-        console.log("result", response)
+        setTempData([
+            {
+                columnList: EDITING_TABLE_DATA.columnList,
+                rowList: EDITING_TABLE_DATA.rowList,
+                dataList: EDITING_TABLE_DATA.dataList
+            }])
         
     //     // const result = await axios.post([ip] , {JSON});
     }
@@ -76,7 +91,7 @@ const QuotaEditing = (props)=>{
     , []);
  
     
-console.log("TempData", tempData)
+    console.log("TempData", tempData)
     /**
      * @sumary This function is to generate universally unique id for the Total Row/Columns
      *  */ 
@@ -113,8 +128,40 @@ console.log("TempData", tempData)
         return false;
     }
     
-   
+    /**
+     *
+     * */
+    const getValue = (row , col) =>{
+        let index_i , index_j;
+        for(let i = 0;i < tempData[0].dataList.length;i++)
+            for(let j = 0;j < tempData[0].dataList[i].length;j++){
+                let currentData = tempData[0].dataList[i][j];
+                if(currentData.columnID === col && currentData.rowID === row){
+                    index_i = i;
+                    index_j = j;
+                    break;
+                }
 
+            }
+        return tempData[0].dataList[index_i][index_j].maxQuota;
+    }
+    const changeValue = (row , col , val) => {
+        let index_i , index_j;
+        for(let i = 0;i < tempData[0].dataList.length;i++)
+            for(let j = 0;j < tempData[0].dataList[i].length;j++){
+                let currentData = tempData[0].dataList[i][j];
+                if(currentData.columnID === col && currentData.rowID === row){
+                    index_i = i;
+                    index_j = j;
+                    break;
+                }
+
+            }
+        let newData = tempData
+        newData[0].dataList[index_i][index_j].maxQuota = val;
+        setTempData(newData);
+        forceUpdate()
+    }
     /**
      * @summary Make the selected (clicked) row to be highlighted
      * @param {string} quotaLabel The label of the current selected quota row
@@ -741,8 +788,10 @@ console.log("TempData", tempData)
                 
                 <div id = "quota--display--added--table">
                     <EditingTable  
-                     editingTableData={editingtable[0]}     //NEED DELETING AND CHANGING
+                     editingTableData={tempData[0]}     //NEED DELETING AND CHANGING
                      onRenderingHeader ={true}
+                     getValue = {getValue}
+                     changeValue = {changeValue}
                      ></EditingTable>
                     
                     

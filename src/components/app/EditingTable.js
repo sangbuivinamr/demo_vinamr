@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import { EDITING_TABLE_DATA } from '../../data/testing-data';
 import "./styles/EditingTable.css";
 const EditingTable = (props) => {
+
+
     const TOTAL = "Total" // In case of changing TOTAL into "Tổng Cộng"
-    console.log("Props of editing table",props)
     const [tableData,setTableData] = useState(props.editingTableData);
     //The useEfect is to make sure the state is updating
     useEffect(() => {
@@ -14,6 +15,7 @@ const EditingTable = (props) => {
     let totalColIDList = []
 
     const getTotalID = (table) =>{
+        if(table === undefined) return;
        totalRowIDList = table.rowList.filter(row => (row.uniqueID)&&(row.text === TOTAL))
        totalColIDList = table.columnList.filter(col => (col.uniqueID)&&(col.text === TOTAL))
     }
@@ -39,6 +41,7 @@ const EditingTable = (props) => {
     console.log("Editing Table - totalColID ",totalColIDList);
 
     const renderHeaderLayoutLeft =(props) =>{
+        if(props === undefined) return null;
         // console.log(" Render column props", props)
         return props.columnList && props.columnList.map((row)=>
         {  if (row.text === TOTAL) //Styling the total Row
@@ -82,7 +85,9 @@ const EditingTable = (props) => {
 //    }
 //    console.log("Check equivalene ",checkEquivalenceSampleSize());
 
-    const renderEditingBody =(props)=>{
+    const renderEditingBody =(props , parentProps)=>{
+        console.log('NIGGA' , props);
+        if(props === undefined) return null;
         let i = -1; // Need i to print out the rowList 
        
         return props.dataList && props.dataList.map(row=>{
@@ -96,8 +101,9 @@ const EditingTable = (props) => {
                         {row.map(cell => {
                             if( isToTalRowID(cell.rowID) && isToTalColID(cell.columnID))
                             return[
-                                <td key={cell.columnID} className = "sum-all-cols-rows-cell">{cell.maxQuota}</td>,
-                                <td className="editing-empty-td"></td>
+                                <td key={cell.columnID} className = "sum-all-cols-rows-cell"><input type = 'number' value = {parentProps.getValue(cell.rowID , cell.columnID)} onChange = {(e) => {parentProps.changeValue(cell.rowID, cell.columnID , e.target.value)}}/>
+                                </td>,
+                                <td className="editing-empty-td"></td>  
                         ];
                             else if (isToTalRowID(cell.rowID) )
                             return[ <td key={cell.columnID} className="header-left-total">
@@ -105,9 +111,9 @@ const EditingTable = (props) => {
                         </td>]
                         // <td className="editing-empty-td"></td>]
                         else if (isToTalColID(cell.columnID))
-                        return[<td key={cell.columnID} className="header-left-total">
-                        {cell.maxQuota}
-                    </td>,
+                        return [
+                        <td key={cell.columnID} className="header-left-total"><input type = 'number' value = {parentProps.getValue(cell.rowID , cell.columnID)} onChange = {(e) => {parentProps.changeValue(cell.rowID, cell.columnID , e.target.value)}}/>
+                        </td>,
                     <td className="editing-empty-td"></td>]
                                     
                                 
@@ -115,7 +121,7 @@ const EditingTable = (props) => {
                             
                             else return(
                                 <td key={cell.columnID} className="cell">
-                                {cell.maxQuota}
+                                <input type = 'number' value = {parentProps.getValue(cell.rowID , cell.columnID)} onChange = {(e) => {parentProps.changeValue(cell.rowID, cell.columnID , e.target.value)}}/>
                             </td>
                             )
                         })}
@@ -128,8 +134,8 @@ const EditingTable = (props) => {
                     }
         })
     }
-    if (tableData.columnList.length < 1 || tableData.rowList.length < 1 ) return (null)
-    else return  (
+    //if (tableData.columnList.length < 1 || tableData.rowList.length < 1 ) return (null)
+    return  (
         <div className="main-editing-table">
 
             <table>
@@ -142,7 +148,7 @@ const EditingTable = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {renderEditingBody(tableData)}
+                    {renderEditingBody(tableData, props)}
                  
                 </tbody>
                 
