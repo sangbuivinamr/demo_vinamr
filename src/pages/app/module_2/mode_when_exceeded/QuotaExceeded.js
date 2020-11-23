@@ -16,6 +16,8 @@ import { QUOTA_OVERVIEW_DATA } from "../../../../data/testing-data";
 //Default URL
 const URL_DATA_EXCEEDED = "https://115.73.222.254:8000/quota/quotaExceeded";
 const QuotaExceeded = (props) => {
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
   //Initial States
   const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
   const [quotaInput, setQuotaInput] = useState({
@@ -91,7 +93,6 @@ const QuotaExceeded = (props) => {
     //The data cell in the table
     let type_car = e.target.parentNode.childNodes[0].innerText;
     let notification = e.target.innerText;
-    console.log("e",e)
     //The header in the table
     let city =
       e.target.offsetParent.childNodes[0].childNodes[0].cells[cellClicked]
@@ -163,16 +164,31 @@ const QuotaExceeded = (props) => {
       if (indexCell === undefined && clicked !== true) {
         alert("CHOOSE THE CELL YOU WANT TO CHANGE!");
       }
+      forceUpdate()
     }
   }
 
   const onApplyAll = () => {
+    let i;
+    let dataLength = dataExceeded.length;
+    let arrayLength = dataExceeded.data.length
     // User can input and apply All to change the cell in the table without clicking check box
     if (clicked === true) {
-      setApplyAll("");
+      for (let i = 0; i < arrayLength; i++ ) {
+        let newData = dataExceeded;
+        newData.data[i].maxQuota = ""
+        setDataExceeded(newData);
+        
+      }
     } else {
-      setApplyAll(text);
+      for (let i = 0; i < arrayLength; i++ ) {
+        let newData = dataExceeded;
+        newData.data[i].maxQuota = text
+        setDataExceeded(newData);
+        
+      }
     }
+    forceUpdate()
   };
 
   return (

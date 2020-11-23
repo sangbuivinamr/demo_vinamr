@@ -20,8 +20,7 @@ export default function BodyExceeded(props) {
     dataBodyExceeded.rowList &&
     dataBodyExceeded.rowList.map(({ text }) => {
       return (
-        <tr 
-        key={parseInt(Math.random() * 1000000)}>
+        <tr key={parseInt(Math.random() * 1000000)}>
           <td className="body-exceeded-left">
             {text}
           </td>
