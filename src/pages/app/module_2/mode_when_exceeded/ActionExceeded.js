@@ -1,44 +1,50 @@
 //Packages
 import React, { useState } from "react";
-import axios from "axios";
 
 //Styles
 import "./styles/ActionExceeded.css";
 
-//Default url
-const URL_POST_ACTIONEXCEEDED = "https://115.73.222.254:8000/";
-
 const ActionExceeded = (props) => {
   const [changePath, setChangePath] = useState();
-  const [changeCode, setChangeCode] = useState();
-
+  const [actionExceed, setactionExceeded] = useState();
+  let actionText = props.value;
+  let actionPlaceholder = props.actionPlaceholder;
   const onChangePath = (changePath) => {
     setChangePath(changePath.target.value);
   };
-  const onChangeCode = (changeCode) => {
-    setChangeCode(changeCode);
+  const onChangeAction = (action) => {
+    props.onChangeAction(action);
+  };
+
+  const selectAction = () => {
+    props.selectAction();
+  };
+  /**
+   * @summary The function for button Apply and the function will be called in the parent component
+   * @param text
+   * @return void
+   */
+  const onApplyAction = (action) => {
+    props.onApply(action);
   };
 
   /**
-   *@summary This function will push the data from client side to server side
-   *@param  projectId This param will direct to the database
-   *@return void
+   * @summary The function for button Apply and the function will be called in the parent component
+   * @param text
+   * @return void
    */
-  const pushDataInput = (projectId) => {
-    if (changeCode !== "" || changeCode !== undefined) {
-      axios
-        .post(URL_POST_ACTIONEXCEEDED + `?projectId=${projectId}`, changeCode)
-        .then((res) => {
-          console.log(res);
-        });
-      console.log("change", changeCode);
-    }
+  const onApplyAllAction = (action) => {
+    props.onApplyAll(action);
   };
   return (
     <div className="action-exceeded">
       <p className="action-p">Action when exceeded</p>
       <div className="jump-slide">
-        <select className="select-action" onChange={onChangePath}>
+        <select
+          className="select-action"
+          onChange={onChangePath}
+          value={actionExceed}
+        >
           <option value="terminate">Terminate Interview</option>
           <option value="backward">Jump Backward</option>
           <option value="forward">Jump Forward</option>
@@ -47,22 +53,29 @@ const ActionExceeded = (props) => {
         </select>
         {changePath === "jumpSlide" ? (
           <div className="code-exceeded">
-            {" "}
             <input
               className="input-exceeded"
-              value={changeCode}
-              onChange={(changeCode) => onChangeCode(changeCode.target.value)}
-              placeholder="330/334"
-            />{" "}
+              value={actionText}
+              onChange={(action) => {
+                onChangeAction(action);
+                selectAction(actionExceed)
+              }}
+              placeholder={actionPlaceholder}
+            />
           </div>
         ) : null}
       </div>
 
       <div className="buttons">
-        <div className="apply" onClick={() => pushDataInput("1", changeCode)}>
+        <div className="apply" onClick={(action) => onApplyAction(action)}>
           Apply
         </div>
-        <div className="apply-all">Apply to All</div>
+        <div
+          className="apply-all"
+          onClick={(action) => onApplyAllAction(action)}
+        >
+          Apply to All
+        </div>
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ const QuotaExceeded = (props) => {
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
   //Initial States
-  const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
+
   const [quotaInput, setQuotaInput] = useState({
     quota_index: null,
     quota_label: "",
@@ -39,9 +39,9 @@ const QuotaExceeded = (props) => {
   const [dataExceeded, setDataExceeded] = useState([]);
   const [text, setText] = useState();
   const [indexCell, setIndexCell] = useState();
-  const [applyAll, setApplyAll] = useState();
   const [placeHolder, setPlaceHolder] = useState();
-
+  const [action, setAction] = useState();
+  const [actionPlaceholder, setActionPlaceholder] = useState();
   const onCheckingNotAnyHighlightedQuota = () =>
     quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
   const onCheckingNotAnyInputtedQuota = () =>
@@ -75,6 +75,18 @@ const QuotaExceeded = (props) => {
     setDataExceeded(dataTable);
   };
 
+  /**
+   * @summary The function save and push the data from client slide to server
+   * @param
+   * @return void
+   */
+  const onSave = (projectId) => {
+    axios
+      .post(URL_DATA_EXCEEDED + `?projectId=${projectId}`, dataExceeded)
+      .then((res) => {
+        console.log("res", res);
+      });
+  };
   /*************************************************************************/
 
   const sendIndex = (indexCell) => {
@@ -97,14 +109,12 @@ const QuotaExceeded = (props) => {
     let city =
       e.target.offsetParent.childNodes[0].childNodes[0].cells[cellClicked]
         .innerText;
-
-    let rowTitleList = dataExceeded.data;
     // set 2 state for compononent QuotaName
     setTypeCar(type_car);
-    // setCity(city);
-    // console.log("rowList",rowTitleList)
+    setCity(city);
+    let dataAction = dataExceeded.data[indexCell].action
+    setActionPlaceholder(dataAction)
     // set state for component Message
-
     setPlaceHolder(notification);
   };
 
@@ -127,34 +137,40 @@ const QuotaExceeded = (props) => {
     setText(text);
   };
   /**
+   * @summary the function handle input of action
+   * @param action
+   * @return void
+   */
+  const onChangeAction = (action) => {
+    setAction(action)
+  }
+  /**
    *@summary The function onClick Apply button
    *@return void
    */
   const onApply = () => {
     let i;
     let dataLength = dataExceeded.length;
-    let arrayLength = dataExceeded.data.length
-    
+    let arrayLength = dataExceeded.data.length;
 
     //Clear the data cell when user click on checkbox
     if (dataLength !== 0) {
       if (indexCell !== undefined && clicked === true) {
-        for(i = 0; i < arrayLength; i++) {
-          if(indexCell === i ){
+        for (i = 0; i < arrayLength; i++) {
+          if (indexCell === i) {
             let temp = dataExceeded;
-            temp.data[i].maxQuota = ""
+            temp.data[i].maxQuota = "";
             setDataExceeded(temp);
+          }
         }
       }
-    }
-
 
       //Update the cell in the table when user input
       if (indexCell !== undefined && clicked === false) {
-        for (let i = 0; i < arrayLength; i++ ) {
-          if(indexCell === i ) {
+        for (let i = 0; i < arrayLength; i++) {
+          if (indexCell === i) {
             let newData = dataExceeded;
-            newData.data[i].maxQuota = text
+            newData.data[i].maxQuota = text;
             setDataExceeded(newData);
           }
         }
@@ -164,32 +180,75 @@ const QuotaExceeded = (props) => {
       if (indexCell === undefined && clicked !== true) {
         alert("CHOOSE THE CELL YOU WANT TO CHANGE!");
       }
-      forceUpdate()
+      forceUpdate();
     }
-  }
+  };
 
   const onApplyAll = () => {
-    let i;
-    let dataLength = dataExceeded.length;
-    let arrayLength = dataExceeded.data.length
+    let arrayLength = dataExceeded.data.length;
+
     // User can input and apply All to change the cell in the table without clicking check box
     if (clicked === true) {
-      for (let i = 0; i < arrayLength; i++ ) {
+      for (let i = 0; i < arrayLength; i++) {
         let newData = dataExceeded;
-        newData.data[i].maxQuota = ""
+        newData.data[i].maxQuota = "";
         setDataExceeded(newData);
-        
       }
     } else {
-      for (let i = 0; i < arrayLength; i++ ) {
+      for (let i = 0; i < arrayLength; i++) {
         let newData = dataExceeded;
-        newData.data[i].maxQuota = text
+        newData.data[i].maxQuota = text;
         setDataExceeded(newData);
-        
       }
     }
-    forceUpdate()
+    forceUpdate();
   };
+
+  /**
+   *@summary The function onClick Apply button
+   *@return void
+   */
+  const onApplyAction = () => {
+    let dataLength = dataExceeded.length;
+    let arrayLength = dataExceeded.data.length;
+
+    //Clear the data cell when user click on checkbox
+    if (dataLength !== 0) {
+
+      //Update the cell in the table when user input
+      if (indexCell !== undefined && clicked === false) {
+        for (let i = 0; i < arrayLength; i++) {
+          if (indexCell === i) {
+            let newData = dataExceeded;
+            newData.data[i].action = action;
+            setDataExceeded(newData);
+          }
+        }
+      }
+
+      //The alert will be shown when user neither choosing a cell on table nor clicked check box
+      if (indexCell === undefined && clicked !== true) {
+        alert("CHOOSE THE CELL YOU WANT TO CHANGE!");
+      }
+      forceUpdate();
+    }
+  };
+
+  const onApplyAllAction = () => {
+    let arrayLength = dataExceeded.data.length;
+
+    // User can input and apply All to change the cell in the table without clicking check box
+        for (let i = 0; i < arrayLength; i++) {
+          let newData = dataExceeded;
+          newData.data[i].action = action;
+          setDataExceeded(newData);
+        }
+
+    forceUpdate();
+  };
+  const selectAction = () => {
+
+  }
 
   return (
     <div className="exceeded">
@@ -197,7 +256,7 @@ const QuotaExceeded = (props) => {
         <h2 className="h2-exceeded">QUOTA SETTINGS</h2>
         <div className="up">
           <i>
-            <IoIosSave className="up icon" />
+            <IoIosSave className="up icon" onClick={() => onSave("1")} />
           </i>
         </div>
         <div className="mode-exceeded">Mode:</div>
@@ -218,7 +277,6 @@ const QuotaExceeded = (props) => {
         <div className="layout-left">
           <ExceededLeft
             dataExceeded={dataExceeded}
-            applyAll={applyAll}
             onChoosingCell={(e, indexCell) => onChoosingCell(e, indexCell)}
             value={text}
             sendIndex={(indexCell) => sendIndex(indexCell)}
@@ -232,12 +290,19 @@ const QuotaExceeded = (props) => {
             <QuotaName dataCityTable={city} dataCarTable={typeCar} />
           </div>
           <div>
-            <ActionExceeded />
+            <ActionExceeded
+              onApply={() => onApplyAction(action)}
+              placeHolder={actionPlaceholder}
+              onApplyAll={() => onApplyAllAction(action)}
+              value={action}
+              actionPlaceholder={actionPlaceholder}
+              onChangeAction={(action) => onChangeAction(action.target.value)}
+              selectAction={() => selectAction() }
+            />
           </div>
           <div>
             <Message
               mess={placeHolder}
-              applyAll={applyAll}
               onApply={() => onApply(text)}
               onApplyAll={() => onApplyAll(text)}
               handleClicked={(e) => handleClicked(e)}
@@ -253,16 +318,6 @@ const QuotaExceeded = (props) => {
 };
 
 export default QuotaExceeded;
-
-/**
- * TODO the function push data to db
- * @summary The function save and push the data from client slide to server
- * @param
- * @return void
- */
-// const onSave = () => {
-// axios.post
-// }
 
 /**
  * TODO

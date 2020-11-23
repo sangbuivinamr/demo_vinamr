@@ -7,8 +7,6 @@ import React from "react";
 
 export default function BodyExceeded(props) {
   let dataBodyExceeded = props.dataBody;
-  let apply = props.apply;
-  let applyAll = props.applyAll;
   //Function send data of the table to parent component
   const sendDataFromBody = (e, indexCell) => {
     props.sendDataParent(e, indexCell);
@@ -36,7 +34,6 @@ export default function BodyExceeded(props) {
                     key={parseInt(Math.random() * 1000000)}
                   >
                     {maxQuota}
-                    {/* {applyAll === undefined ? maxQuota : applyAll} */}
                   </td>
                   
                 );
