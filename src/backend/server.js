@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3000
 
 app.use('/quota', quotaRoute)
 app.use('/expression',expressionRoute)
-app.use('/rawDataCheck', rawDataCheckRoute)
+app.use('/rawData', rawDataCheckRoute)
 app.use('/interviewer', interviewerRoute)
 
 
