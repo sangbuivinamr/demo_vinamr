@@ -42,6 +42,7 @@ const QuotaExceeded = (props) => {
   const [placeHolder, setPlaceHolder] = useState();
   const [action, setAction] = useState();
   const [actionPlaceholder, setActionPlaceholder] = useState();
+  const [actionExceeded, setActionExceeded] = useState();
   const onCheckingNotAnyHighlightedQuota = () =>
     quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
   const onCheckingNotAnyInputtedQuota = () =>
@@ -75,18 +76,7 @@ const QuotaExceeded = (props) => {
     setDataExceeded(dataTable);
   };
 
-  /**
-   * @summary The function save and push the data from client slide to server
-   * @param
-   * @return void
-   */
-  const onSave = (projectId) => {
-    axios
-      .post(URL_DATA_EXCEEDED + `?projectId=${projectId}`, dataExceeded)
-      .then((res) => {
-        console.log("res", res);
-      });
-  };
+ 
   /*************************************************************************/
 
   const sendIndex = (indexCell) => {
@@ -112,12 +102,14 @@ const QuotaExceeded = (props) => {
     // set 2 state for compononent QuotaName
     setTypeCar(type_car);
     setCity(city);
-    let dataAction = dataExceeded.data[indexCell].action
-    setActionPlaceholder(dataAction)
+    let dataAction = dataExceeded.data[indexCell].action;
+    setActionPlaceholder(dataAction);
     // set state for component Message
     setPlaceHolder(notification);
+    let mode =dataExceeded.data[indexCell].selected
+    setActionExceeded(mode)
+    console.log("mode",mode)
   };
-
   /**
    * @summary This function pass from children to parent
    * @param {*} e The param pass from Exceeded Left component to parent component
@@ -142,8 +134,8 @@ const QuotaExceeded = (props) => {
    * @return void
    */
   const onChangeAction = (action) => {
-    setAction(action)
-  }
+    setAction(action);
+  };
   /**
    *@summary The function onClick Apply button
    *@return void
@@ -214,20 +206,22 @@ const QuotaExceeded = (props) => {
 
     //Clear the data cell when user click on checkbox
     if (dataLength !== 0) {
-
       //Update the cell in the table when user input
-      if (indexCell !== undefined && clicked === false) {
+      if (indexCell !== undefined) {
         for (let i = 0; i < arrayLength; i++) {
           if (indexCell === i) {
-            let newData = dataExceeded;
-            newData.data[i].action = action;
-            setDataExceeded(newData);
+            let temp = dataExceeded;
+            temp.data[i].action = action;
+            let selected = dataExceeded;
+            selected.data[i].selected = actionExceeded
+            setDataExceeded(temp,selected);
+            console.log("check",dataExceeded)
           }
         }
       }
 
       //The alert will be shown when user neither choosing a cell on table nor clicked check box
-      if (indexCell === undefined && clicked !== true) {
+      if (indexCell === undefined) {
         alert("CHOOSE THE CELL YOU WANT TO CHANGE!");
       }
       forceUpdate();
@@ -238,18 +232,30 @@ const QuotaExceeded = (props) => {
     let arrayLength = dataExceeded.data.length;
 
     // User can input and apply All to change the cell in the table without clicking check box
-        for (let i = 0; i < arrayLength; i++) {
-          let newData = dataExceeded;
-          newData.data[i].action = action;
-          setDataExceeded(newData);
-        }
+    for (let i = 0; i < arrayLength; i++) {
+      let temp = dataExceeded;
+      temp.data[i].action = action;
+      let selected =dataExceeded;
+      selected.data[i].selected = actionExceeded
+      setDataExceeded(temp,selected);
+      console.log("nwe",temp)
+    }
 
     forceUpdate();
   };
-  const selectAction = () => {
+  const selectAction = (actionExceeded) => {
 
-  }
+    setActionExceeded(actionExceeded);
+  };
 
+   /**
+   * @summary The function save and push the data from client slide to server
+   * @param
+   * @return void
+   */
+  const onSave = (projectId) => {
+    axios.post(URL_DATA_EXCEEDED + `?projectId=${projectId}`, dataExceeded);
+  };
   return (
     <div className="exceeded">
       <div className="exceeded exceeded-bar">
@@ -291,13 +297,14 @@ const QuotaExceeded = (props) => {
           </div>
           <div>
             <ActionExceeded
-              onApply={() => onApplyAction(action)}
+              onApply={() => onApplyAction(action,actionExceeded)}
               placeHolder={actionPlaceholder}
               onApplyAll={() => onApplyAllAction(action)}
               value={action}
+              selectedMode = {actionExceeded}
               actionPlaceholder={actionPlaceholder}
               onChangeAction={(action) => onChangeAction(action.target.value)}
-              selectAction={() => selectAction() }
+              selectAction={selectAction}
             />
           </div>
           <div>

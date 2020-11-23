@@ -5,20 +5,21 @@ import React, { useState } from "react";
 import "./styles/ActionExceeded.css";
 
 const ActionExceeded = (props) => {
-  const [changePath, setChangePath] = useState();
-  const [actionExceed, setactionExceeded] = useState();
   let actionText = props.value;
   let actionPlaceholder = props.actionPlaceholder;
-  const onChangePath = (changePath) => {
-    setChangePath(changePath.target.value);
-  };
+  let selectedMode = props.selectedMode;
+  const [changePath, setChangePath] = useState(selectedMode);
+  
   const onChangeAction = (action) => {
     props.onChangeAction(action);
   };
 
-  const selectAction = () => {
-    props.selectAction();
+
+  const selectAction = (value) => {
+    props.selectAction(value);
   };
+
+
   /**
    * @summary The function for button Apply and the function will be called in the parent component
    * @param text
@@ -37,37 +38,45 @@ const ActionExceeded = (props) => {
     props.onApplyAll(action);
   };
   return (
-    <div className="action-exceeded">
-      <p className="action-p">Action when exceeded</p>
-      <div className="jump-slide">
+    <div className = "action-exceeded">
+      <p className = "action-p"> Action when exceeded</p>
+      <div className = "jump-slide">
         <select
-          className="select-action"
-          onChange={onChangePath}
-          value={actionExceed}
+          className = "select-action"
+          value = {selectedMode}
+          onChange={(e) => {
+            setChangePath(e.target.value)
+            selectAction(e.target.value)
+          }}
         >
-          <option value="terminate">Terminate Interview</option>
-          <option value="backward">Jump Backward</option>
-          <option value="forward">Jump Forward</option>
-          <option value="jumpSlide">Jump to Slide</option>
-          <option value="continue">Continue Interview</option>
+          <option value = "Terminate Interview"> Terminate Interview </option>
+          <option value = "Jump Backward"> Jump Backward </option>
+          <option value = "Jump Forward"> Jump Forward </option>
+          <option value ="Jump to Slide"> Jump to Slide </option>
+          <option value = "Continue Interview"> Continue Interview </option>
         </select>
-        {changePath === "jumpSlide" ? (
-          <div className="code-exceeded">
+        {selectedMode === "Jump to Slide" ? (
+          <div className = "code-exceeded">
             <input
-              className="input-exceeded"
-              value={actionText}
-              onChange={(action) => {
+              className = "input-exceeded"
+              value = {actionText}
+              onChange = {(action) => {
                 onChangeAction(action);
-                selectAction(actionExceed)
               }}
-              placeholder={actionPlaceholder}
+              placeholder = {actionPlaceholder}
             />
           </div>
         ) : null}
       </div>
 
       <div className="buttons">
-        <div className="apply" onClick={(action) => onApplyAction(action)}>
+        <div
+          className="apply"
+          onClick={() => {
+            onApplyAction();
+            selectAction(changePath);
+          }}
+        >
           Apply
         </div>
         <div
