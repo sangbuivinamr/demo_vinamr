@@ -1,14 +1,36 @@
 //Packages
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InterviewRow from "./InterviewRow";
+
 import { EXCEEDED_LAYOUT_LEFT } from "../../../../data/testing-data";
 //Styles
 import "./styles/QuotaInterview.css";
+import axios from "axios";
 
+const URL_INTERVIEW =
+  "https://115.73.222.254:8000/interviewer/interviewerReview";
 const QuotaInteview = (props) => {
   const [selectedInterview, setSelectedInterview] = useState("interview"); // Initialize the state, so when the user navigate to this mode, the mode will have the mode is interview in the option
+  const [dataInterview, setDataInterview] = useState([]);
+
+  /**
+   * @summary Function useEffect
+   */
+  useEffect(() => {
+    getDataInterview("0560");
+  }, []);
+
+  const getDataInterview = async (projectId) => {
+    const response = await axios.get(URL_INTERVIEW + `?projectId=${projectId}`);
+    let dataTable = response.data;
+    setDataInterview(dataTable);
+    console.log("resp", response);
+  };
+  console.log("dad");
+
   const onChangeNav = (e) => {
     props.history.push(`/${e.target.value}`);
+    setSelectedInterview(selectedInterview);
   };
   const renderHeader = () => {
     let headerElement = ["Name", "Completed"];
@@ -18,6 +40,7 @@ const QuotaInteview = (props) => {
     });
   };
 
+  // if (dataInterview.length !== 0) console.log("datda", dataInterview);
   return (
     <div className="interview">
       <div className="interview interview-bar">
@@ -42,7 +65,7 @@ const QuotaInteview = (props) => {
             <tr>{renderHeader()}</tr>
           </thead>
           <tbody>
-            <InterviewRow exceededLeft={EXCEEDED_LAYOUT_LEFT} />
+            <InterviewRow dataInterview={dataInterview} />
           </tbody>
         </table>
       </div>
