@@ -6,6 +6,11 @@ const mappingData = require('./mappingData')
 module.exports = async (req, res, next) => {
     try {
         let projectId = req.query.projectId
+        if (projectId === undefined) {
+            return res.status(404).json({
+                error: "unknown projectId"
+            })
+        }
         let connection = await dbConnection()
 
 

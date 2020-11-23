@@ -4,6 +4,11 @@ const sqlQuery = require('../../../database/mysql/mysqlQuery')
 module.exports.getAllQuota = async (req, res, next) => {
     let projectId = req.query.projectId
     try {
+        if (projectId === undefined) {
+            return res.json({
+                error: "unknown projectId"
+            })
+        }
         //tạo connection mới
         let connection = await dbConnection()
         //query version mới nhất theo projectId thể làm điều kiên query cho kêt quả cuối cùng theo yêu cầu.

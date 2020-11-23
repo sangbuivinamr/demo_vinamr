@@ -25,6 +25,16 @@ module.exports.getData = async (req, res, next) => {
 module.exports.changeStatus = async (req, res, next) => {
     try {
         let connection = await dbConnection()
+        if (req.query.projectId === undefined) {
+            return res.status(404).json({
+                error: "unknown projectId"
+            })
+        }
+        if (req.query.interviewId === undefined) {
+            return res.status(404).json({
+                error: "unknown interviewId"
+            })
+        }
         //Lấy interview theo projectid và interviewid mới nhất
         let query = "SELECT * FROM `sys`.`temp` WHERE projectid=? AND interviewid=? ORDER BY stt DESC LIMIT 1"
         let result = await sqlQuery(connection, query, [req.query.projectId, req.query.interviewId])

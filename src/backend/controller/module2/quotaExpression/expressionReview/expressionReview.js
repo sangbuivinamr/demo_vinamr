@@ -1,9 +1,14 @@
-const dbConnection = require('../../../../database/mysql/mysql_connect')
-const sqlQuery = require('../../../../database/mysql/mysql_query')
+const dbConnection = require('../../../../database/mysql/mysqlConnect')
+const sqlQuery = require('../../../../database/mysql/mysqlQuery')
 const checkData = require('./checkData')
 
 module.exports.getCodeExpression = async (req, res, next) => {
     try {
+        if (req.query.projectId === undefined) {
+            return res.status(404).json({
+                error: "unknown projectId"
+            })
+        }
         let connection = await dbConnection()
         //Query survey mới nhất theo ProjectID
         let query = 'SELECT * FROM sys.json_data WHERE projectID="' + req.query.projectId + '" ORDER BY stt DESC LIMIT 1'
