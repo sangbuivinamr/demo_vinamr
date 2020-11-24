@@ -26,7 +26,12 @@
 .quota-management-page--expression-review--tables tbody {
   background-color: #f2f2f2;
   color: black;
+<<<<<<< HEAD:src/pages/app/module_2/mode_epression/styles/ExpressionReview.css
   border: 1px solid var(--global-color-1);
+=======
+  overflow: scroll;
+  border: 2px solid var(--global-color-1);
+>>>>>>> editing-model:src/pages/app/module_2/mode_expression/styles/ExpressionReview.css
 }
 /* 
 .quota-management-page--expression-review--tables .slide--note {

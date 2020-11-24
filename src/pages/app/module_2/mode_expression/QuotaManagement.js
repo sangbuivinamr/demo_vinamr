@@ -206,6 +206,7 @@ const QuotaManagement = (props)=>{
      * @return the index of the slide
      * @param {string} expression the selected expression
      */
+<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
     const handleExpressionHighlight = () => {
     var selectedText = window.getSelection().toString();
     console.log("Highlighting successfully",selectedText)
@@ -244,6 +245,29 @@ const QuotaManagement = (props)=>{
     }
 
 
+=======
+      const handleExpressionHighlight = () => {
+      var selectedText = window.getSelection().toString();
+      
+       selectedText =  returningValidExpression(selectedText);
+        if(selectedText !== "") 
+        {
+        
+        setSelectedExpression(selectedText);
+        selectedText = selectedText.match(/(\d+)/);
+        const slide = parseInt(selectedText);
+        setHightlightedSlide(slide);
+        } 
+      }
+
+
+
+      const onChangeNav=(e)=>{
+          
+              props.history.push(`/${e.target.value}`)
+        
+      }
+>>>>>>> editing-model:src/pages/app/module_2/mode_expression/QuotaManagement.js
     return(
         
         <div className="quota-page">
@@ -256,7 +280,11 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoIosArrowRoundUp
                         className="up icon"
+<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
                         onClick={() => onSwappingQuotaRow("UP") }
+=======
+                        onClick={() => onSwappingQuotaRow("UP")}
+>>>>>>> editing-model:src/pages/app/module_2/mode_expression/QuotaManagement.js
                     />
                     </i>
                 </div>
@@ -287,11 +315,27 @@ const QuotaManagement = (props)=>{
                 <div className="mode">
                     Mode:
                 </div>
-                    <select className="select">
-                        <option value="Expression"> Expression </option>
-                        <option value="Editing"> Editing </option>
-                        <option value="When Exceeded"> When Exceeded </option>
-                        <option value="Tracking"> Tracking </option>
+                    <select className="select"onChange={onChangeNav}>
+                        <option
+                            value=""
+                        > 
+                            Expression 
+                        </option>
+                        <option 
+                            value="editing"
+                        >
+                            Editing 
+                        </option>
+                        <option
+                            value="exceeded"
+                        >
+                            When Exceeded 
+                        </option>
+                        <option 
+                            value="tracking"
+                        >
+                            Tracking
+                        </option>
                     </select>
                 <div className="expression-review">
                     <h2 className="review">
