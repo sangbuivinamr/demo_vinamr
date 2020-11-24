@@ -206,7 +206,7 @@ const QuotaManagement = (props)=>{
      * @return the index of the slide
      * @param {string} expression the selected expression
      */
-<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
+    
     const handleExpressionHighlight = () => {
     var selectedText = window.getSelection().toString();
     console.log("Highlighting successfully",selectedText)
@@ -245,20 +245,6 @@ const QuotaManagement = (props)=>{
     }
 
 
-=======
-      const handleExpressionHighlight = () => {
-      var selectedText = window.getSelection().toString();
-      
-       selectedText =  returningValidExpression(selectedText);
-        if(selectedText !== "") 
-        {
-        
-        setSelectedExpression(selectedText);
-        selectedText = selectedText.match(/(\d+)/);
-        const slide = parseInt(selectedText);
-        setHightlightedSlide(slide);
-        } 
-      }
 
 
 
@@ -267,7 +253,6 @@ const QuotaManagement = (props)=>{
               props.history.push(`/${e.target.value}`)
         
       }
->>>>>>> editing-model:src/pages/app/module_2/mode_expression/QuotaManagement.js
     return(
         
         <div className="quota-page">
@@ -280,12 +265,9 @@ const QuotaManagement = (props)=>{
                     <i>
                     <IoIosArrowRoundUp
                         className="up icon"
-<<<<<<< HEAD:src/pages/app/module_2/mode_epression/QuotaManagement.js
                         onClick={() => onSwappingQuotaRow("UP") }
-=======
-                        onClick={() => onSwappingQuotaRow("UP")}
->>>>>>> editing-model:src/pages/app/module_2/mode_expression/QuotaManagement.js
-                    />
+
+               />
                     </i>
                 </div>
                 <div className="up">
