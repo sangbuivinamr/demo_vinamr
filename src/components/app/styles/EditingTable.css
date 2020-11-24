@@ -20,39 +20,43 @@
   font-size: 15px;
   height: 10px;
   font-family: var(--global-font-family);
-  width: 10px;
+  width: 150px;
   margin-top: 20px;
   text-align: center;
 }
-.body-exceeded-left {
+.editing-table-label {
   border: 1px solid black;
   font-family: var(--global-font-family);
   font-size: 15px;
   background-color: #ffd066;
-  width: 10px;
+  min-width: 50%;
+  text-align: center;
 }
 .cell {
   border: 1px solid black;
-  width: 100px;
-  max-width: 20px;
+  min-width: 150px;
+
   white-space: nowrap;
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
 }
-.main-table {
+.main-editing-table {
+  background-color: #f2f2f2;
+  padding: 1%;
+
+  width: 1140px;
+  height: 496px;
+  margin-left: 30px;
+
   background-color: #f2f2f2;
   padding: 1%;
   margin-right: 30px;
-  width: 1140px;
-  height: 496px;
-  margin-left: 50px;
-  overflow-y: scroll;
-  overflow-x: scroll;
-  display: grid;
+  width: 100%;
+  min-height: 496px;
 }
-.main-table > table {
+.main-editing-table > table {
   border-spacing: 0px;
   border-collapse: collapse;
 }
@@ -63,7 +67,11 @@
   font-size: 15px;
   height: 10px;
   font-family: var(--global-font-family);
-  width: 10px;
+  width: 150px;
   margin-top: 20px;
   text-align: center;
+}
+.editing-empty-td {
+  min-width: 10px;
+  min-height: 20px;
 }

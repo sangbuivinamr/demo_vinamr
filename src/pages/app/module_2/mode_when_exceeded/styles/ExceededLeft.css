@@ -18,21 +18,24 @@
     font-size: 15px;
     background-color:  #ffd066;
     width: 10px;
-   
+    text-align: center;
 }
 .cell{
     border: 1px solid black;
     width: 100px;
     max-width: 20px;
     white-space: nowrap;
-    color: red;
     cursor: pointer;
     overflow: hidden;
     text-overflow: ellipsis; 
+    /* color: red; */
+}
+.cell:hover{
+    background-color: #ffefcc;
 }
 .main-table{
     background-color: #f2f2f2;
-    padding: 1%;
+    padding-top: 2%;
     margin-right: 30px;
     width: 1140px;
     height: 496px;

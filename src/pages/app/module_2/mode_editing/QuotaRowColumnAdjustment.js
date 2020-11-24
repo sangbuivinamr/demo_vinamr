@@ -8,6 +8,7 @@ import "./styles/QuotaRowColumnAdjustment.css";
 import {ImSigma} from "react-icons/im";
 
  const QuotaRowColumnAdjustment = (props) =>{
+     console.log(" Props quota props",props)
     const totalRows =  props.totalRowsData;
     // console.log("Total Row",totalRows)
     const totalColumns = props.totalColumnsData;
@@ -32,11 +33,12 @@ import {ImSigma} from "react-icons/im";
                     <tr>
                         {/* This is the row adjustment's part */}
                         <td>
+                            <div className ="quota-label-selection-table-div-inside-td">
                             {totalRows.map(totalRow =>{
                                 return(
                                     //  <div>
-                                    <div key={parseInt(Math.random() * 10000)} className="sigma-total-rounded-box">
-                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <p> {totalRow.text}</p>
+                                    <div className="sigma-total-rounded-box">
+                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <text> Total</text>
                                 
                             </div>
                             // {/* {total.map(row => {
@@ -53,11 +55,12 @@ import {ImSigma} from "react-icons/im";
                            
                             {addedRow.map(row => {
                                 return(  
-                                    <div key={parseInt(Math.random() * 10000)} style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenRowStatus, row)}} onClick={() => props.onChoosingRow(row)} className="selected--expression--box"> 
+                                    <div key={parseInt(Math.random() * 10000)} style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenRowStatus, row)}} onClick={() => props.onChoosingRow(row)} className="selected--editing--box"> 
                                         {row.text}
                                     </div>
                                 )})
                             }
+                            </div>
                         </td>
                         {/* This is the column adjustment's part */}
                         <td>
@@ -67,8 +70,8 @@ import {ImSigma} from "react-icons/im";
                             {totalColumns.map(totalColumn =>{
                                 return(
                                     //  <div>
-                                    <div key={parseInt(Math.random() * 10000)} className="sigma-total-rounded-box">
-                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <p> {totalColumn.text}</p>
+                                    <div className="sigma-total-rounded-box">
+                                <ImSigma className="sigma-icon" style={{size:"10px"}} /> <text> Total</text>
                                 
                             </div>
                             // {/* {total.map(row => {
@@ -84,7 +87,7 @@ import {ImSigma} from "react-icons/im";
                             })}
                             {addedColumn.map(col => {
                                 return(
-                                    <div key={parseInt(Math.random() * 10000)} style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenColumnStatus, col)}} onClick={() => props.onChoosingColumn(col)} className="selected--expression--box"> 
+                                    <div key={parseInt(Math.random() * 10000)} style={{backgroundColor: onChangingColorBasedOnClickStatus(props.chosenColumnStatus, col)}} onClick={() => props.onChoosingColumn(col)} className="selected--editing--box"> 
                                         {col.text}
                                     </div>
                                 )})

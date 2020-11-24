@@ -13,9 +13,11 @@
     margin-left:10px;
     font-family:var(--global-font-family) ;
     color: #FCC216;
+    font-weight: bold;
 }
 .name{
     margin-left:10px;
     color: #4F3C06; 
+    font-size: 15px;
     font-family:var(--global-font-family) ;
 }
