@@ -36,46 +36,20 @@
     color:#7a818c;
 }
 .buttons-4{
-    display: flex;
     margin-left: 600px;
 }
 .button-1{
     height: 30px;
     width: 100px;
-    margin-left: 50px;
+    margin-left: 800px;
     background-color:#fcc216 ;
     text-align: center;
     border-radius: 5px;
     padding-top: 5px;
     cursor: pointer;
+    color:white;
 }
 .button-1:hover{
-    opacity: 0.75;
-}
-.button-2{
-    height: 30px;
-    width: 200px;
-    margin-left: 50px;
-    background-color:#fcc216 ;
-    text-align: center;
-    padding-top: 5px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-.button-2:hover{
-    opacity: 0.75;
-}
-.button-3{
-    height: 30px;
-    width: 250px;
-    margin-left: 50px;
-    background-color:#fcc216 ;
-    text-align: center;
-    padding-top: 5px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-.button-3:hover{
     opacity: 0.75;
 }
 .content-area{
@@ -83,7 +57,7 @@
     height: 100%;
     padding-top: 10px;
 }
-.item-1 div, input[type="checkbox"]{
+.item-1 div, .item-1 input[type="checkbox"]{
     display: none;
 }
 .item-1{
@@ -94,7 +68,7 @@
     display: block;
     overflow: scroll;
 }
-.item-2 div, input[type="checkbox"]{
+.item-2 div, .item-2 input[type="checkbox"]{
     overflow: scroll;
     background-color: white;
     display: none;
@@ -107,7 +81,7 @@
     border-bottom: 2px dotted #4F3C06;
 
 }
-.item-3 div, input[type="checkbox"]{
+.item-3 div, .item-3 input[type="checkbox"]{
     display: none;
     overflow: scroll;
     background-color: white;

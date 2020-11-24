@@ -1,0 +1,17 @@
+.header-component {
+  background-color: #ffd066;
+}
+.element-header {
+  width: 300px;
+  text-align: center;
+  border-right: 1px solid black;
+  height: 40px;
+}
+.select-option{
+    height: 100%;
+    outline: none !important;
+    border: 0px solid white;
+    margin-left: 50px;
+    width:20px;
+    margin-right:-5px;
+}

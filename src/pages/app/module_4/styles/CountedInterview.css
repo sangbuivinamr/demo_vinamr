@@ -1,39 +1,13 @@
 @import "../../styles/GlobalStyles.css";
-.table-1{
-    background-color: #f2f2f2;
-    padding: 1%;
-    overflow:scroll;
+.tab-1{
+    background-color: white;
+    width: 1480px;
+    border: 3px solid var(--global-background-color);
 }
-.table-1 >tr{
-    /* display: inline-block; */
-}
-.table-1> table{
+.tab-1> table{
     border-spacing: 0px;
-    border: 3px solid var(--global-background-color)
+    width:1450px;
 }
-.cell-header td{
-    border: 1px solid black;
-    border-spacing: 10px;
-    display: inline-flexbox;
-}
-thead{
-    display: flex;
-    margin-left: 30px;
-}
-td{
-    vertical-align: middle;
-}
-.cell-body td{
-    border-right:1px solid black;
-    border-top:1px solid black ;
-    border-spacing: 0px;
-    margin-left: 20px;
-    width: 30px;
-    text-align: center;
-    white-space: nowrap;
-}
-.select-option{
-    width: 10px;
-    padding: 7px;
-    height: 25px;
+.table-1 td{
+    border: 1px solid black
 }

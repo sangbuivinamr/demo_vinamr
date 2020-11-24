@@ -19,10 +19,6 @@
     width: 30px;
     border-spacing: 10px;
 }
-thead{
-    display: flex;
-    margin-left: 30px;
-}
 td{
     vertical-align: middle;
 }
@@ -34,9 +30,4 @@ td{
     width: 30px;
     text-align: center;
     white-space: nowrap;
-}
-.select-option{
-    width: 10px;
-    padding: 7px;
-    height: 25px;
 }
