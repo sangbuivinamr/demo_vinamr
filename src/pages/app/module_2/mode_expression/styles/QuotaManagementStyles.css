@@ -64,7 +64,7 @@
   cursor: pointer;
   margin-left: -1px;
   font-family: var(--global-font-family);
-  margin-right: 20%;
+  margin-right: 0px;
 }
 .select > option {
   color: white;
@@ -77,7 +77,7 @@
   margin-top: 20px;
   color: var(--global-color-2);
   margin-right: 50px;
-
+  margin-left: 100px;
   font-family: var(--global-font-family);
   white-space: nowrap;
 }
