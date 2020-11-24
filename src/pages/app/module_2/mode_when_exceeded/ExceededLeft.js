@@ -1,84 +1,56 @@
 /*
  *Contributor: Tien 30/10/2020
- *Main function: render layout left 
+ *Main function: render layout left
  */
 
- //Packages
+//Packages
 import React from "react";
-
+import BodyExceeded from "../../../../components/app/BodyExceeded";
+import HeaderExceeded from "../../../../components/app/HeaderExceeded";
 
 //Styles
 import "./styles/ExceededLeft.css";
 
+const ExceededLeft = (props) => {
+  let dataFromBE = props.dataExceeded;
+  let dataHeaderBE = props.dataExceeded.colList;
+  let dataBodyBE = props.dataExceeded;
+  let apply = props.apply;
+  let applyAll = props.applyAll;
 
-const ExceededLeft =(props)=>{
-    const exceededLeft= props.exceededLeft;
-    const exceededLeftHeader=props.exceededLeftHeader ;
-    const exceededLeftSex = props.exceededLeftSex
-    const renderHeaderLayoutLeft =() =>{
-        return exceededLeftHeader && exceededLeftHeader.map(({quota_index,quota_label,exceeded_sex})=>
-        {
-            return ((
-            <th 
-                className="header-left" 
-                key={quota_index}
-                onClick ={(e)=>{
-                    console.log(e.target.innerText)
-                }}
-
-            > 
-                {quota_label}
-            </th>
-            
-            ))
-        })
-    }
-    
-    const renderExceedBodyLeft =()=>{
-        
-        // const isClicked=()=>{
-        //     style={{background-color:#ffefcc}}
-        // }
-        return exceededLeft && exceededLeft.map(({ type_index,type_car,check})=>{
-            return(
-                    <tr key={type_index}>
-                        <td className="body-exceeded-left">{type_car}</td>
-                        {check.map((count) => {
-                            return(
-                            <td
-                                className="cell"
-                                onClick = {(e) => {
-                                    console.log("e",e)
-                                    console.log("text",e.target.innerText)
-                                    console.log(e.target.parentNode.childNodes[0].innerText)
-                                }}
-                            >
-                                {count}
-                            </td>
-                        )}
-                        )}
-                        
-                    </tr>
-            )})
-    }
-    return(
-        <div className="main-table">
-            <table>
-                <thead>
-                    <tr>
-                        <td></td>
-                        {renderHeaderLayoutLeft()}
-                    </tr>
-                </thead>
-                <tbody>
-                    {renderExceedBodyLeft()}
-                    
-                </tbody>
-                
-                
-            </table>
-        </div>
-    )
-
-}
+  //Function send data of the table to parent component
+  const sendDataParent = (e, indexCell) => {
+    props.onChoosingCell(e, indexCell);
+  };
+  const sendIndex = (indexCell) => {
+    props.sendIndex(indexCell);
+  };
+  if (dataFromBE.length === 0) {
+    return <div></div>;
+  }
+  return (
+    <div className="main-table">
+      <table>
+        <thead>
+          <tr>
+            <td></td>
+            <HeaderExceeded dataHeader={dataHeaderBE} />
+          </tr>
+        </thead>
+        <tbody>
+          <BodyExceeded
+            dataBody={dataBodyBE}
+            value={props.value}
+            apply={apply}
+            applyAll={applyAll}
+            sendDataParent={(e, indexCell) => {
+              sendDataParent(e, indexCell);
+            }}
+            sendIndex={(indexCell) => sendIndex(indexCell)}
+          />
+        </tbody>
+      </table>
+    </div>
+  );
+};
 export default ExceededLeft;

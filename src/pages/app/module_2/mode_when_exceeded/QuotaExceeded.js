@@ -1,247 +1,340 @@
 //Packages
-import React,{useState} from "react";
-import { IoIosArrowRoundUp } from "react-icons/io";
-import {IoIosArrowRoundDown} from "react-icons/io";
-import {IoMdClose} from "react-icons/io";
-import {IoIosSave} from "react-icons/io";
-import {IoIosUndo} from "react-icons/io";
-import {IoIosRedo} from "react-icons/io";
+import React, { useState, useEffect } from "react";
+import { IoIosSave } from "react-icons/io";
 import ExceededLeft from "./ExceededLeft";
 import QuotaName from "./QuotaName";
 import ActionExceeded from "./ActionExceeded";
 import Message from "./Message";
+import axios from "axios";
 
 //Styles
 import "./styles/QuotaExceeded.css";
 
 //Data
-import {QUOTA_OVERVIEW_DATA, EXCEEDED_LAYOUT_LEFT,EXCEEDED_SEX_LEFT} from "../../../../data/testing-data";
+import { QUOTA_OVERVIEW_DATA } from "../../../../data/testing-data";
 
-const QuotaExceeded = (props)=>{
-    const [selectedExpression, setSelectedExpression] = useState("");
-    const [highlightedSlide, setHightlightedSlide] = useState(1);
-    const [quotaData, setQuotaData] = useState(QUOTA_OVERVIEW_DATA);
-    const [quotaInput, setQuotaInput] = useState({
-        quota_index: null,
-        quota_label: "",
-        quota_expression: ""
-    })
-    const [quotaClickStatus, setQuotaClickStatus] = useState({
-        quotaLabel: "", 
-        status: false
-    })
+//Default URL
+const URL_DATA_EXCEEDED = "https://115.73.222.254:8000/quota/quotaExceeded";
+const QuotaExceeded = (props) => {
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
+  //Initial States
 
-    const [name,setName]=useState("");
-    const [message,setMessage]=useState("");
+  const [quotaInput, setQuotaInput] = useState({
+    quota_index: null,
+    quota_label: "",
+    quota_expression: "",
+  });
+  const [quotaClickStatus, setQuotaClickStatus] = useState({
+    quotaLabel: "",
+    status: false,
+  });
+  const [typeCar, setTypeCar] = useState("");
+  const [notification, setNotification] = useState({
+    notification: "",
+  });
+  const [city, setCity] = useState("");
+  const [selectedExceeded, setSelectedExceeded] = useState("exceeded"); // Initialize the state, so when the user navigate to this mode, the mode will have the mode is interview in the option
+  const [clicked, setClicked] = useState(false);
+  const [dataExceeded, setDataExceeded] = useState([]);
+  const [text, setText] = useState();
+  const [indexCell, setIndexCell] = useState();
+  const [placeHolder, setPlaceHolder] = useState();
+  const [action, setAction] = useState();
+  const [actionPlaceholder, setActionPlaceholder] = useState();
+  const [actionExceeded, setActionExceeded] = useState();
+  const onCheckingNotAnyHighlightedQuota = () =>
+    quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
+  const onCheckingNotAnyInputtedQuota = () =>
+    quotaInput.quota_index === null &&
+    quotaInput.quota_label === "" &&
+    quotaInput.quota_expression === "";
 
+  /**
+   * @summary The function naviagte to another page
+   * @param {*} e
+   * @return void
+   */
+  const onChangeNav = (e) => {
+    props.history.push(`/${e.target.value}`);
+  };
 
-    const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
-    const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
-    
+  /*******************************GET DATA***********************************/
+  /**
+   * @summary Function useEffect
+   * @return void
+   */
+  useEffect(() => {
+    getDataExceeded("1");
+  }, []);
 
-    /**
-     * @summary Add a quota row to the table
-     */
-    const onAddingQuota = () => {
-
-        // Check if the user has actually inputted a quota
-        if(onCheckingNotAnyInputtedQuota()){
-            alert("You haven't typed any quota")
-            return;
-        }
-
-        let newQuotaData = quotaData.concat(quotaInput);
-
-        setQuotaData(newQuotaData);
-
-        // After we've added a quota, the input will be cleaned up
-        setQuotaInput({
-            quota_index: null,
-            quota_label: "",
-            quota_expression: ""
-        })
-    }
-
-    /**
-     * @summary Handle the input change for the label input in the quota table
-     * @param {string} quota_label The label (aka value of the input at the label column)
-     */
-    const onAddingQuotaLabel = (quota_label) => {
-        let newQuotaInput = {
-            quota_index: quotaData.length,
-            quota_label: quota_label,
-            quota_expression: quotaInput.quota_expression
-        };
-
-        setQuotaInput(newQuotaInput)
-        
-    }
-
-    /**
-     * @summary Handle the input change for the expression input in the quota table
-     * @param {string} quota_expression The expression (aka value of the input at the expression column) 
-     */
-    const onAddingQuotaExpression = (quota_expression) => {
-        let newQuotaInput = {
-            quota_index: quotaData.length,
-            quota_label: quotaInput.quota_label,
-            quota_expression: quota_expression
-        }
-        setQuotaInput(newQuotaInput)
-    }
-
-    /**
-     * @summary Make the selected (clicked) row to be highlighted
-     * @param {string} quotaLabel The label of the current selected quota row
-     */
-    const onChoosingQuota = (quotaLabel) => {
-
-        let newQuotaStatus = {
-            quotaLabel: quotaLabel,
-            status: true
-        }
-        setQuotaClickStatus(newQuotaStatus);
-    }
-
-    /**
-     * @summary Delete the selected quota row in the table
-     */
-    const onDeletingQuota = () => {
-        if(onCheckingNotAnyHighlightedQuota()){
-            alert("Please indicate the quota you want to remove!")
-            return;
-        }
-        let currentQuotaData = [];
-        currentQuotaData = currentQuotaData.concat(quotaData);
-
-        // Filter out the selected quota row
-        let newQuotaData = currentQuotaData.filter(quota => quota.quota_label !== quotaClickStatus.quotaLabel)
-        setQuotaData(newQuotaData);
-
-    }
-
-       /**
-     * @summary returning the valid expression if matching, else return an empty string ""
-     * @param {string} expression the selected expression
-     */
-    const returningValidExpression = (expression) => {
-  
-        const verifiedExpression = /^([S]\d+[=]\d+)*/g;
-         const getExpresssion = expression.match(verifiedExpression); 
-          
-        return getExpresssion[0];
-    }
-     /**
-     * @summary Handling the highlighted text
-     * @return the index of the slide
-     * @param {string} expression the selected expression
-     */
-      const handleExpressionHighlight = () => {
-      var selectedText = window.getSelection().toString();
-      
-       selectedText =  returningValidExpression(selectedText);
-        if(selectedText !== "") 
-        {
-        
-        setSelectedExpression(selectedText);
-        selectedText = selectedText.match(/(\d+)/);
-        const slide = parseInt(selectedText);
-        setHightlightedSlide(slide);
-        } 
-      }
-    const onChangeNav=(e)=>{  props.history.push(`/${e.target.value}`) }
-
-    const onChangeName=(newName)=>{
-        setName({name:newName});
-    }
-    return(
-        <div className="exceeded">
-             <div className="exceeded exceeded-bar">
-                <h2 className="h2-exceeded">
-                    QUOTA SETTINGS
-                    
-                </h2>
-                <div className="up">
-                    <i>
-                    <IoIosUndo
-                        className="up icon"
-                        // onClick={() => onUndo()}
-                    />
-                    </i>
-                </div>
-                <div className="up">
-                    <i>
-                    <IoIosRedo
-                        className="up icon"
-                        // onClick={() => onRedo()}
-                    />
-                    </i>
-                </div>
-                <div className="up">
-                    <i>
-                    <IoIosSave
-                        className="up icon"
-                        onClick={onAddingQuota}
-                    />
-                    </i>
-                </div>
-                <div className="mode-exceeded">
-                    Mode: 
-                </div>
-                    <select className="select" onChange={onChangeNav} /*value={}*/>
-                        <option
-                            value=""
-                        > 
-                            Expression 
-                        </option>
-                        <option 
-                            value="editing"
-                        >
-                            Editing 
-                        </option>
-                        <option
-                            value="exceeded"
-                        >
-                            When Exceeded 
-                        </option>
-                        <option 
-                            value="tracking"
-                        >
-                            Tracking
-                        </option>
-                    </select>
-                    <h2 className="review">
-                        ACTION & MESAGES
-                    </h2>
-            </div>
-            <div className="layouts">
-                <div className="layout-left">
-                    <ExceededLeft 
-                        exceededLeft={ EXCEEDED_LAYOUT_LEFT}
-                        exceededLeftHeader={QUOTA_OVERVIEW_DATA}
-                        exceededLeftSex={EXCEEDED_SEX_LEFT} 
-                    />
-                </div>
-                <div className="layout-right">
-                    <div>
-                        <QuotaName 
-                            name={name}
-                        />
-                    </div>
-                    <div>
-                        <ActionExceeded/>
-                    </div>
-                    <div>
-                        <Message
-                            mess={message}
-                        /> 
-                    </div>                       
-                </div>
-            </div>
-                
-                
-        </div>
+  const getDataExceeded = async (projectId) => {
+    const response = await axios.get(
+      URL_DATA_EXCEEDED + `?projectId=${projectId}`
     );
+    let dataTable = response.data;
+    setDataExceeded(dataTable);
+  };
+
+ 
+  /*************************************************************************/
+
+  const sendIndex = (indexCell) => {
+    setIndexCell(indexCell);
+  };
+
+  /**
+   * @summary This function take the data from chilren to parent
+   * @param {*} e took from table layout left
+   * @return void
+   */
+  const onChoosingCell = (e, indexCell) => {
+    //The cellClicked will define which index the user clicked on the table to match with the header
+    let cellClicked = e.target.cellIndex;
+
+    //The data cell in the table
+    let type_car = e.target.parentNode.childNodes[0].innerText;
+    let notification = e.target.innerText;
+    //The header in the table
+    let city =
+      e.target.offsetParent.childNodes[0].childNodes[0].cells[cellClicked]
+        .innerText;
+    // set 2 state for compononent QuotaName
+    setTypeCar(type_car);
+    setCity(city);
+    let dataAction = dataExceeded.data[indexCell].action;
+    setActionPlaceholder(dataAction);
+    // set state for component Message
+    setPlaceHolder(notification);
+    let mode =dataExceeded.data[indexCell].selected
+    setActionExceeded(mode)
+    console.log("mode",mode)
+  };
+  /**
+   * @summary This function pass from children to parent
+   * @param {*} e The param pass from Exceeded Left component to parent component
+   * @return void
+   */
+  const handleClicked = () => {
+    setClicked(!clicked);
+    setPlaceHolder("");
+  };
+
+  /**
+   * @summary the function handle input of the textarea
+   * @param text
+   * @return void
+   */
+  const onChangeText = (text) => {
+    setText(text);
+  };
+  /**
+   * @summary the function handle input of action
+   * @param action
+   * @return void
+   */
+  const onChangeAction = (action) => {
+    setAction(action);
+  };
+  /**
+   *@summary The function onClick Apply button
+   *@return void
+   */
+  const onApply = () => {
+    let i;
+    let dataLength = dataExceeded.length;
+    let arrayLength = dataExceeded.data.length;
+
+    //Clear the data cell when user click on checkbox
+    if (dataLength !== 0) {
+      if (indexCell !== undefined && clicked === true) {
+        for (i = 0; i < arrayLength; i++) {
+          if (indexCell === i) {
+            let temp = dataExceeded;
+            temp.data[i].maxQuota = "";
+            setDataExceeded(temp);
+          }
+        }
+      }
+
+      //Update the cell in the table when user input
+      if (indexCell !== undefined && clicked === false) {
+        for (let i = 0; i < arrayLength; i++) {
+          if (indexCell === i) {
+            let newData = dataExceeded;
+            newData.data[i].maxQuota = text;
+            setDataExceeded(newData);
+          }
+        }
+      }
+
+      //The alert will be shown when user neither choosing a cell on table nor clicked check box
+      if (indexCell === undefined && clicked !== true) {
+        alert("CHOOSE THE CELL YOU WANT TO CHANGE!");
+      }
+      forceUpdate();
+    }
+  };
+
+  const onApplyAll = () => {
+    let arrayLength = dataExceeded.data.length;
+
+    // User can input and apply All to change the cell in the table without clicking check box
+    if (clicked === true) {
+      for (let i = 0; i < arrayLength; i++) {
+        let newData = dataExceeded;
+        newData.data[i].maxQuota = "";
+        setDataExceeded(newData);
+      }
+    } else {
+      for (let i = 0; i < arrayLength; i++) {
+        let newData = dataExceeded;
+        newData.data[i].maxQuota = text;
+        setDataExceeded(newData);
+      }
+    }
+    forceUpdate();
+  };
+
+  /**
+   *@summary The function onClick Apply button
+   *@return void
+   */
+  const onApplyAction = () => {
+    let dataLength = dataExceeded.length;
+    let arrayLength = dataExceeded.data.length;
+
+    //Clear the data cell when user click on checkbox
+    if (dataLength !== 0) {
+      //Update the cell in the table when user input
+      if (indexCell !== undefined) {
+        for (let i = 0; i < arrayLength; i++) {
+          if (indexCell === i) {
+            let temp = dataExceeded;
+            temp.data[i].action = action;
+            let selected = dataExceeded;
+            selected.data[i].selected = actionExceeded
+            setDataExceeded(temp,selected);
+            console.log("check",dataExceeded)
+          }
+        }
+      }
+
+      //The alert will be shown when user neither choosing a cell on table nor clicked check box
+      if (indexCell === undefined) {
+        alert("CHOOSE THE CELL YOU WANT TO CHANGE!");
+      }
+      forceUpdate();
+    }
+  };
+
+  const onApplyAllAction = () => {
+    let arrayLength = dataExceeded.data.length;
+
+    // User can input and apply All to change the cell in the table without clicking check box
+    for (let i = 0; i < arrayLength; i++) {
+      let temp = dataExceeded;
+      temp.data[i].action = action;
+      let selected =dataExceeded;
+      selected.data[i].selected = actionExceeded
+      setDataExceeded(temp,selected);
+      console.log("nwe",temp)
+    }
+
+    forceUpdate();
+  };
+  const selectAction = (actionExceeded) => {
+
+    setActionExceeded(actionExceeded);
+  };
+
+   /**
+   * @summary The function save and push the data from client slide to server
+   * @param
+   * @return void
+   */
+  const onSave = (projectId) => {
+    axios.post(URL_DATA_EXCEEDED + `?projectId=${projectId}`, dataExceeded);
+  };
+  return (
+    <div className="exceeded">
+      <div className="exceeded exceeded-bar">
+        <h2 className="h2-exceeded">QUOTA SETTINGS</h2>
+        <div className="up">
+          <i>
+            <IoIosSave className="up icon" onClick={() => onSave("1")} />
+          </i>
+        </div>
+        <div className="mode-exceeded">Mode:</div>
+        <select
+          className="select"
+          onChange={onChangeNav}
+          value={selectedExceeded} //Initialize state for the mode when user naivgate to this mode
+        >
+          <option value="">Expression</option>
+          <option value="editing">Editing</option>
+          <option value="exceeded">When Exceeded</option>
+          <option value="tracking">Tracking</option>
+          <option value="interview">Interview Preview</option>
+        </select>
+        <h2 className="review">ACTION & MESAGES</h2>
+      </div>
+      <div className="layouts">
+        <div className="layout-left">
+          <ExceededLeft
+            dataExceeded={dataExceeded}
+            onChoosingCell={(e, indexCell) => onChoosingCell(e, indexCell)}
+            value={text}
+            sendIndex={(indexCell) => sendIndex(indexCell)}
+            // setQuotaClickStatus={setQuotaClickStatus}
+            // onChoosingQuota={(e) => onChoosingQuota(e)}
+            // quotaClickStatus={quotaClickStatus}
+          />
+        </div>
+        <div className="layout-right">
+          <div>
+            <QuotaName dataCityTable={city} dataCarTable={typeCar} />
+          </div>
+          <div>
+            <ActionExceeded
+              onApply={() => onApplyAction(action,actionExceeded)}
+              placeHolder={actionPlaceholder}
+              onApplyAll={() => onApplyAllAction(action)}
+              value={action}
+              selectedMode = {actionExceeded}
+              actionPlaceholder={actionPlaceholder}
+              onChangeAction={(action) => onChangeAction(action.target.value)}
+              selectAction={selectAction}
+            />
+          </div>
+          <div>
+            <Message
+              mess={placeHolder}
+              onApply={() => onApply(text)}
+              onApplyAll={() => onApplyAll(text)}
+              handleClicked={(e) => handleClicked(e)}
+              value={text}
+              onChangeText={(text) => onChangeText(text.target.value)}
+              sendIndex={(indexCell) => sendIndex(indexCell)}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default QuotaExceeded;
+
+/**
+ * TODO
+ * @summary Make the selected (clicked) row to be highlighted
+ * @param {string} exceededCell The cell of the current selected quota row
+ */
+// const onChoosingQuota = (exceededCell) => {
+//   let newQuotaStatus = {
+//     quotaLabel: exceededCell,
+//     status: true,
+//   };
+//   setQuotaClickStatus(newQuotaStatus);
+// };
