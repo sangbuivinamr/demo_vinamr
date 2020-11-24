@@ -1,13 +1,24 @@
 @import "../../styles/GlobalStyles.css";
 .tab-1{
     background-color: white;
-    width: 1480px;
+    width: 1467px;
     border: 3px solid var(--global-background-color);
+    margin-left: 30px;
+
 }
 .tab-1> table{
     border-spacing: 0px;
     width:1450px;
 }
 .table-1 td{
-    border: 1px solid black
+    border: 1px solid black;
+}
+.table-1 tbody{
+    width: 300px;
+    
+}
+.select-option-body{
+    outline: none !important;
+    width: 20px;
+    float: right;
 }

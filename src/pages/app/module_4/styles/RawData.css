@@ -62,6 +62,7 @@
 }
 .item-1{
     border-top: 2px dotted #4F3C06;
+    
 }
 .item-1 input:checked ~div{
     background-color: white;

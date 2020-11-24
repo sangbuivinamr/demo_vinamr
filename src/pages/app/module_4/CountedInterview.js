@@ -29,7 +29,15 @@ const CountedInterview = (props) => {
             <tr key={index} className="body-counted">
               <td>{interviewId}</td>
               <td>{completed}</td>
-              <td>{status}</td>
+              <td>
+                {status}
+                <select className="select-option-body">
+                  <option>Pending QC (1)</option>
+                  <option>Approved</option>
+                  <option>Pending QC (2)</option>
+                  <option>Pending FW</option>
+                </select>
+              </td>
               <td>{endTime}</td>
               <td>{audio}</td>
               <td>{photos}</td>
@@ -46,7 +54,7 @@ const CountedInterview = (props) => {
     <div className="tab-1">
       <table className="table-1">
         <HeaderRawData />
-        <tbody >{renderBody()}</tbody>
+        <tbody>{renderBody()}</tbody>
       </table>
     </div>
   );

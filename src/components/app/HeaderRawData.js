@@ -34,10 +34,10 @@ const HeaderRawData = (props) => {
           {key}
           {isHeaderNeeded.includes(key) ? (
             <select className="select-option">
-              <option>hi</option>
-              <option>hi2</option>
-              <option>hi2</option>
-              <option>hi2</option>
+              <option>Pending QC (1)</option>
+              <option>Pending FW</option>
+              <option>Pending FW</option>
+              <option>Pending FW</option>
             </select>
           ) : null}
         </th>
