@@ -19,4 +19,3 @@ module.exports = async () => new Promise(
        resolve(connection);
      })
     });
-

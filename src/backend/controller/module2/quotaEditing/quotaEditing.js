@@ -1,5 +1,5 @@
-const dbConnection = require('../../database/mysql/mysql_connect')
-const sqlQuery = require('../../database/mysql/mysql_query')
+const dbConnection = require('../../../database/mysql/mysqlConnect')
+const sqlQuery = require('../../../database/mysql/mysqlQuery')
 
 //APi để get dữ liệu trong databse để hiện thị ở trang quota editing
 module.exports.getTable = async (req, res, next) => {

@@ -6,6 +6,7 @@ const EditingTable = (props) => {
 
     const TOTAL = "Total" // In case of changing TOTAL into "Tổng Cộng"
     const [tableData,setTableData] = useState(props.editingTableData);
+<<<<<<< HEAD
     //The useEfect is to make sure the state is updating
     useEffect(() => {
         setTableData(props.editingTableData);
@@ -40,9 +41,13 @@ const EditingTable = (props) => {
     console.log("Editing Table - totalRowID ",totalRowIDList);
     console.log("Editing Table - totalColID ",totalColIDList);
 
+=======
+    //Rendering the header of the table 
+>>>>>>> Tracking
     const renderHeaderLayoutLeft =(props) =>{
         if(props === undefined) return null;
         // console.log(" Render column props", props)
+<<<<<<< HEAD
         return props.columnList && props.columnList.map((row)=>
         {  if (row.text === TOTAL) //Styling the total Row
         return[
@@ -54,12 +59,57 @@ const EditingTable = (props) => {
         ];
            else return ((
             <th className="header-left"> {row.text}</th>
+=======
+        return props.colList && props.colList.map((col)=>
+        {   
+            return ((
+            <th className="header-left"> {col.text}</th>
+>>>>>>> Tracking
             
             ))
         })
     }
+<<<<<<< HEAD
 
     
+=======
+    const handleTotalRow = (props) =>{
+        
+        let tempTotal;
+        for(const row of props)
+        {   
+            tempTotal = row.reduce((first,{maxQuota}) => first + maxQuota,0);
+            totalRow.push(tempTotal);
+        }
+   
+    }
+    handleTotalRow(tableData.data) /// Implement this function right away to calculate the sum of all row and columns 
+    const sumOfAllCells = totalRow.reduce((first,   last) => first+ last,0);
+    
+    const handleTotalColumn = (props) => {
+        // console.log("Handle Total Column props", props)
+        let indexOfRow, indexOfColumn;
+
+        for(const column of props.colList){
+            totalCol.push(0);
+            for (const row of props.rowList)
+            {
+                indexOfColumn = props.colList.indexOf(column);
+                indexOfRow = props.rowList.indexOf(row)
+                totalCol[indexOfColumn] += props.data[indexOfRow][indexOfColumn].maxQuota;
+            }
+        }
+      
+   
+           
+             
+                
+         }
+    
+
+    handleTotalColumn(tableData); ///Implement the function right away to calculate the sum of all row and columns 
+
+>>>>>>> Tracking
     const renderTableRowOfColTotals = (props) => {
 
         return(
@@ -89,6 +139,7 @@ const EditingTable = (props) => {
         console.log('NIGGA' , props);
         if(props === undefined) return null;
         let i = -1; // Need i to print out the rowList 
+<<<<<<< HEAD
        
         return props.dataList && props.dataList.map(row=>{
           {  i++;
@@ -123,9 +174,22 @@ const EditingTable = (props) => {
                                 <td key={cell.columnID} className="cell">
                                 <input type = 'number' value = {parentProps.getValue(cell.rowID , cell.columnID)} onChange = {(e) => {parentProps.changeValue(cell.rowID, cell.columnID , e.target.value)}}/>
                             </td>
+=======
+        // console.log("render Editing body",props)
+        return props.data && props.data.map(row=>{
+          {  i++;
+            return(
+                    <tr>
+                        <td className="body-exceeded-left">{props.rowList[i].text}</td>
+                        {row.map(({maxQuota}) => {
+                            return(
+                                <td className="cell">
+                                    {maxQuota}
+                                </td>
+>>>>>>> Tracking
                             )
                         })}
-                        {/* <td className="header-left-total">{totalRow[i]}</td> */}
+                        <td className="header-left-total">{totalRow[i]}</td>
                        
                     </tr>,
                    <tr> {props.rowList[i].text === TOTAL ? (<td style={{height:"10px"}}></td>) : 
@@ -134,9 +198,15 @@ const EditingTable = (props) => {
                     }
         })
     }
+<<<<<<< HEAD
     //if (tableData.columnList.length < 1 || tableData.rowList.length < 1 ) return (null)
     return  (
         <div className="main-editing-table">
+=======
+    if (tableData.colList.length < 1 || tableData.rowList.length < 1 ) return (null)
+    else return  (
+        <div className="main-table">
+>>>>>>> Tracking
 
             <table>
                 <thead>
@@ -148,8 +218,13 @@ const EditingTable = (props) => {
                     </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                     {renderEditingBody(tableData, props)}
                  
+=======
+                    {renderEditingBody(tableData)}  
+                    {renderTableRowOfColTotals(totalCol)}
+>>>>>>> Tracking
                 </tbody>
                 
                 

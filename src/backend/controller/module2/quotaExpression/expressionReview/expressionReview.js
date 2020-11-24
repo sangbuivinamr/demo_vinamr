@@ -1,39 +1,30 @@
-const dbConnection = require('../../database/mysql/mysql_connect')
-const sqlQuery = require('../../database/mysql/mysql_query')
+const dbConnection = require('../../../../database/mysql/mysqlConnect')
+const sqlQuery = require('../../../../database/mysql/mysqlQuery')
 const checkData = require('./checkData')
-
-// module.exports.checkForm = async (req, res, next) => {
-//     try {
-//         let connection = await dbConnection()
-//         let query = 'SELECT * FROM sys.json_data WHERE projectID="' + req.query.projectId + '" ORDER BY stt DESC LIMIT 1'
-//         let getResult = await sqlQuery(connection, query)
-//         var parse = JSON.parse(getResult[0].surveyjson.slice(1, getResult[0].surveyjson.length - 1))
-//         for (var page of parse.pages) {
-//             if (page.elements) {
-//                 for (let i = 0; i < page.elements.length; i++) {
-//                     for (var question of page.elements) {
-//                         console.log(question) 
-//                     }
-//                 }
-//             }
-//         }
-//     }
-//     catch (err) {
-//         console.log(err)
-//     }
-// }
 
 module.exports.getCodeExpression = async (req, res, next) => {
     try {
+        if (req.query.projectId === undefined) {
+            return res.status(404).json({
+                error: "unknown projectId"
+            })
+        }
         let connection = await dbConnection()
+        //Query survey mới nhất theo ProjectID
         let query = 'SELECT * FROM sys.json_data WHERE projectID="' + req.query.projectId + '" ORDER BY stt DESC LIMIT 1'
         let getResult = await sqlQuery(connection, query)
+        //Parse kết quả Query thành json
         var parse = JSON.parse(getResult[0].surveyjson.slice(1, getResult[0].surveyjson.length - 1))
+        //vòng for đầu tiên để duyệt dừng trang trong survey
         for (var page of parse.pages) {
+            //nếu trang có element đồng nghĩa trang đó sẽ có question
             if (page.elements) {
+                //Mỗi element sẽ chứa 1 question và Element là 1 array question.
                 for (let i = 0; i < page.elements.length; i++) {
+                    //Duyệt qua từng Question để tìm ra Question có Code map với Code truyền vào trong Request
                     for (var question of page.elements) {
                         if (question.name == req.query.code) {
+                            //Check loại câu hỏi và dùng hàm check trong CheckData để lọc theo từng loại câu hỏi
                             var child = await checkData.check(question)
                             var result = {
                                 code: question.name,
@@ -47,7 +38,6 @@ module.exports.getCodeExpression = async (req, res, next) => {
                 }
             }
         }
-        
         return res.json({
             massage: "no matching result"
         })

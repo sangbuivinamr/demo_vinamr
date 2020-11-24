@@ -31,38 +31,13 @@ const QuotaExceeded = (props)=>{
         status: false
     })
 
+    const [name,setName]=useState("");
+    const [message,setMessage]=useState("");
+
+
     const onCheckingNotAnyHighlightedQuota = () => quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
     const onCheckingNotAnyInputtedQuota = () => quotaInput.quota_index === null && quotaInput.quota_label === "" && quotaInput.quota_expression === "";
     
-    /**
-     * @summary Swap the quota row in the table
-     * @param {string} swapType The type of the swap: UP/ DOWN
-     */
-    const onSwappingQuotaRow = (swapType) => {
-
-        if(onCheckingNotAnyHighlightedQuota()) return;
-
-        const currentQuotaData = [].concat(quotaData);
-
-        let selectedQuotaIndex;
-
-        // Finding the index of the highlighted quota row
-        for(let quotaIndex = 0; quotaIndex < currentQuotaData.length; quotaIndex++){
-            if(currentQuotaData[quotaIndex]["quota_label"] === quotaClickStatus.quotaLabel) selectedQuotaIndex = quotaIndex;
-        }
-
-        // Swapping
-        const tempQuota = currentQuotaData[selectedQuotaIndex];
-        if(swapType === "UP"){
-            currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex - 1]
-            currentQuotaData[selectedQuotaIndex - 1] = tempQuota
-        }else{
-            currentQuotaData[selectedQuotaIndex] = currentQuotaData[selectedQuotaIndex + 1]
-            currentQuotaData[selectedQuotaIndex + 1] = tempQuota
-        }
-        
-        setQuotaData(currentQuotaData)
-    }
 
     /**
      * @summary Add a quota row to the table
@@ -174,11 +149,11 @@ const QuotaExceeded = (props)=>{
         setHightlightedSlide(slide);
         } 
       }
-    const onChangeNav=(e)=>{
-          
-    props.history.push(`/${e.target.value}`)
-  
-}
+    const onChangeNav=(e)=>{  props.history.push(`/${e.target.value}`) }
+
+    const onChangeName=(newName)=>{
+        setName({name:newName});
+    }
     return(
         <div className="exceeded">
              <div className="exceeded exceeded-bar">
@@ -190,7 +165,7 @@ const QuotaExceeded = (props)=>{
                     <i>
                     <IoIosUndo
                         className="up icon"
-                        onClick={() => onSwappingQuotaRow("UP")}
+                        // onClick={() => onUndo()}
                     />
                     </i>
                 </div>
@@ -198,7 +173,7 @@ const QuotaExceeded = (props)=>{
                     <i>
                     <IoIosRedo
                         className="up icon"
-                        onClick={() => onSwappingQuotaRow("DOWN")}
+                        // onClick={() => onRedo()}
                     />
                     </i>
                 </div>
@@ -249,13 +224,17 @@ const QuotaExceeded = (props)=>{
                 </div>
                 <div className="layout-right">
                     <div>
-                        <QuotaName />
+                        <QuotaName 
+                            name={name}
+                        />
                     </div>
                     <div>
                         <ActionExceeded/>
                     </div>
                     <div>
-                        <Message/> 
+                        <Message
+                            mess={message}
+                        /> 
                     </div>                       
                 </div>
             </div>
