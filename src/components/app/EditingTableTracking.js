@@ -16,13 +16,24 @@ const EditingTableTracking = (props) => {
     );
   };
 
+  const getColumnRowTotal = () => totalCol.reduce((prev, current) => prev + current) + totalRow.reduce((prev, current) => prev + current);
+  
   const renderTableRowOfColTotals = (table) => {
+
+    console.log('table in renderColTotal', table)
+    console.log('totalCol', totalCol);
+    console.log('totalRow', totalRow);
+
     return(
         <tr>
             <td className="header-left-total">Total</td>
-            {table.colList && table.colList.map((col, colIndex) => (
-                <td>{getColumnMaxQuotaTotalList(col[colIndex]["uniqueID"])}</td>
-            ))}
+            {table.colList && table.colList.map((col) => {
+
+              return(
+                <td className="cell">{getColumnMaxQuotaTotalList(col["uniqueID"])}</td>
+              )
+            })}
+            {/* <td>{getColumnRowTotal()}</td> */}
         </tr>
     )
   };
@@ -33,6 +44,11 @@ const EditingTableTracking = (props) => {
       if (el[cellType === "ROW" ? "row" : "column"] === cellId)
         maxQuotaList.push(el["maxQuota"]);
     });
+
+    console.log('maxQuotaList', maxQuotaList);
+
+    // if(cellType === "ROW") setTotalRow(maxQuotaList);
+    // else setTotalCol(maxQuotaList);
 
     return maxQuotaList;
   };
@@ -51,6 +67,7 @@ const EditingTableTracking = (props) => {
     return (
       table.rowList &&
       table.rowList.map((el, elIndex) => {
+        
         return (
           <tr>
             <td className="body-exceeded-left">
@@ -82,7 +99,7 @@ const EditingTableTracking = (props) => {
           </thead>
           <tbody>
             {renderEditingBody(tableData)}
-            {renderTableRowOfColTotals(totalCol)}
+            {renderTableRowOfColTotals(tableData)}
           </tbody>
         </table>
       </div>
