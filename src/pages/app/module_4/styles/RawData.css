@@ -1,13 +1,12 @@
 @import "../../styles/GlobalStyles.css";
 .raw-data{
     background-color: var(--global-background-color) ;
-    height: 100vh;
+    height: 100%;
     width: 100vw;
     margin-top: -10px;
     margin-left: -8px;
     position: absolute;
-    display: grid;
-    max-height:100% ;
+    /* display: grid; */
 }
 .header{
     margin-left: 30px;
@@ -54,8 +53,9 @@
 }
 .content-area{
     margin-top: 20px;
-    height: 100%;
+    height: fit-content;
     padding-top: 10px;
+    background-color: var(--global-background-color);
 }
 .item-1 div, .item-1 input[type="checkbox"]{
     display: none;

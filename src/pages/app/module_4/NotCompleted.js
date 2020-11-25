@@ -17,30 +17,30 @@ const NotCompleted = (props) => {
       bodyNotCompleted &&
       bodyNotCompleted.map(
         (
-          {
-            interviewId,
-            completed,
-            status,
-            endTime,
-            audio,
-            photos,
-            latitude,
-            longitude,
-            duration,
-          },
+          { interviewid, complete, curDate, Latitude, Longtitude, duration },
           index
         ) => {
           return (
-            <tr key={index}>
-              <td>{interviewId}</td>
-              <td>{completed}</td>
-              <td>{status}</td>
-              <td>{endTime}</td>
-              <td>{audio}</td>
-              <td>{photos}</td>
-              <td>{latitude}</td>
-              <td>{longitude}</td>
-              <td>{duration}</td>
+            <tr key={index} className="body-counted">
+              {complete === "Not Completed" ? <td>{interviewid}</td> : null}
+              {complete === "Not Completed" ? <td>{complete}</td> : null}
+              {complete === "Not Completed" ? (
+                <td>
+                  Pending PW
+                  <select className="select-option-body">
+                    <option>Pending QC (1)</option>
+                    <option>Approved</option>
+                    <option>Pending QC (2)</option>
+                    <option>Pending FW</option>
+                  </select>
+                </td>
+              ) : null}
+              {complete === "Not Completed" ? <td>{curDate}</td> : null}
+              {complete === "Not Completed" ? <td>Link</td> : null}
+              {complete === "Not Completed" ? <td>Link</td> : null}
+              {complete === "Not Completed" ? <td>{Latitude}</td> : null}
+              {complete === "Not Completed" ? <td>{Longtitude}</td> : null}
+              {complete === "Not Completed" ? <td>{duration}</td> : null}
             </tr>
           );
         }

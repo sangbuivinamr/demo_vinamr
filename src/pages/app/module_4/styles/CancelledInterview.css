@@ -15,7 +15,7 @@
 }
 .table-2 tbody{
     width: 300px;
-    
+    text-align: center;
 }
 .select-option-body{
     outline: none !important;

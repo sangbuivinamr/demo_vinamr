@@ -42,8 +42,8 @@ const RawData = (props) => {
     let dataRawCheck = response.data;
     getDataRawCheck(dataRawCheck);
   };
+  console.log("dataBE",dataRawCheck)
   
-  console.log("data22", dataRawCheck);
   return (
     <div className="raw-data">
       <div className="content-raw-data">
@@ -78,19 +78,19 @@ const RawData = (props) => {
             </label>
             <input type="checkbox" id="first" />
             <AiFillCaretRight className="arrow" />
-            <CountedInterview bodyCounted={DATA_MODULE_4_COUNTED} />
+            <CountedInterview bodyCounted={dataRawCheck} />
           </div>
           <div className="item-2">
             <label for="second">Cancelled Interviews</label>
             <input type="checkbox" id="second" />
             <AiFillCaretRight className="arrow" />
-            <CancelledInterview bodyCancelled={DATA_MODULE_4_COUNTED} />
+            <CancelledInterview bodyCancelled={dataRawCheck} />
           </div>
           <div className="item-3">
             <label for="third">Not Completed Interviews</label>
             <input type="checkbox" id="third" />
             <AiFillCaretRight className="arrow" />
-            <NotCompleted bodyNotCompleted={DATA_MODULE_4_NOT_COMPLETED} />
+            <NotCompleted bodyNotCompleted={dataRawCheck} />
           </div>
         </div>
       </div>

@@ -7,43 +7,36 @@ import "./styles/CountedInterview.css";
 
 const CountedInterview = (props) => {
   const bodyCounted = props.bodyCounted;
+
   const renderBody = () => {
     return (
       bodyCounted &&
       bodyCounted.map(
         (
-          {
-            interviewId,
-            completed,
-            status,
-            endTime,
-            audio,
-            photos,
-            latitude,
-            longitude,
-            duration,
-          },
+          { interviewid, complete, curDate, Latitude, Longtitude, duration },
           index
         ) => {
           return (
             <tr key={index} className="body-counted">
-              <td>{interviewId}</td>
-              <td>{completed}</td>
-              <td>
-                {status}
-                <select className="select-option-body">
-                  <option>Pending QC (1)</option>
-                  <option>Approved</option>
-                  <option>Pending QC (2)</option>
-                  <option>Pending FW</option>
-                </select>
-              </td>
-              <td>{endTime}</td>
-              <td>{audio}</td>
-              <td>{photos}</td>
-              <td>{latitude}</td>
-              <td>{longitude}</td>
-              <td>{duration}</td>
+              {complete === "Completed" ? <td>{interviewid}</td> : null}
+              {complete === "Completed" ? <td>{complete}</td> : null}
+              {complete === "Completed" ? (
+                <td>
+                  Pending PW
+                  <select className="select-option-body">
+                    <option>Pending QC (1)</option>
+                    <option>Approved</option>
+                    <option>Pending QC (2)</option>
+                    <option>Pending FW</option>
+                  </select>
+                </td>
+              ) : null}
+              {complete === "Completed" ? <td>{curDate}</td> : null}
+              {complete === "Completed" ? <td>Link</td> : null}
+              {complete === "Completed" ? <td>Link</td> : null}
+              {complete === "Completed" ? <td>{Latitude}</td> : null}
+              {complete === "Completed" ? <td>{Longtitude}</td> : null}
+              {complete === "Completed" ? <td>{duration}</td> : null}
             </tr>
           );
         }
