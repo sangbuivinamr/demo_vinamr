@@ -12,14 +12,14 @@ import "./styles/QuotaName.css";
 const QuotaName = (props) => {
   const renderQuotaName = () => {
     return props.dataCityTable !== "" && props.dataCarTable !== "" ? (
-      <p className="name">
+      <p className = "when-exceed--name">
         {props.dataCarTable} {"."} {props.dataCityTable}
       </p>
     ) : null;
   };
   return (
-    <div className="quota-name">
-      <p className="quota-name-p">Quota Name</p>
+    <div className="when-exceed--quota-name-area">
+      <p className="when-exceed--quota-name-p-area">Quota Name</p>
       {renderQuotaName()}
     </div>
   );

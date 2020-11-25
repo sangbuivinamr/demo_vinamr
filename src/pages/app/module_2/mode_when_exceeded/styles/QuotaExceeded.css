@@ -67,7 +67,7 @@
   color:#c69017;
 }
 
-.layouts{
+.when-exceed--layouts{
   margin-top: 130px;
   margin-left: -25px;
   width: 1200px;
@@ -76,11 +76,11 @@
   grid-template-columns: auto auto ;
   grid-gap: 10px;
 }
-.layout-left{
+.when-exceed--layout-left{
   resize: horizontal;
   font-family: var(--global-font-family);
 }
-.layout-right{
+.when-exceed--layout-right{
   color: #4F3C06;
   white-space: nowrap;
   font-family: var(--global-font-family);

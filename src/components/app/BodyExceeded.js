@@ -19,14 +19,14 @@ export default function BodyExceeded(props) {
     dataBodyExceeded.rowList.map(({ text }) => {
       return (
         <tr key={parseInt(Math.random() * 1000000)}>
-          <td className="body-exceeded-left">
+          <td className="when-exceeded--body-exceeded-left">
             {text}
           </td>
             {dataBodyExceeded.data.map(({ row, maxQuota }, index) => {
               if (row === text) {
                 return (
                   <td
-                    className="cell"
+                    className="when-exceeded--cell"
                     onClick={(e) => {
                       sendDataFromBody(e, index);
                       sendIndex(index);

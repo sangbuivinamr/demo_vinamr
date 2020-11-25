@@ -54,11 +54,11 @@ const Message = (props) => {
   let message = props.mess;
   let valueText = props.value
   return (
-    <div className = "message">
-      <div className = "two-mess">
-        <p className = "p-mess">Message</p>
+    <div className = "when-exceed--message">
+      <div className = "when-exceed--two-mess">
+        <p className = "when-exceed--p-mess">Message</p>
         <input
-          className = "check"
+          className = "when-exceed--check"
           name = "message"
           type = "checkbox"
           onClick = {(e) => {
@@ -66,23 +66,23 @@ const Message = (props) => {
             handleDisable(e);
           }}
         />
-        <p className = "no-mess">
+        <p className = "when-exceed--no-mess">
           <i>No Message</i>
         </p>
       </div>
       <textarea
-        className = "notification-area"
+        className = "when-exceed--notification-area"
         type = "text"
         disabled = {disabled}
         placeholder = {message}
         value = {valueText}
         onChange = {(text) => onChangeText(text)}
       />
-      <div className = "button-mess">
-        <div className = "apply-mess" onClick = {(text) => onApply(text)}>
+      <div className = "when-exceed--button-mess">
+        <div className = "when-exceed--apply-mess" onClick = {(text) => onApply(text)}>
           Apply
         </div>
-        <div className = "apply-all-mess" onClick = {(text) => onApplyAll(text)}>
+        <div className = "when-exceed--apply-all-mess" onClick = {(text) => onApplyAll(text)}>
           Apply to All
         </div>
       </div>
