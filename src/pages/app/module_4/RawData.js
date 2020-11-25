@@ -10,21 +10,19 @@ import { AiFillCaretRight } from "react-icons/ai";
 import CancelledInterview from "./CancelledInterview";
 import CountedInterview from "./CountedInterview";
 import NotCompleted from "./NotCompleted";
-import {
-  DATA_MODULE_4_COUNTED,
-  DATA_MODULE_4_CANCELLED,
-  DATA_MODULE_4_NOT_COMPLETED,
-} from "../../../data/testing-data";
+import axios from "axios";
 
 //Styles
 import "./styles/RawData.css";
-import axios from "axios";
 
 //Default URL
 const URL_MODULE_4 = "https://115.73.222.254:8000/rawDataCheck/getRawData";
 
 const RawData = (props) => {
   const [dataRawCheck, getDataRawCheck] = useState([]);
+  const [selectedCounted, setSelectedCounted] = useState();
+  const [selectedCancel, setSelectedCancel] = useState();
+
   /**
    *@summary Function useEffect
    *@return void
@@ -32,6 +30,7 @@ const RawData = (props) => {
   useEffect(() => {
     getRawData("0558");
   }, []);
+
   /**
    *@summary The function getData for module_4
    *@param projectId
@@ -42,8 +41,23 @@ const RawData = (props) => {
     let dataRawCheck = response.data;
     getDataRawCheck(dataRawCheck);
   };
-  console.log("dataBE",dataRawCheck)
-  
+
+  /**
+   * @summary The function handle data is cancelled
+   * @param selectedCounted
+   * @return void
+   */
+  const onChangeOptionCounted = (selectedCounted) => {
+    setSelectedCounted(selectedCounted);
+  };
+  /**
+   * @summary The function handle data is cancelled
+   * @param selectedOptionCancel
+   * @return void
+   */
+  const onChangeOptionCancel = (selectedCancel) => {
+    setSelectedCancel(selectedCancel);
+  };
   return (
     <div className="raw-data">
       <div className="content-raw-data">
@@ -78,13 +92,27 @@ const RawData = (props) => {
             </label>
             <input type="checkbox" id="first" />
             <AiFillCaretRight className="arrow" />
-            <CountedInterview bodyCounted={dataRawCheck} />
+            <CountedInterview
+              bodyCounted={dataRawCheck}
+              selectedCounted={selectedCounted}
+              value={selectedCounted}
+              onChangeOptionCounted={(selectedCounted) =>
+                onChangeOptionCounted(selectedCounted.target.value)
+              }
+            />
           </div>
           <div className="item-2">
             <label for="second">Cancelled Interviews</label>
             <input type="checkbox" id="second" />
             <AiFillCaretRight className="arrow" />
-            <CancelledInterview bodyCancelled={dataRawCheck} />
+            <CancelledInterview
+              selectedCancel={selectedCancel}
+              value={selectedCancel}
+              bodyCancelled={dataRawCheck}
+              onChangeOptionCancel={(selectedCancel) =>
+                onChangeOptionCancel(selectedCancel.target.value)
+              }
+            />
           </div>
           <div className="item-3">
             <label for="third">Not Completed Interviews</label>

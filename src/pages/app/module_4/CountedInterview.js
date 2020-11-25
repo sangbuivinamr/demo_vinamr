@@ -7,7 +7,10 @@ import "./styles/CountedInterview.css";
 
 const CountedInterview = (props) => {
   const bodyCounted = props.bodyCounted;
-
+  let optionCounted = props.selectedCounted;
+  const onChangeOptionCounted = (optionCounted) => {
+    props.onChangeOptionCounted(optionCounted);
+  };
   const renderBody = () => {
     return (
       bodyCounted &&
@@ -22,12 +25,19 @@ const CountedInterview = (props) => {
               {complete === "Completed" ? <td>{complete}</td> : null}
               {complete === "Completed" ? (
                 <td>
-                  Pending PW
-                  <select className="select-option-body">
+                  {optionCounted}
+                  <select
+                    className = "select-option-body"
+                    value = {optionCounted}
+                    onChange = {(optionCounted) =>
+                      onChangeOptionCounted(optionCounted)
+                    }
+                  >
                     <option>Pending QC (1)</option>
-                    <option>Approved</option>
-                    <option>Pending QC (2)</option>
                     <option>Pending FW</option>
+                    <option>Pending QC (2)</option>
+                    <option>Approved</option>
+                    <option>Cancelled</option>
                   </select>
                 </td>
               ) : null}
@@ -44,8 +54,8 @@ const CountedInterview = (props) => {
     );
   };
   return (
-    <div className="tab-1">
-      <table className="table-1">
+    <div className = "tab-1">
+      <table className = "table-1">
         <HeaderRawData />
         <tbody>{renderBody()}</tbody>
       </table>

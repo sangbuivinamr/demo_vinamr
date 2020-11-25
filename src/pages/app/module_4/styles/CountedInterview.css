@@ -21,4 +21,5 @@
     outline: none !important;
     width: 20px;
     float: right;
+    cursor: pointer;
 }

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import HeaderRawData from "../../../components/app/HeaderRawData";
 import "./styles/CancelledInterview.css";
 const CancelledInterview = (props) => {
-  const [selectedOption, setSelectedOption] = useState();
-  const onChangeOption = (selectedOption) => {
-    setSelectedOption(selectedOption);
+  let optionCancel = props.selectedCancel
+  const onChangeOptionCancel = (optionCancel) => {
+    props.onChangeOptionCancel(optionCancel);
   };
   const bodyCancelled = props.bodyCancelled;
   const renderBody = () => {
@@ -20,12 +20,18 @@ const CancelledInterview = (props) => {
               {complete === "Completed" ? <td>{interviewid}</td> : null}
               {complete === "Completed" ? <td>{complete}</td> : null}
               {complete === "Completed" ? (
-                <td onChange={() => onChangeOption(selectedOption)}>
-                  <select className="select-option-body" value={selectedOption}>
+                <td>
+                  {optionCancel}
+                  <select
+                    className="select-option-body"
+                    value={optionCancel}
+                    onChange={(optionCancel) => onChangeOptionCancel(optionCancel)}
+                  >
                     <option>Pending QC (1)</option>
-                    <option>Approved</option>
-                    <option>Pending QC (2)</option>
                     <option>Pending FW</option>
+                    <option>Pending QC (2)</option>
+                    <option>Approved</option>
+                    <option>Cancelled</option>
                   </select>
                 </td>
               ) : null}
