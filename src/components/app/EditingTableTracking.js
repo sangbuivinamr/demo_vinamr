@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { EDITING_TABLE_DATA } from "../../data/testing-data";
 import "./styles/EditingTable.css";
 const EditingTableTracking = (props) => {
+  let colTotalQuotas = [];
+  let colTotal;
   const [totalCol, setTotalCol] = useState([]);
   const [totalRow, setTotalRow] = useState([]);
   const [tableData, setTableData] = useState(props.editingTableData);
@@ -16,24 +18,21 @@ const EditingTableTracking = (props) => {
     );
   };
 
-  const getColumnRowTotal = () => totalCol.reduce((prev, current) => prev + current) + totalRow.reduce((prev, current) => prev + current);
   
   const renderTableRowOfColTotals = (table) => {
-
-    console.log('table in renderColTotal', table)
-    console.log('totalCol', totalCol);
-    console.log('totalRow', totalRow);
 
     return(
         <tr>
             <td className="header-left-total">Total</td>
-            {table.colList && table.colList.map((col) => {
-
+            {table.colList && table.colList.map((col, colIndex) => {
+              colTotalQuotas.push(getColumnMaxQuotaTotalList(col["uniqueID"]))
+              colTotal = colTotalQuotas.reduce((prev, curr) =>prev+curr)
+              
               return(
                 <td className="cell">{getColumnMaxQuotaTotalList(col["uniqueID"])}</td>
               )
             })}
-            {/* <td>{getColumnRowTotal()}</td> */}
+            <td className="cell">{colTotal}</td>
         </tr>
     )
   };
@@ -52,6 +51,14 @@ const EditingTableTracking = (props) => {
 
     return maxQuotaList;
   };
+
+  const afterGetRowMaxQuotaTotalList = (rowId) => {
+    const num = getRowMaxQuotaTotalList(rowId);
+    let newNum = [].concat(totalRow);
+    newNum.push(num);
+    setTotalRow(newNum);
+    return num;
+  }
 
   const getRowMaxQuotaTotalList = (rowId) =>
     getMaxQuotaList(rowId, "ROW").reduce(
@@ -73,10 +80,13 @@ const EditingTableTracking = (props) => {
             <td className="body-exceeded-left">
               {table.rowList[elIndex].text}
             </td>
-            {getMaxQuotaList(el["uniqueID"], "ROW").map((quota) => (
-              <td className="cell">{quota}</td>
-            ))}
+            {
+              getMaxQuotaList(el["uniqueID"], "ROW").map((quota) => (
+                <td className="cell">{quota}</td>
+              ))
+            }
             <td className="cell">{getRowMaxQuotaTotalList(el["uniqueID"])}</td>
+            {/* <td className="cell">{afterGetRowMaxQuotaTotalList(el["uniqueID"])}</td> */}
           </tr>
         );
       })
