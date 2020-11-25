@@ -54,7 +54,7 @@
   color: white;
   font-family: var(--global-font-family);
 }
-.quota-page > select {
+.quota-page select {
   margin-top: 20px;
   height: 32px;
   width: 170px;
@@ -100,7 +100,7 @@
   margin-top: 150px;
   direction: row;
 }
-.expression-review > .up{
+.expression-review > .up {
   margin-top: 20px;
   background-color: var(--global-color-1);
   border-radius: 5px;
@@ -108,7 +108,7 @@
   height: 35px;
   margin-right: 10px;
 }
-.input-code{
+.input-code {
   border-radius: 5rem;
   outline: none;
   margin-top: 20px;
@@ -117,8 +117,7 @@
   margin-right: 10px;
   width: 100px;
   text-align: center;
-
 }
-.input-code::placeholder{
+.input-code::placeholder {
   text-align: center;
 }

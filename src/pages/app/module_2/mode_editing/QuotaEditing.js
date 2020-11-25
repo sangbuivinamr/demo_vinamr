@@ -45,8 +45,8 @@ const QuotaEditing = (props)=>{
     })
 
 
-    //Change input of quota rows
-    const [inputData , setInputData] = useState([])
+    
+    
 
     const [totalRows, setTotalRows] = useState([]); //This state is to deal with break row feature
     const [currentIndexTotalRows,  setCurrentIndexTotalRows] = useState(-1);
@@ -157,7 +157,12 @@ const QuotaEditing = (props)=>{
                 }
 
             }
-        let newData = tempData
+            console.log("Quota Editing  - val ",val)
+            val = (val === "") ? 0 : val;
+            //Handle val is NaN
+            
+            val = parseInt(val,10)
+        let newData = [].concat(tempData)
         newData[0].dataList[index_i][index_j].maxQuota = val;
         setTempData(newData);
         forceUpdate()
@@ -731,7 +736,7 @@ const QuotaEditing = (props)=>{
    
     return(
         <div className="quota-page">
-            <div className="quota-page default-bar">
+            <div className="default-bar">
                 <h2 className="h2-default">QUOTA SETTINGS</h2>
                 <div className="display--square--button">
                     <i 
@@ -770,10 +775,10 @@ const QuotaEditing = (props)=>{
                         Tracking
                     </option>
                 </select>
-                <div className="expression-review">
-                    <h2 className="review">
-                       <text>QUOTA LABEL<br/> SELECTION</text> 
-                    </h2>
+                <div className="title-add-to-btns">
+                   
+                       <h2 className="quota-label-selection-title">QUOTA LABEL<br/> SELECTION</h2> 
+                    
                     <button id ="quota--management--page--add--to-row--btn" onClick ={() =>updateRow(quotaClickStatus)} >
                     Add to <br/> Row
                     </button>

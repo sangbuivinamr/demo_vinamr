@@ -3,7 +3,7 @@ Contributor: Dev03 -Ha Tien Dat
 Date: 27/10/2020
 Functionality: Display the quota label and select the columns or rows 
 */ 
-import React, {useState} from 'react';
+import React from 'react';
 import "./styles/QuotaLabelSelection.css";
 import QuotaRow from "../../../../components/app/QuotaRow";
 
