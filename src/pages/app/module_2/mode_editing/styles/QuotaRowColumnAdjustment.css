@@ -22,6 +22,7 @@
   text-align: center;
   vertical-align: top;
 }
+
 .quota-management-page--adjust-rows-cols tbody {
   background-color: white;
 
@@ -36,7 +37,7 @@
   width: 80%;
   padding: 2px;
 }
-.quota-management-page--adjust-rows-cols .selected--expression--box {
+.quota-management-page--adjust-rows-cols .selected--editing--box {
   background-color: white;
   width: 80%;
   border: 1px solid #707276;
@@ -44,7 +45,7 @@
 
   text-align: center;
   color: #707276;
-  font-size: 12px;
+  font-size: 10px;
 
   margin-left: 20px;
   margin-top: 12px;
@@ -56,5 +57,11 @@
 .quota-management-page--adjust-rows-cols .sigma-icon {
   justify-items: center;
   color: white;
-  width: 13px;
+  width: 12px;
+}
+.quota-management-page--adjust-rows-cols table {
+  height: 100%;
+}
+.quota-label-selection-table-div-inside-td {
+  min-height: 180px;
 }

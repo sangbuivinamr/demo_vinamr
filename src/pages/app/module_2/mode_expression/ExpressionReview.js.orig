@@ -5,6 +5,10 @@
 */
 import React from "react";
 import "./styles/ExpressionReview.css";
+<<<<<<< HEAD:src/pages/app/module_2/mode_epression/ExpressionReview.js
+=======
+
+>>>>>>> editing-model:src/pages/app/module_2/mode_expression/ExpressionReview.js
 
 
 
@@ -50,20 +54,20 @@ const ExpressionReview = (props) => {
 
 return(
     <div className="">
-        <table className="quota-management-page--expression-review--tables">
-            <thead>
-            {renderExpressionHeader()}
-            </thead>
+    <table className="quota-management-page--expression-review--tables">
+        <thead>
+        {renderExpressionHeader()}
+        </thead>
 
-            {/* The code and the discription  */}
-            <tr>
-                <td className ="slide--index">{expression_code}</td>
-                <td id="des">{expressionReviewData.description}</td>
-            </tr>
+        {/* The code and the discription  */}
+        <tr>
+            <td className ="slide--index">{expression_code}</td>
+            <td id="des">{expressionReviewData.description}</td>
+        </tr>
 
-            {/* Render layout_left body */}
-            {renderExpressionBody(highlightedSlide)}
-        </table>
+        {/* Render layout_left body */}
+        {renderExpressionBody(highlightedSlide)}
+    </table>
     </div>
 )
 }

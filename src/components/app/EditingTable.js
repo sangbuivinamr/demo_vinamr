@@ -116,6 +116,7 @@ const EditingTable = (props) => {
                             <input type = 'number' value = {parentProps.getValue(cell.rowID , cell.columnID)} onChange = {(e) => {parentProps.changeValue(cell.rowID, cell.columnID , e.target.value)}}/>
                         </td>,
                         <td className="editing-empty-td"></td>]
+
                                     
                                 
                                
