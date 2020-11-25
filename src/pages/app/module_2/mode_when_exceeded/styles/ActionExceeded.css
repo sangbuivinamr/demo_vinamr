@@ -1,27 +1,48 @@
 @import '../../../styles/GlobalStyles.css';
-.action-exceeded{
+
+.action-exceeded {
    margin-top: 0px;
-   border:2px solid #FCC216;
+   border: 2px solid #FCC216;
    display: grid;
-   background-color:#f2f2f2;
-   height: 200px;
+   background-color: #f2f2f2;
+   height: 250px;
    width: 300px;
    justify-content: center;
-   color:#cea649;
+   color: #cea649;
 }
-.action-p{
-   margin-left: -20px;
-   margin-top:10px
+
+.action-p {
+   margin-left: -10px;
+   margin-top: 10px;
+   font-weight: bold;
+   color: #FCC216;
 }
-.select-action{
-   height: 30px;
-   justify-content: start;
-}
-.buttons{
+
+.jump-slide {
    display: flex;
-   margin-top:10px
 }
-.apply{
+
+.select-action {
+   height: 30px;
+   width: 80%;
+   background-color: rgb(77, 74, 74);
+   color: white;
+   cursor: pointer;
+}
+
+.input-exceeded {
+   width: 100px;
+   margin-left: 10px;
+   height: 25px;
+   text-align: center;
+}
+
+.buttons {
+   display: flex;
+   margin-top: 10px
+}
+
+.apply {
    background-color: #ffd066;
    color: white;
    border-radius: 5px;
@@ -31,12 +52,21 @@
    text-align: center;
    cursor: pointer;
 }
-.apply-all{
+
+.apply:hover {
+   opacity: 0.75;
+}
+
+.apply-all {
    background-color: #ffd066;
-    border-radius: 5px;
-    height: 30px;
-    width: 130px;
-    text-align: center;
-    cursor: pointer;
-    color: white;
+   border-radius: 5px;
+   height: 30px;
+   width: 130px;
+   text-align: center;
+   cursor: pointer;
+   color: white;
+}
+
+.apply-all:hover {
+   opacity: 0.75;
 }
