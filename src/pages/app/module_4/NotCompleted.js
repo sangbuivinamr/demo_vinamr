@@ -24,17 +24,7 @@ const NotCompleted = (props) => {
             <tr key={index} className="body-counted">
               {complete === "Not Completed" ? <td>{interviewid}</td> : null}
               {complete === "Not Completed" ? <td>{complete}</td> : null}
-              {complete === "Not Completed" ? (
-                <td>
-                  Pending PW
-                  <select className="select-option-body">
-                    <option>Pending QC (1)</option>
-                    <option>Approved</option>
-                    <option>Pending QC (2)</option>
-                    <option>Pending FW</option>
-                  </select>
-                </td>
-              ) : null}
+              {complete === "Not Completed" ? <td>Pending PW</td> : null}
               {complete === "Not Completed" ? <td>{curDate}</td> : null}
               {complete === "Not Completed" ? <td>Link</td> : null}
               {complete === "Not Completed" ? <td>Link</td> : null}
