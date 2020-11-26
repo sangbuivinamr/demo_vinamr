@@ -5,6 +5,8 @@ import "./styles/EditingTable.css";
 const EditingTableTracking = (props) => {
   let colTotalQuotas = [];
   let colTotal;
+  let currentColTotalQuotas = [];
+  let currentColTotal;
   const [tableData, setTableData] = useState(props.editingTableData);
 
   //Rendering the header of the table
@@ -24,38 +26,55 @@ const EditingTableTracking = (props) => {
         {table.colList &&
           table.colList.map((col, colIndex) => {
             colTotalQuotas.push(getColumnMaxQuotaTotalList(col["uniqueID"]));
-            colTotal = colTotalQuotas.reduce((prev, curr) => prev + curr);
+            currentColTotalQuotas.push(
+              getColumnCurrentMaxQuotaTotalList(col["uniqueID"])
+            );
+
+            colTotal = colTotalQuotas.reduce(quotaListSum);
+            currentColTotal = currentColTotalQuotas.reduce(quotaListSum);
 
             return (
               <td className="cell">
+                {getColumnCurrentMaxQuotaTotalList(col["uniqueID"])}/
                 {getColumnMaxQuotaTotalList(col["uniqueID"])}
               </td>
             );
           })}
-        <td className="cell">{colTotal}</td>
+        <td className="cell">
+          {currentColTotal}/{colTotal}
+        </td>
       </tr>
     );
   };
 
   const getMaxQuotaList = (cellId, cellType) => {
     let maxQuotaList = [];
+    let currentMaxQuotaList = [];
     tableData.data.map((el) => {
       if (el[cellType === "ROW" ? "row" : "column"] === cellId)
         maxQuotaList.push(el["maxQuota"]);
+      currentMaxQuotaList.push(el["current"]);
     });
 
-    return maxQuotaList;
+    return {
+      maxQuotaList,
+      currentMaxQuotaList,
+    };
   };
 
+  const quotaListSum = (prev, curr) => parseInt(prev) + parseInt(curr);
+
   const getRowMaxQuotaTotalList = (rowId) =>
-    getMaxQuotaList(rowId, "ROW").reduce(
-      (prev, current) => parseInt(prev) + parseInt(current)
-    );
+    getMaxQuotaList(rowId, "ROW").maxQuotaList.reduce(quotaListSum);
 
   const getColumnMaxQuotaTotalList = (colId) =>
-    getMaxQuotaList(colId, "COLUMN").reduce(
-      (prev, current) => parseInt(prev) + parseInt(current)
-    );
+    getMaxQuotaList(colId, "COLUMN").maxQuotaList.reduce(quotaListSum);
+
+  const getRowCurrentMaxQuotaTotalList = (rowId) =>
+    getMaxQuotaList(rowId, "ROW").currentMaxQuotaList.reduce(quotaListSum);
+
+  const getColumnCurrentMaxQuotaTotalList = (colId) =>
+    getMaxQuotaList(colId, "COLUMN").currentMaxQuotaList.reduce(quotaListSum);
 
   const renderEditingBody = (table) => {
     return (
@@ -66,10 +85,22 @@ const EditingTableTracking = (props) => {
             <td className="body-exceeded-left">
               {table.rowList[elIndex].text}
             </td>
-            {getMaxQuotaList(el["uniqueID"], "ROW").map((quota) => (
-              <td className="cell">{quota}</td>
-            ))}
-            <td className="cell">{getRowMaxQuotaTotalList(el["uniqueID"])}</td>
+            {getMaxQuotaList(el["uniqueID"], "ROW").maxQuotaList.map(
+              (quota, index) => (
+                <td className="cell">
+                  {
+                    getMaxQuotaList(el["uniqueID"], "ROW").currentMaxQuotaList[
+                      index
+                    ]
+                  }
+                  /{quota}
+                </td>
+              )
+            )}
+            <td className="cell">
+              {getRowCurrentMaxQuotaTotalList(el["uniqueID"])}/
+              {getRowMaxQuotaTotalList(el["uniqueID"])}
+            </td>
           </tr>
         );
       })
