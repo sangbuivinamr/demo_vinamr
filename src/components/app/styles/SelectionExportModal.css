@@ -1,0 +1,52 @@
+@import "../../../pages/app/styles/GlobalStyles.css";
+.module-4--selection-export-modal-div {
+  position: absolute;
+}
+.module-4--selection-export-modal {
+  position: absolute;
+  top: 25%;
+  left: 35%;
+  font-family: var(--global-font-family);
+  background-color: black;
+  width: 500px;
+
+  height: 300px;
+  filter: opacity(90%);
+
+  padding-left: 20px;
+  color: white;
+  box-sizing: border-box;
+
+  border-radius: 30px;
+  padding-top: 10px;
+  padding-left: 30px;
+  padding-bottom: 10px;
+  outline: none !important;
+}
+
+.module-4--selection-export-modal h2 {
+  font-size: 30px;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  font-weight: bold;
+}
+.module-4--selection-export-modal .module-4--Please-select {
+  font-size: 20px;
+}
+.module-4--selection-export-modal .module-4--export-options {
+  width: 80%;
+}
+.module-4--selection-export-modal select {
+  margin-top: 20px;
+  margin-right: 0px;
+  height: 32px;
+
+  background-color: white;
+  color: black;
+
+  outline: none;
+  cursor: pointer;
+
+  font-size: 20px;
+  font-family: var(--global-font-family);
+}
