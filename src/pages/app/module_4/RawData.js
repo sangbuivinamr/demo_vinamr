@@ -11,7 +11,7 @@ import CancelledInterview from "./CancelledInterview";
 import CountedInterview from "./CountedInterview";
 import NotCompleted from "./NotCompleted";
 import axios from "axios";
-
+import SelectionExportModal from "../../../components/app/SelectionExportModal.js"
 //Styles
 import "./styles/RawData.css";
 
@@ -39,6 +39,7 @@ const RawData = (props) => {
   const getRawData = async (projectId) => {
     const response = await axios.get(URL_MODULE_4 + `?projectId=${projectId}`);
     let dataRawCheck = response.data;
+    console.log("GET", dataRawCheck)
     getDataRawCheck(dataRawCheck);
   };
 
@@ -122,6 +123,10 @@ const RawData = (props) => {
           </div>
         </div>
       </div>
+      <SelectionExportModal isOpen={true}>
+
+      </SelectionExportModal>
+
     </div>
   );
 };
