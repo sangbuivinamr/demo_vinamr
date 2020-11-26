@@ -3,7 +3,7 @@
  */
 
 //Packages
-import React, { Fragment } from "react";
+import React from "react";
 
 //Styles
 import "../../components/app/styles/HeaderRawData.css";
@@ -20,24 +20,26 @@ const HeaderRawData = (props) => {
     "Longitude",
     "Duration",
   ];
-  const isHeaderNeeded = [
-    "InterviewID",
-    "Completed",
-    "Status",
-    "EndTime",
-    "Duration",
-  ];
+  const isHeaderNeeded = ["InterviewID", "Completed", "EndTime", "Duration"];
+  const isStatus = ["Status"];
   const renderHeader = () => {
     return header.map((key, index) => {
       return (
         <th className="element-header">
           {key}
-          {isHeaderNeeded.includes(key) ? (
+          {isStatus.includes(key) ? (
             <select className="select-option">
               <option>Pending QC (1)</option>
               <option>Pending FW</option>
               <option>Pending FW</option>
               <option>Pending FW</option>
+            </select>
+          ) : isHeaderNeeded.includes(key) ? (
+            <select className="select-option">
+              <option>test</option>
+              <option>test</option>
+              <option>test</option>
+              <option>test</option>
             </select>
           ) : null}
         </th>
