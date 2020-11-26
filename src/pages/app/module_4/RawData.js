@@ -22,7 +22,7 @@ const RawData = (props) => {
   const [dataRawCheck, getDataRawCheck] = useState([]);
   const [selectedCounted, setSelectedCounted] = useState();
   const [selectedCancel, setSelectedCancel] = useState();
-
+  const [isOpenExpModal,setIsOpenExpModal] = useState(false);
   /**
    *@summary Function useEffect
    *@return void
@@ -30,7 +30,16 @@ const RawData = (props) => {
   useEffect(() => {
     getRawData("0558");
   }, []);
-
+  /**
+   * 
+   * @summary Handle open and close modal 
+   */
+  const closeExpModal =() =>{
+    setIsOpenExpModal(false);
+  }
+  const openExpModal =() =>{
+    setIsOpenExpModal(true);
+  }
   /**
    *@summary The function getData for module_4
    *@param projectId
@@ -84,7 +93,7 @@ const RawData = (props) => {
           </p>
         </div>
         <div className="buttons-4">
-          <div className="button-1">Export Data</div>
+          <div className="button-1" onClick={openExpModal}>Export Data</div>
         </div>
         <div className="content-area">
           <div className="item-1">
@@ -123,7 +132,9 @@ const RawData = (props) => {
           </div>
         </div>
       </div>
-      <SelectionExportModal isOpen={true}>
+      <SelectionExportModal isOpen={isOpenExpModal} 
+      closeExpModal={closeExpModal}
+      >
 
       </SelectionExportModal>
 
