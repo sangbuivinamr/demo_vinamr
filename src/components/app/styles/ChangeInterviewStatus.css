@@ -1,0 +1,26 @@
+@import "../../../pages/app/styles/GlobalStyles.css";
+
+.module-4--selection-change-interview-status-div {
+  position: absolute;
+}
+.module-4--change-interview-status-modal {
+  position: absolute;
+  top: 25%;
+  left: 35%;
+  font-family: var(--global-font-family);
+  background-color: black;
+  width: 500px;
+
+  height: 300px;
+  filter: opacity(90%);
+
+  padding-left: 20px;
+  color: white;
+  box-sizing: border-box;
+
+  border-radius: 30px;
+  padding-top: 10px;
+  padding-left: 30px;
+  padding-bottom: 10px;
+  outline: none !important;
+}

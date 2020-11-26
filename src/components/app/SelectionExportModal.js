@@ -14,7 +14,7 @@ const SelectionExportModal  = (props) =>{
         Modal.setAppElement('body');
     },[])
     return(
-            <div className=".module-4--selection-export-modal-div">
+            <div className="module-4--selection-export-modal-div">
                  <Modal isOpen ={props.isOpen} className="module-4--selection-export-modal">
             <h2>
                 Export Data

@@ -12,6 +12,7 @@ import CountedInterview from "./CountedInterview";
 import NotCompleted from "./NotCompleted";
 import axios from "axios";
 import SelectionExportModal from "../../../components/app/SelectionExportModal.js"
+import ChangeInterviewStatus from "../../../components/app/ChangeInterviewStatus.js"
 //Styles
 import "./styles/RawData.css";
 
@@ -23,6 +24,7 @@ const RawData = (props) => {
   const [selectedCounted, setSelectedCounted] = useState();
   const [selectedCancel, setSelectedCancel] = useState();
   const [isOpenExpModal,setIsOpenExpModal] = useState(false);
+  const [isOpenCIStatModal, setIsOpenCIStatModal] = useState(false); // CIStat abbreviates for "Change Interview Status". 
   /**
    *@summary Function useEffect
    *@return void
@@ -31,8 +33,7 @@ const RawData = (props) => {
     getRawData("0558");
   }, []);
   /**
-   * 
-   * @summary Handle open and close modal 
+   * @summary Handle open and close Export Selection modal 
    */
   const closeExpModal =() =>{
     setIsOpenExpModal(false);
@@ -40,6 +41,18 @@ const RawData = (props) => {
   const openExpModal =() =>{
     setIsOpenExpModal(true);
   }
+
+  /**
+   * @summary Handle open and close Change Interview Status modal 
+   */
+  const closeCIStatModal =() =>{
+    setIsOpenCIStatModal(false);
+  }
+  const  openCIStatModal = () =>{
+    setIsOpenCIStatModal(true);
+  }
+
+
   /**
    *@summary The function getData for module_4
    *@param projectId
@@ -134,10 +147,9 @@ const RawData = (props) => {
       </div>
       <SelectionExportModal isOpen={isOpenExpModal} 
       closeExpModal={closeExpModal}
-      >
-
-      </SelectionExportModal>
-
+      />
+      <ChangeInterviewStatus isOpen={isOpenCIStatModal} closeCIStatModal={closeCIStatModal}/>
+       <button onClick={openCIStatModal}> Open Confirm Status </button>         
     </div>
   );
 };
