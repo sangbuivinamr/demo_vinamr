@@ -120,7 +120,7 @@ const EditingTable = (props) => {
                                
                             
                             else return(
-                                <td key={cell.columnID} className="cell">
+                                <td key={cell.columnID} className="editing-table--cell">
                                 <input type = 'number' value = {parentProps.getValue(cell.rowID , cell.columnID)} onChange = {(e) => {parentProps.changeValue(cell.rowID, cell.columnID , e.target.value)}}/>
                             </td>
                             )

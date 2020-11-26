@@ -71,7 +71,8 @@ const QuotaEditing = (props)=>{
    
     const getDataFromBE = async (projectId) => {
         const response = await axios.get(QUOTA_EDITING_TABLE + `?projectId=${projectId}`)
-        setTempData(response.data)
+        console.log("response:",response.data)
+        usableTable(response.data)
         setTempData([
             {
                 columnList: EDITING_TABLE_DATA.columnList,
@@ -79,7 +80,7 @@ const QuotaEditing = (props)=>{
                 dataList: EDITING_TABLE_DATA.dataList
             }])
         
-    //     // const result = await axios.post([ip] , {JSON});
+    
     }
     const postDataToBE = async () => {
         const post = await axios.post(QUOTA_EDITING_TABLE +`?projectId=${PROJECT_ID}`,tempData).then(res=> console.log(res))
@@ -87,11 +88,75 @@ const QuotaEditing = (props)=>{
     }
 
     useEffect(() => {
-        getDataFromBE(PROJECT_ID)}
+        getDataFromBE(PROJECT_ID);
+        console.log("useEff",tempData)
+    }
+       
     , []);
- 
-    
     console.log("TempData", tempData)
+    // useEffect(() => {
+    //     usableTable(tempData);
+    // }
+       
+    // , []);
+    
+     /**
+      * 
+      * @param {*} tableData 
+      */
+     const usableDataList = (dataList) =>{
+        let tempDataList = [].concat(dataList)
+
+        //Rename the data from the database
+        tempDataList.map( row =>{
+            let index_row = tempDataList.indexOf(row)
+            let rowID = row.row
+            let columnID = row.column
+
+            //Replace each element of dataList
+            tempDataList.splice(index_row,1,{columnID: columnID, rowID: rowID, maxQuota: row.maxQuota})
+        })
+
+
+        //Turn 1d array dataList to 2d array dataList
+        let current_row_id= tempDataList[0].rowID;
+        let arr_2d = []
+        arr_2d.push([])
+        tempDataList.map (row => {
+            
+            if (row.rowID === current_row_id)
+                arr_2d[arr_2d.length-1].push(row);
+            else {
+                current_row_id = row.rowID
+                arr_2d.push([row])
+            }
+        })
+        tempDataList = arr_2d;
+        return tempDataList;
+     }
+    /**
+     * @summary This is to turn the data from BE into usable array
+     */
+
+     const usableTable = (tableData) => {
+         
+     let emptyTableData ={
+            columnList: [],
+            rowList: [],
+            dataList: []
+            }
+     emptyTableData.columnList = [].concat(tableData.colList)
+     emptyTableData.rowList = [].concat(tableData.rowList)
+     emptyTableData.dataList = [].concat(tableData.data)
+     emptyTableData.dataList = usableDataList( emptyTableData.dataList)
+    
+     let tempEditingTable = []
+     tempEditingTable.push(emptyTableData)
+     console.log("Set eTING",)
+     setEditingTable(tempEditingTable)
+    // setTempData(tempEditingTable)
+    
+     }
     /**
      * @sumary This function is to generate universally unique id for the Total Row/Columns
      *  */ 
@@ -167,6 +232,10 @@ const QuotaEditing = (props)=>{
         setTempData(newData);
         forceUpdate()
     }
+
+
+
+
     /**
      * @summary Make the selected (clicked) row to be highlighted
      * @param {string} quotaLabel The label of the current selected quota row
@@ -249,10 +318,7 @@ const QuotaEditing = (props)=>{
                 tempTotalRows[currentIndexTotalRows].rowList.splice(-1,0,{text: takenQuotaLabel, uniqueID: getUniqueID })
                 // setTotalRows(tempTotalRows)
 
-                //This is to deal with the addedRow (unneccesary)
-                let tempArray = [].concat(addedRow);
-                tempArray.push(takenQuotaLabel)
-                setAddedRow(tempArray);
+              
                 //This is to deal with the dataList of editing Table
                 let tempTable = [].concat(editingtable);    //NEED DELETING 
                 let indexOfTable = 0;             
@@ -291,9 +357,6 @@ const QuotaEditing = (props)=>{
         
 
         const getUniqueID = getUniqueIDByPassingQuotaLabel(takenQuotaLabel);
-        let tempArray = [].concat(addedColumn);
-        tempArray.push(takenQuotaLabel)
-        setAddedColumn(tempArray);
 
         let tempTotalColumns = [].concat(totalColumns);
         tempTotalColumns[currentIndexTotalColumns].columnList.splice(-1,0,{text: takenQuotaLabel, uniqueID: getUniqueID})

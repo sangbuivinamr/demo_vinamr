@@ -83,16 +83,6 @@ export const QUOTA_LABEL_SELECTION_DATA = [
         quota_label: "Intend. Other Models",
         quota_expression: "S1=1"
     },
-    // {
-    //     uniqueID: "ee207259-74c2-44c6-afc3-31a4ae3adfeb",
-    //     quota_label: "NAM",
-    //     quota_expression: "S1=3"
-    // },
-    // {
-    //     uniqueID: "fa65c4c0-e178-4dad-a1e4-904925833c95",
-    //     quota_label: "NỮ",
-    //     quota_expression: "S1=6"
-    // }
 ]
 
 export const EXPRESSION_REVIEW_DATA = [
