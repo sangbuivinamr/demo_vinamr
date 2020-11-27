@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import HeaderRawData from "../../../components/app/HeaderRawData";
 import "./styles/CancelledInterview.css";
 const CancelledInterview = (props) => {
-  let optionCancel = props.selectedCancel
+  let optionCancel = props.selectedCancel;
+  const status = props.status;
   const onChangeOptionCancel = (optionCancel) => {
     props.onChangeOptionCancel(optionCancel);
   };
@@ -25,13 +26,14 @@ const CancelledInterview = (props) => {
                   <select
                     className="select-option-body"
                     value={optionCancel}
-                    onChange={(optionCancel) => onChangeOptionCancel(optionCancel)}
+                    onChange={(optionCounted) =>
+                      onChangeOptionCancel(optionCounted)
+                    }
                   >
-                    <option>Pending QC (1)</option>
-                    <option>Pending FW</option>
-                    <option>Pending QC (2)</option>
-                    <option>Approved</option>
-                    <option>Cancelled</option>
+                    {status &&
+                      status.map((key) => {
+                        return <option>{key}</option>;
+                      })}
                   </select>
                 </td>
               ) : null}

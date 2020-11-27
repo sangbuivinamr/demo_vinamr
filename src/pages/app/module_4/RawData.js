@@ -11,9 +11,10 @@ import CancelledInterview from "./CancelledInterview";
 import CountedInterview from "./CountedInterview";
 import NotCompleted from "./NotCompleted";
 import axios from "axios";
-import SelectionExportModal from "../../../components/app/SelectionExportModal.js"
+import SelectionExportModal from "../../../components/app/SelectionExportModal.js";
 //Styles
 import "./styles/RawData.css";
+import { STATUS } from "../../../data/Status";
 
 //Default URL
 const URL_MODULE_4 = "https://115.73.222.254:8000/rawDataCheck/getRawData";
@@ -22,7 +23,7 @@ const RawData = (props) => {
   const [dataRawCheck, getDataRawCheck] = useState([]);
   const [selectedCounted, setSelectedCounted] = useState();
   const [selectedCancel, setSelectedCancel] = useState();
-  const [isOpenExpModal,setIsOpenExpModal] = useState(false);
+  const [isOpenExpModal, setIsOpenExpModal] = useState(false);
   /**
    *@summary Function useEffect
    *@return void
@@ -31,15 +32,15 @@ const RawData = (props) => {
     getRawData("0558");
   }, []);
   /**
-   * 
-   * @summary Handle open and close modal 
+   *
+   * @summary Handle open and close modal
    */
-  const closeExpModal =() =>{
+  const closeExpModal = () => {
     setIsOpenExpModal(false);
-  }
-  const openExpModal =() =>{
+  };
+  const openExpModal = () => {
     setIsOpenExpModal(true);
-  }
+  };
   /**
    *@summary The function getData for module_4
    *@param projectId
@@ -48,7 +49,6 @@ const RawData = (props) => {
   const getRawData = async (projectId) => {
     const response = await axios.get(URL_MODULE_4 + `?projectId=${projectId}`);
     let dataRawCheck = response.data;
-    console.log("GET", dataRawCheck)
     getDataRawCheck(dataRawCheck);
   };
 
@@ -68,10 +68,14 @@ const RawData = (props) => {
   const onChangeOptionCancel = (selectedCancel) => {
     setSelectedCancel(selectedCancel);
   };
+  if(dataRawCheck.length !==0 )
+  {
+    console.log(dataRawCheck[0].projectid)
+  }
   return (
     <div className="raw-data">
       <div className="content-raw-data">
-        <h1 className="header">{"[Project Name 2]"}</h1>
+        <h1 className="header">{ dataRawCheck.length !==0 ? dataRawCheck[0].projectid :null}</h1>
         <div className="text-list">
           <p className="total">Total: {"905"} | </p>
           <p className="total">Quota Counted Interviews: {"701"} | </p>
@@ -93,7 +97,9 @@ const RawData = (props) => {
           </p>
         </div>
         <div className="buttons-4">
-          <div className="button-1" onClick={openExpModal}>Export Data</div>
+          <div className="button-1" onClick={openExpModal}>
+            Export Data
+          </div>
         </div>
         <div className="content-area">
           <div className="item-1">
@@ -103,6 +109,7 @@ const RawData = (props) => {
             <input type="checkbox" id="first" />
             <AiFillCaretRight className="arrow" />
             <CountedInterview
+              status={STATUS}
               bodyCounted={dataRawCheck}
               selectedCounted={selectedCounted}
               value={selectedCounted}
@@ -116,6 +123,7 @@ const RawData = (props) => {
             <input type="checkbox" id="second" />
             <AiFillCaretRight className="arrow" />
             <CancelledInterview
+              status={STATUS}
               selectedCancel={selectedCancel}
               value={selectedCancel}
               bodyCancelled={dataRawCheck}
@@ -132,12 +140,10 @@ const RawData = (props) => {
           </div>
         </div>
       </div>
-      <SelectionExportModal isOpen={isOpenExpModal} 
-      closeExpModal={closeExpModal}
-      >
-
-      </SelectionExportModal>
-
+      <SelectionExportModal
+        isOpen={isOpenExpModal}
+        closeExpModal={closeExpModal}
+      ></SelectionExportModal>
     </div>
   );
 };

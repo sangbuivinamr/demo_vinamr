@@ -24,7 +24,7 @@ const NotCompleted = (props) => {
             <tr key={index} className="body-counted">
               {complete === "Not Completed" ? <td>{interviewid}</td> : null}
               {complete === "Not Completed" ? <td>{complete}</td> : null}
-              {complete === "Not Completed" ? <td>Pending PW</td> : null}
+              {complete === "Not Completed" ? <td> Terminate</td> : null}
               {complete === "Not Completed" ? <td>{curDate}</td> : null}
               {complete === "Not Completed" ? <td>Link</td> : null}
               {complete === "Not Completed" ? <td>Link</td> : null}
