@@ -4,7 +4,7 @@
 
 //Packages
 import React from "react";
-
+import { STATUS } from "../../data/Status";
 //Styles
 import "../../components/app/styles/HeaderRawData.css";
 
@@ -29,10 +29,10 @@ const HeaderRawData = (props) => {
           {key}
           {isStatus.includes(key) ? (
             <select className="select-option">
-              <option>Pending QC (1)</option>
-              <option>Pending FW</option>
-              <option>Pending FW</option>
-              <option>Pending FW</option>
+              {STATUS &&
+                STATUS.map((key) => {
+                  return <option>{key}</option>;
+                })}
             </select>
           ) : isHeaderNeeded.includes(key) ? (
             <select className="select-option">

@@ -17,19 +17,23 @@ import "./styles/RawData.css";
 import { STATUS } from "../../../data/Status";
 
 //Default URL
-const URL_MODULE_4 = "https://115.73.222.254:8000/rawDataCheck/getRawData";
-
+const URL_MODULE_4 = {
+  URL_DATA_MODULE_4:"https://115.73.222.254:8000/rawDataCheck/getRawData",
+  URL_MEDIA:"https://115.73.222.254:8000/rawDataCheck/media/getMedia"
+};
 const RawData = (props) => {
   const [dataRawCheck, getDataRawCheck] = useState([]);
   const [selectedCounted, setSelectedCounted] = useState();
   const [selectedCancel, setSelectedCancel] = useState();
   const [isOpenExpModal, setIsOpenExpModal] = useState(false);
+  const [dataMedia, setDataMedia] = useState();
   /**
    *@summary Function useEffect
    *@return void
    */
   useEffect(() => {
     getRawData("0558");
+    getMedia("0558");
   }, []);
   /**
    *
@@ -46,10 +50,20 @@ const RawData = (props) => {
    *@param projectId
    *@return data from dataBase
    */
-  const getRawData = async (projectId) => {
-    const response = await axios.get(URL_MODULE_4 + `?projectId=${projectId}`);
+  const getRawData = async (projectId,interviewId) => {
+    const response = await axios.get(URL_MODULE_4.URL_DATA_MODULE_4 + `?projectId=${projectId}&interviewId=${interviewId}`);
     let dataRawCheck = response.data;
     getDataRawCheck(dataRawCheck);
+  };
+  /**
+   *@summary The function getData for module_4
+   *@param projectId
+   *@return data from dataBase
+   */
+  const getMedia = async (projectId) => {
+    const response = await axios.get(URL_MODULE_4.URL_MEDIA + `?projectId=${projectId}`);
+    let dataMedia = response.data;
+    setDataMedia(dataMedia);
   };
 
   /**
@@ -68,10 +82,8 @@ const RawData = (props) => {
   const onChangeOptionCancel = (selectedCancel) => {
     setSelectedCancel(selectedCancel);
   };
-  if(dataRawCheck.length !==0 )
-  {
-    console.log(dataRawCheck[0].projectid)
-  }
+  console.log("media",dataMedia)
+  console.log("data",dataRawCheck)
   return (
     <div className="raw-data">
       <div className="content-raw-data">
