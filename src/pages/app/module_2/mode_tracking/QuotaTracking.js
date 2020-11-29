@@ -1,6 +1,6 @@
 //Packages
-import React from "react";
-import EditingTable from "../../../../components/app/EditingTable";
+import React, { useState } from "react";
+import EditingTableTracking from "../../../../components/app/EditingTableTracking";
 import { EDITING_TABLE_DATA, testTable } from "../../../../data/testing-data";
 import { REFRESH } from "../assets/icons/IconConfig";
 import { getQuotaTableTrackingMode } from "../utils/getTracking";
@@ -12,18 +12,19 @@ import FileSaver from "file-saver";
 //Styles
 import "./styles/QuotaTracking.css";
 
- /**
-  * @summary Render the tracking mode of module 2
-  * @param {object} props JSX Props
-  */
+/**
+ * @summary Render the tracking mode of module 2
+ * @param {object} props JSX Props
+ */
 const QuotaTracking = (props) => {
   const [tableSpread, setTableSpread] = React.useState({});
   const [quotaTable, setQuotaTable] = React.useState(null);
   const [convertedTable, setConvertedTable] = React.useState(null);
+  const [fetchedQuotaTable, setFetchedQuotaTable] = useState(false);
 
   /**
    * @summary Navigate modes of module 2
-   * @param {object} e 
+   * @param {object} e
    */
   const onChangeNav = (e) => {
     props.history.push(`/${e.target.value}`);
@@ -33,12 +34,12 @@ const QuotaTracking = (props) => {
    * @summary A callback used to fetch the quota table
    */
   const getQuotaTable = React.useCallback(() => {
-    console.log('bitch')
     const projectId = localStorage.getItem("currentprojectid");
     getQuotaTableTrackingMode(projectId).then((table) => {
-      console.log('table', table)
-      setQuotaTable(table.data)
-    })
+      console.log("table", table);
+      setQuotaTable(table.data);
+      setFetchedQuotaTable(true);
+    });
   });
 
   React.useEffect(() => getQuotaTable(), []);
@@ -82,14 +83,12 @@ const QuotaTracking = (props) => {
       let quotaCount;
 
       for (let data in table.data) {
-        for (let info in table.data[data]) {
-          if (
-            table.data[data][info]["row"] === rowId &&
-            table.data[data][info]["column"] === columnId
-          ) {
-            quotaCount = table.data[data][info]["maxQuota"];
-            break;
-          }
+        if (
+          table.data[data]["row"] === rowId &&
+          table.data[data]["column"] === columnId
+        ) {
+          quotaCount = table.data[data]["maxQuota"];
+          break;
         }
       }
 
@@ -146,14 +145,22 @@ const QuotaTracking = (props) => {
             <option value="tracking">Tracking</option>
           </select>
         </div>
-        <img className="quota-tracking--refresh-icon" src={REFRESH} onClick={getQuotaTable} />
-        <p className="quota-tracking--update-date">Last Update: 6:41AM Thu 14 May 2020</p>
+        <img
+          className="quota-tracking--refresh-icon"
+          src={REFRESH}
+          onClick={getQuotaTable}
+        />
+        <p className="quota-tracking--update-date">
+          Last Update: 6:41AM Thu 14 May 2020
+        </p>
       </div>
       <div>
-        {quotaTable  && <EditingTable
-          editingTableData={quotaTable}
-          onRenderingHeader={true}
-        />}
+        {fetchedQuotaTable && quotaTable && (
+          <EditingTableTracking
+            editingTableData={quotaTable}
+            onRenderingHeader={true}
+          />
+        )}
       </div>
     </div>
   );

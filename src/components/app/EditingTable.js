@@ -112,9 +112,11 @@ const EditingTable = (props) => {
                         // <td className="editing-empty-td"></td>]
                         else if (isToTalColID(cell.columnID))
                         return [
-                        <td key={cell.columnID} className="header-left-total"><input type = 'number' value = {parentProps.getValue(cell.rowID , cell.columnID)} onChange = {(e) => {parentProps.changeValue(cell.rowID, cell.columnID , e.target.value)}}/>
+                        <td key={cell.columnID} className="header-left-total">
+                            <input type = 'number' value = {parentProps.getValue(cell.rowID , cell.columnID)} onChange = {(e) => {parentProps.changeValue(cell.rowID, cell.columnID , e.target.value)}}/>
                         </td>,
-                    <td className="editing-empty-td"></td>]
+                        <td className="editing-empty-td"></td>]
+
                                     
                                 
                                
