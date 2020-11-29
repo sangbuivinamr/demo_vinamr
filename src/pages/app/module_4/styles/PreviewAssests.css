@@ -13,9 +13,11 @@
 }
 .preview-assest--table th {
     border:  1px solid black;
+    text-align: center;
 }
 .preview-assest--table td {
     border : 1px solid black;
+    text-align: center;
 }
 .image{
     width: 300px;
