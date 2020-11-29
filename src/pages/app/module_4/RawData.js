@@ -15,30 +15,40 @@ import SelectionExportModal from "../../../components/app/SelectionExportModal.j
 import ChangeInterviewStatus from "../../../components/app/ChangeInterviewStatus.js"
 //Styles
 import "./styles/RawData.css";
+import { STATUS } from "../../../data/Status";
 
 //Default URL
-const URL_MODULE_4 = "https://115.73.222.254:8000/rawDataCheck/getRawData";
-
+const URL_MODULE_4 = {
+  URL_DATA_MODULE_4:"https://115.73.222.254:8000/rawDataCheck/getRawData",
+  URL_MEDIA:"https://115.73.222.254:8000/rawDataCheck/media/getMedia"
+};
 const RawData = (props) => {
   const [dataRawCheck, getDataRawCheck] = useState([]);
+
   const [selectedCounted, setSelectedCounted] = useState();
+
   const [selectedCancel, setSelectedCancel] = useState();
+
   const [isOpenExpModal,setIsOpenExpModal] = useState(false);
+
   const [isOpenCIStatModal, setIsOpenCIStatModal] = useState(false); // CIStat abbreviates for "Change Interview Status". 
+  
+  const [dataMedia, setDataMedia] = useState();
   /**
    *@summary Function useEffect
    *@return void
    */
   useEffect(() => {
     getRawData("0558");
+    getMedia("0558");
   }, []);
   /**
    * @summary Handle open and close Export Selection modal 
    */
-  const closeExpModal =() =>{
+  const closeExpModal = () => {
     setIsOpenExpModal(false);
-  }
-  const openExpModal =() =>{
+  };
+  const openExpModal = () => {
     setIsOpenExpModal(true);
   }
 
@@ -58,11 +68,20 @@ const RawData = (props) => {
    *@param projectId
    *@return data from dataBase
    */
-  const getRawData = async (projectId) => {
-    const response = await axios.get(URL_MODULE_4 + `?projectId=${projectId}`);
+  const getRawData = async (projectId,interviewId) => {
+    const response = await axios.get(URL_MODULE_4.URL_DATA_MODULE_4 + `?projectId=${projectId}&interviewId=${interviewId}`);
     let dataRawCheck = response.data;
-    console.log("GET", dataRawCheck)
     getDataRawCheck(dataRawCheck);
+  };
+  /**
+   *@summary The function getData for module_4
+   *@param projectId
+   *@return data from dataBase
+   */
+  const getMedia = async (projectId) => {
+    const response = await axios.get(URL_MODULE_4.URL_MEDIA + `?projectId=${projectId}`);
+    let dataMedia = response.data;
+    setDataMedia(dataMedia);
   };
 
   /**
@@ -81,10 +100,12 @@ const RawData = (props) => {
   const onChangeOptionCancel = (selectedCancel) => {
     setSelectedCancel(selectedCancel);
   };
+  console.log("media",dataMedia)
+  console.log("data",dataRawCheck)
   return (
     <div className="raw-data">
       <div className="content-raw-data">
-        <h1 className="header">{"[Project Name 2]"}</h1>
+        <h1 className="header">{ dataRawCheck.length !==0 ? dataRawCheck[0].projectid :null}</h1>
         <div className="text-list">
           <p className="total">Total: {"905"} | </p>
           <p className="total">Quota Counted Interviews: {"701"} | </p>
@@ -106,7 +127,9 @@ const RawData = (props) => {
           </p>
         </div>
         <div className="buttons-4">
-          <div className="button-1" onClick={openExpModal}>Export Data</div>
+          <div className="button-1" onClick={openExpModal}>
+            Export Data
+          </div>
         </div>
         <div className="content-area">
           <div className="item-1">
@@ -116,6 +139,7 @@ const RawData = (props) => {
             <input type="checkbox" id="first" />
             <AiFillCaretRight className="arrow" />
             <CountedInterview
+              status={STATUS}
               bodyCounted={dataRawCheck}
               selectedCounted={selectedCounted}
               value={selectedCounted}
@@ -129,6 +153,7 @@ const RawData = (props) => {
             <input type="checkbox" id="second" />
             <AiFillCaretRight className="arrow" />
             <CancelledInterview
+              status={STATUS}
               selectedCancel={selectedCancel}
               value={selectedCancel}
               bodyCancelled={dataRawCheck}

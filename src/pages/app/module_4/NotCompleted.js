@@ -6,6 +6,7 @@
 //Packages
 import React from "react";
 import HeaderRawData from "../../../components/app/HeaderRawData";
+import { Link } from "react-router-dom";
 
 //Styles
 import "./styles/NotCompleted.css";
@@ -24,10 +25,33 @@ const NotCompleted = (props) => {
             <tr key={index} className="body-counted">
               {complete === "Not Completed" ? <td>{interviewid}</td> : null}
               {complete === "Not Completed" ? <td>{complete}</td> : null}
-              {complete === "Not Completed" ? <td>Pending PW</td> : null}
+              {complete === "Not Completed" ? <td> Terminate</td> : null}
               {complete === "Not Completed" ? <td>{curDate}</td> : null}
-              {complete === "Not Completed" ? <td>Link</td> : null}
-              {complete === "Not Completed" ? <td>Link</td> : null}
+              {complete === "Not Completed" ? (
+                <td>
+                  <Link
+                    to={{
+                      pathname: "/preview",
+                      state: { interviewid, complete },
+                    }}
+                  >
+                    Link
+                  </Link>
+                </td>
+              ) : null}
+              {complete === "Not Completed" ? (
+                <td>
+                  {/* This link for photos */}
+                  <Link
+                    to={{
+                      pathname: "/preview",
+                      state: { interviewid, complete },
+                    }}
+                  >
+                    Link
+                  </Link>
+                </td>
+              ) : null}
               {complete === "Not Completed" ? <td>{Latitude}</td> : null}
               {complete === "Not Completed" ? <td>{Longtitude}</td> : null}
               {complete === "Not Completed" ? <td>{duration}</td> : null}

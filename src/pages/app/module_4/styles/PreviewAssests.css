@@ -1,0 +1,26 @@
+.preview-assets{
+    background-color: #ffefcc;
+    margin-left: -8px;
+    margin-top: -8px;
+    width: 1536px;
+    height: 714.4px;
+    display: flex;
+}
+.preview-assest--table{
+    margin-left: 350px;
+    margin-top: 150px;
+    border-spacing: 0px;
+}
+.preview-assest--table th {
+    border:  1px solid black;
+}
+.preview-assest--table td {
+    border : 1px solid black;
+}
+.image{
+    width: 300px;
+    height: 300px;
+}
+.audio{
+    outline: none;
+}
