@@ -82,7 +82,7 @@ const CountedInterview = (props) => {
 
   return (
     <div className="tab-1">
-      <table className="table-1">
+      <table className="table-1" id="1000">
         <HeaderRawData />
         <tbody>{renderBody()}</tbody>
       </table>
