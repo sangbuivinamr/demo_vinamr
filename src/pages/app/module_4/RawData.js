@@ -4,13 +4,16 @@
 *Main Function: render module_4
 */
 
-//Packages
+//React API
 import React, { useState, useEffect } from "react";
 import { AiFillCaretRight } from "react-icons/ai";
+import axios from "axios";
+import ReactToExcel from "react-html-table-to-excel";
+
+//Components
 import CancelledInterview from "./CancelledInterview";
 import CountedInterview from "./CountedInterview";
 import NotCompleted from "./NotCompleted";
-import axios from "axios";
 import SelectionExportModal from "../../../components/app/SelectionExportModal.js"
 import ChangeInterviewStatus from "../../../components/app/ChangeInterviewStatus.js"
 //Styles
@@ -174,7 +177,14 @@ const RawData = (props) => {
       closeExpModal={closeExpModal}
       />
       <ChangeInterviewStatus isOpen={isOpenCIStatModal} closeCIStatModal={closeCIStatModal}/>
-       <button onClick={openCIStatModal}> Open Confirm Status </button>         
+       <button onClick={openCIStatModal}> Open Confirm Status </button>    
+       <ReactToExcel
+       table="3000"
+       filename="123123"
+       sheet="sheet 1"
+       buttonText="EXPORT"
+       className="table-3"
+       />     
     </div>
   );
 };
