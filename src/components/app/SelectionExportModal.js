@@ -49,7 +49,7 @@ const SelectionExportModal  = (props) =>{
                 <input type="checkbox" className="module-4--export-modal--checkbox"/>
                 <span>Not Completed Interviews</span>
             </div>
-           <button className="module-4--selection-exp-modal--export-button">
+           <button className="module-4--selection-exp-modal--export-button" onClick={props.ExportToCSV}>
                Export
            </button>
              <button 

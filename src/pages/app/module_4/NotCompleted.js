@@ -41,7 +41,6 @@ const NotCompleted = (props) => {
               ) : null}
               {complete === "Not Completed" ? (
                 <td>
-                  {/* This link for photos */}
                   <Link
                     to={{
                       pathname: "/preview",

@@ -16,6 +16,7 @@ import CountedInterview from "./CountedInterview";
 import NotCompleted from "./NotCompleted";
 import SelectionExportModal from "../../../components/app/SelectionExportModal.js"
 import ChangeInterviewStatus from "../../../components/app/ChangeInterviewStatus.js"
+import ExportToCSV from "../../../components/app/ExportToCSV.js"
 //Styles
 import "./styles/RawData.css";
 import { STATUS } from "../../../data/Status";
@@ -54,6 +55,16 @@ const RawData = (props) => {
   const openExpModal = () => {
     setIsOpenExpModal(true);
   }
+  /**
+   * @summary Get current date and time
+   */
+  const getCurrentDate = () => {
+let  today = new Date();
+let date = today.getFullYear()+(today.getMonth()+1)+today.getDate();
+let time = today.getHours() +today.getMinutes();
+let dateTime = date+' '+time;
+return dateTime;
+  }
 
   /**
    * @summary Handle open and close Change Interview Status modal 
@@ -73,6 +84,7 @@ const RawData = (props) => {
    */
   const getRawData = async (projectId,interviewId) => {
     const response = await axios.get(URL_MODULE_4.URL_DATA_MODULE_4 + `?projectId=${projectId}&interviewId=${interviewId}`);
+    console.log("GetRawData",response)
     let dataRawCheck = response.data;
     getDataRawCheck(dataRawCheck);
   };
@@ -83,6 +95,7 @@ const RawData = (props) => {
    */
   const getMedia = async (projectId) => {
     const response = await axios.get(URL_MODULE_4.URL_MEDIA + `?projectId=${projectId}`);
+    console.log("GetMedia",response)
     let dataMedia = response.data;
     setDataMedia(dataMedia);
   };
@@ -175,16 +188,10 @@ const RawData = (props) => {
       </div>
       <SelectionExportModal isOpen={isOpenExpModal} 
       closeExpModal={closeExpModal}
+      ExportToCSV={() => ExportToCSV(dataRawCheck,`${dataRawCheck[0].projectid}_All Data_${getCurrentDate()}`)}
       />
       <ChangeInterviewStatus isOpen={isOpenCIStatModal} closeCIStatModal={closeCIStatModal}/>
        <button onClick={openCIStatModal}> Open Confirm Status </button>    
-       <ReactToExcel
-       table="3000"
-       filename="123123"
-       sheet="sheet 1"
-       buttonText="EXPORT"
-       className="table-3"
-       />     
     </div>
   );
 };
