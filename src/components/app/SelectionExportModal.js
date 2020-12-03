@@ -10,9 +10,22 @@ import Modal from 'react-modal';
 import "./styles/SelectionExportModal.css";
 
 const SelectionExportModal  = (props) =>{
+    
+        //Type of exporting data
+        const TYPE_EXPORTING =["Quota Counted Interviews","All data", "Cancelled Interviews","Not Completed Interviews"]
+
     useEffect(() =>{
         Modal.setAppElement('body');
     },[])
+
+    /**
+     * @summary This function is to handle selected Check box
+     */
+    let interviewType = "";
+    const handleCheckBox = (type) =>{
+
+    }
+
     return(
             <div className="module-4--selection-export-modal-div">
                  <Modal isOpen ={props.isOpen} className="module-4--selection-export-modal">
@@ -24,36 +37,25 @@ const SelectionExportModal  = (props) =>{
             <select className="module-4--export-options">
                 <option value="first_option">MS Excel (*.xlsx)</option>
                 <option value="second_option">MS Excel (*.csv)</option>
-                <option value="third_option">SPSS (*.sav)</option>
-                <option value="forth_option" selected>PDF (*.pdf)</option>
             </select>
             </div>
             <text className="module-4--Please-select">Export data for</text>
-            <div>
-                <input type="checkbox" className="module-4--export-modal--checkbox"/>
-                <span>Quota Counted Interviews</span>
-            </div>
-            <div>
-                <input type="checkbox" className="module-4--export-modal--checkbox"/>
-                <span>All data</span>
-            </div>
-            <div>
-                <input type="checkbox" className="module-4--export-modal--checkbox"/>
-                <span>Cancelled Interviews</span>
-            </div>
-            <div>
-                <input type="checkbox" className="module-4--export-modal--checkbox"/>
-                <span>Selected Interviews</span>
-            </div>
-            <div>
-                <input type="checkbox" className="module-4--export-modal--checkbox"/>
-                <span>Not Completed Interviews</span>
-            </div>
+            {
+             TYPE_EXPORTING.map(exType => {
+                 return(
+                    <div>
+                    <input style={{marginBottom:"10px"}} type="checkbox" className="module-4--export-modal--checkbox" value={exType} onChange ={ e => console.log("Check Box", e.target.value)}/>
+                    <span>{exType}</span>
+                </div>
+                 );
+             })
+            }
            <button className="module-4--selection-exp-modal--export-button" onClick={props.ExportToCSV}>
                Export
            </button>
              <button 
              onClick ={props. closeExpModal}
+             className ="module-4--selection-exp-modal--cancel-button"
              >
               Cancel
            </button>

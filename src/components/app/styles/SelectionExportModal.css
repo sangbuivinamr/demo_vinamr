@@ -50,3 +50,21 @@
   font-size: 20px;
   font-family: var(--global-font-family);
 }
+
+.module-4--selection-exp-modal--export-button {
+  background-color: #972e33;
+  border: 2px white solid;
+  border-radius: 20px;
+  width: 30%;
+  height: 32px;
+  color: white;
+}
+.module-4--selection-exp-modal--cancel-button {
+  background-color: white;
+  border: 2px black solid;
+  border-radius: 20px;
+  width: 30%;
+  height: 32px;
+  color: black;
+  margin-left: 10px;
+}

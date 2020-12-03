@@ -55,16 +55,7 @@ const RawData = (props) => {
   const openExpModal = () => {
     setIsOpenExpModal(true);
   }
-  /**
-   * @summary Get current date and time
-   */
-  const getCurrentDate = () => {
-let  today = new Date();
-let date = today.getFullYear()+(today.getMonth()+1)+today.getDate();
-let time = today.getHours() +today.getMinutes();
-let dateTime = date+' '+time;
-return dateTime;
-  }
+
 
   /**
    * @summary Handle open and close Change Interview Status modal 
@@ -116,6 +107,8 @@ return dateTime;
   const onChangeOptionCancel = (selectedCancel) => {
     setSelectedCancel(selectedCancel);
   };
+
+  
   console.log("media",dataMedia)
   console.log("data",dataRawCheck)
   return (
@@ -188,7 +181,7 @@ return dateTime;
       </div>
       <SelectionExportModal isOpen={isOpenExpModal} 
       closeExpModal={closeExpModal}
-      ExportToCSV={() => ExportToCSV(dataRawCheck,`${dataRawCheck[0].projectid}_All Data_${getCurrentDate()}`)}
+      ExportToCSV={() => ExportToCSV(dataRawCheck)}
       />
       <ChangeInterviewStatus isOpen={isOpenCIStatModal} closeCIStatModal={closeCIStatModal}/>
        <button onClick={openCIStatModal}> Open Confirm Status </button>    
