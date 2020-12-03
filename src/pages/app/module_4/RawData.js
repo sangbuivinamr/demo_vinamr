@@ -8,7 +8,6 @@
 import React, { useState, useEffect } from "react";
 import { AiFillCaretRight } from "react-icons/ai";
 import axios from "axios";
-import ReactToExcel from "react-html-table-to-excel";
 
 //Components
 import CancelledInterview from "./CancelledInterview";
@@ -21,11 +20,9 @@ import ExportToCSV from "../../../components/app/ExportToCSV.js"
 import "./styles/RawData.css";
 import { STATUS } from "../../../data/Status";
 
-//Default URL
-const URL_MODULE_4 = {
-  URL_DATA_MODULE_4:"https://115.73.222.254:8000/rawDataCheck/getRawData",
-  URL_MEDIA:"https://115.73.222.254:8000/rawDataCheck/media/getMedia"
-};
+//Default URL`
+import URL_MODULE_4 from "./config.js"
+import HeaderRawData from "../../../components/app/HeaderRawData";
 const RawData = (props) => {
   const [dataRawCheck, getDataRawCheck] = useState([]);
 
@@ -38,6 +35,7 @@ const RawData = (props) => {
   const [isOpenCIStatModal, setIsOpenCIStatModal] = useState(false); // CIStat abbreviates for "Change Interview Status". 
   
   const [dataMedia, setDataMedia] = useState();
+  const [questionData, setQuestionData] = useState();
   /**
    *@summary Function useEffect
    *@return void
@@ -45,6 +43,8 @@ const RawData = (props) => {
   useEffect(() => {
     getRawData("0558");
     getMedia("0558");
+    console.log("Done GET")
+    getQuestionData("0558");
   }, []);
   /**
    * @summary Handle open and close Export Selection modal 
@@ -80,6 +80,22 @@ const RawData = (props) => {
     getDataRawCheck(dataRawCheck);
   };
   /**
+   * 
+   * @summary This function is to get anwser data from database 
+   */
+  const getQuestionData = async (projectId) => {
+    console.log('asfsfslfkjsahfkj')
+    const response = await axios.post(URL_MODULE_4.MODULE_4_QUESTION_DATA , {
+      id: projectId
+    })
+    console.log(response.data)
+    let data = response.data.json.surveyjson;
+    let json = JSON.parse(data.slice(1 , data.length - 1))
+    console.log("RawData.js - getAnswerData", json)
+    setQuestionData(json.pages)
+  }
+   console.log("RawData.js _ getQuestionData_ questionData  <state>",questionData)
+  /**
    *@summary The function getData for module_4
    *@param projectId
    *@return data from dataBase
@@ -108,9 +124,21 @@ const RawData = (props) => {
     setSelectedCancel(selectedCancel);
   };
 
-  
-  console.log("media",dataMedia)
-  console.log("data",dataRawCheck)
+  /**
+   * @summary This fuction is to post to database
+   */
+  const postToDataBase = () =>{
+    const tempData = 
+      {
+        interviewid: dataRawCheck[0].projectId,
+        interviewStatus: "????",
+        status: "Cancel",
+        step: "Pending",
+        type: " Fulltime"
+        
+        }
+    
+  }
   return (
     <div className="raw-data">
       <div className="content-raw-data">
@@ -141,6 +169,7 @@ const RawData = (props) => {
           </div>
         </div>
         <div className="content-area">
+        <HeaderRawData questionData={questionData}/>
           <div className="item-1">
             <label for="first" className="first-label">
               Quota Counted Interviews
@@ -155,6 +184,7 @@ const RawData = (props) => {
               onChangeOptionCounted={(selectedCounted) =>
                 onChangeOptionCounted(selectedCounted.target.value)
               }
+
             />
           </div>
           <div className="item-2">
@@ -169,6 +199,7 @@ const RawData = (props) => {
               onChangeOptionCancel={(selectedCancel) =>
                 onChangeOptionCancel(selectedCancel.target.value)
               }
+              onOpenCIStatModal={openCIStatModal}
             />
           </div>
           <div className="item-3">
@@ -184,7 +215,7 @@ const RawData = (props) => {
       ExportToCSV={() => ExportToCSV(dataRawCheck)}
       />
       <ChangeInterviewStatus isOpen={isOpenCIStatModal} closeCIStatModal={closeCIStatModal}/>
-       <button onClick={openCIStatModal}> Open Confirm Status </button>    
+      
     </div>
   );
 };

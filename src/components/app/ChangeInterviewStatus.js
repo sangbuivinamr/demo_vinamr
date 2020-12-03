@@ -23,7 +23,7 @@ const ChangeInterviewStatus = (props) => {
                     Please confirm if you want to proceed.
                 </text>
                 <div>
-                <button>
+                <button onClick={props.onConfirmChange}>
                     Confirm
                 </button>
                 <button onClick ={props.closeCIStatModal}>
