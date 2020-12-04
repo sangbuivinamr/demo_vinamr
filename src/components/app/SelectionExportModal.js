@@ -44,7 +44,11 @@ const SelectionExportModal  = (props) =>{
              TYPE_EXPORTING.map(exType => {
                  return(
                     <div>
-                    <input style={{marginBottom:"10px"}} type="checkbox" className="module-4--export-modal--checkbox" value={exType} onChange ={ e => console.log("Check Box", e.target.value)}/>
+                    <input style={{marginBottom:"10px"}} 
+                    type="checkbox" className="module-4--export-modal--checkbox" 
+                    value={exType} 
+                    key={TYPE_EXPORTING.indexOf(exType)}
+                    onChange ={ e => console.log("Check Box", e.target.value)}/>
                     <span>{exType}</span>
                 </div>
                  );

@@ -80,7 +80,7 @@ const CancelledInterview = (props) => {
   return (
     <div className="tab-2">
       <table className="table-2" id="2000">
-        <HeaderRawData />
+        <HeaderRawData questionData={props.questionData} />
         <tbody>{renderBody()}</tbody>
       </table>
     </div>

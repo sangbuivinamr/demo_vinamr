@@ -184,7 +184,7 @@ const RawData = (props) => {
               onChangeOptionCounted={(selectedCounted) =>
                 onChangeOptionCounted(selectedCounted.target.value)
               }
-
+              questionData={questionData}
             />
           </div>
           <div className="item-2">
@@ -200,13 +200,14 @@ const RawData = (props) => {
                 onChangeOptionCancel(selectedCancel.target.value)
               }
               onOpenCIStatModal={openCIStatModal}
+              questionData={questionData}
             />
           </div>
           <div className="item-3">
             <label for="third">Not Completed Interviews</label>
             <input type="checkbox" id="third" />
             <AiFillCaretRight className="arrow" />
-            <NotCompleted bodyNotCompleted={dataRawCheck} />
+            <NotCompleted bodyNotCompleted={dataRawCheck}  questionData={questionData} />
           </div>
         </div>
       </div>

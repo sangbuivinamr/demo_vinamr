@@ -1,25 +1,25 @@
 @import "../../styles/GlobalStyles.css";
-.tab-2{
-    background-color: white;
-    width: 1467px;
-    border: 3px solid var(--global-background-color);
-    margin-left: 30px;
-
+.tab-2 {
+  background-color: white;
+  width: 1467px;
+  border: 3px solid var(--global-background-color);
+  margin-left: 30px;
 }
-.tab-2> table{
-    border-spacing: 0px;
-    width:1450px;
+.tab-2 > table {
+  border-spacing: 0px;
+  width: 1450px;
+  border-collapse: collapse;
 }
-.table-2 td{
-    border: 1px solid black;
+.table-2 td {
+  border: 1px solid black;
 }
-.table-2 tbody{
-    width: 300px;
-    text-align: center;
+.table-2 tbody {
+  width: 300px;
+  text-align: center;
 }
-.select-option-body{
-    outline: none !important;
-    width: 20px;
-    float: right;
-    cursor: pointer;
+.select-option-body {
+  outline: none !important;
+  width: 20px;
+  float: right;
+  cursor: pointer;
 }

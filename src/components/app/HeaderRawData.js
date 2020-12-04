@@ -49,7 +49,7 @@ const HeaderRawData = (props) => {
   const renderHeader = () => {
     return header.map((key, index) => {
       return (
-        <th className="element-header">
+        <th className="element-header" KEY={index}>
           {key}
           {isStatus.includes(key) ? (
             <select className="select-option">
