@@ -3,6 +3,11 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 
  const ExportToCSV = (csvData) => {
+    console.log("ExportToCSV", csvData)
+     if(csvData === undefined || csvData.length === 0 ) {
+        alert("Cannot export empty data")    
+         return;
+     }
        /**
    * @summary Get current date and time
    */
