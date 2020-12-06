@@ -9,8 +9,8 @@ import { STATUS } from "../../data/Status";
 import "../../components/app/styles/HeaderRawData.css";
 
 const HeaderRawData = (props) => {
-  
-  const [questionData,setQuestionData] = useState(props.questionData)
+ 
+  const [questionName,setQuestionName] = useState(props.questionName)
   let header = [
     "InterviewID",
     "Completed",
@@ -18,38 +18,39 @@ const HeaderRawData = (props) => {
     "EndTime",
     "Audio",
     "Photos",
-    "Latitude",
+    "Latitude", 
     "Longitude",
     "Duration",
   ];
   //useEffect to re-render every time the props change
   useEffect(() =>{
-    setQuestionData(props.questionData)
-  },props.questionData)
+    setQuestionName(props.questionName)
+  },[props.questionName])
 
-
-  console.log("JSON data", questionData)
 
   //Filter the the question from the question data
-  let filteredArray = []
-  if(questionData !== undefined)
-    questionData.map(page => {
-      let tempArray =[] 
-      if (page.elements !== undefined)
-      page.elements.map(el =>  filteredArray.push(el.name))
-  });
-  filteredArray.splice(filteredArray.length -2,2)
-  console.log("HeaderRawData.js _ filterHeader _ filteredArray ",filteredArray)
-  for (const col of filteredArray)
-    header.push(col)
+
+  // if(questionData !== undefined)
+  //   questionData.map(page => {
+  //     let tempArray =[] 
+  //     if (page.elements !== undefined)
+  //     page.elements.map(el =>  filteredArray.push(el.name))
+  // });
+  // filteredArray.splice(filteredArray.length -2,2)
+  // console.log("HeaderRawData.js _ filterHeader _ filteredArray ",filteredArray)
+
+  if (questionName !== undefined){
+    for (const col of questionName)
+    header.push(col.name)
+  }
   
-  
+
   const isHeaderNeeded = ["InterviewID", "Completed", "EndTime", "Duration"];
   const isStatus = ["Status"];
   const renderHeader = () => {
     return header.map((key, index) => {
       return (
-        <th className="element-header" KEY={index}>
+        <th className="element-header" key={index}>
           {key}
           {isStatus.includes(key) ? (
             <select className="select-option">

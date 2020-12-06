@@ -3,9 +3,8 @@
 }
 .element-header {
   min-width: 150px;
-  border: 1px solid black;
+  border: 1px solid rgb(175, 126, 126);
   height: 40px;
-  border-collapse: collapse;
 }
 .select-option {
   float: right;
