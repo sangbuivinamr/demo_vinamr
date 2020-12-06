@@ -22,9 +22,8 @@ import { STATUS } from "../../../data/Status";
 
 //Default URL`
 import URL_MODULE_4 from "./config.js"
-import HeaderRawData from "../../../components/app/HeaderRawData";
 const RawData = (props) => {
-  const [dataRawCheck, getDataRawCheck] = useState([]);
+  const [dataRawCheck, setDataRawCheck] = useState([]);
 
   const [selectedCounted, setSelectedCounted] = useState();
 
@@ -36,16 +35,72 @@ const RawData = (props) => {
   
   const [dataMedia, setDataMedia] = useState();
   const [questionData, setQuestionData] = useState();
+  const [questionName, setQuestionName] = useState();
+  console.log("----------------------------------------------------------------BEGINNING OF RENDERING----------------------------------------------------------------------------------------------")
+  
   /**
    *@summary Function useEffect
    *@return void
    */
   useEffect(() => {
+    console.log("First useEffect")
     getRawData("0558");
+    console.log(" RawData.js - useEffect - rawDataCheck",dataRawCheck)
     getMedia("0558");
     console.log("Done GET")
     getQuestionData("0558");
+    console.log("RawData.js _ getQuestionData_ questionData",questionData)
+    // let tempRawData = JSON.parse(JSON.stringify(URL_MODULE_4.TEMP_RAW_DATA));
+    
+    // for(const rawData of tempRawData)
+    // {
+    //   //Parse {String} kq into JSON
+    //   rawData.kq = JSON.parse(rawData.kq);
+    //   //Delete unnecessary attribute
+    //   delete rawData.tempcol;
+
+
+    // }
+    // console.log("useEffect tempRawData",tempRawData)
+    // setDataRawCheck(tempRawData)
+    // const response = URL_MODULE_4.TEMP_INTERVIEW;
+    // getQuestionName(response)
+    // setQuestionData(response)
+   
   }, []);
+
+  /**
+   * @summary This second useEffect is to filter neccesary data from 3 different JSONs
+   * @step First, add more questionName.name as properties to each element of rawDataCheck
+   * Second, set value of all the new properties due to attribute {kq} of each element of dataRawCheck
+   * NOTE: each questionName.name has different type => Need to handle different cases
+   */
+ useEffect(() => {
+   console.log("Second useEffect", questionData,questionName,dataRawCheck);
+    if(questionName !== undefined && questionData !== undefined && dataRawCheck !== undefined){
+      let tempName = JSON.parse(JSON.stringify(questionName)); //stringify and parse to deep copy JSON, avoid unattended change to state
+      let tempData  = JSON.parse(JSON.stringify(questionData));
+      let tempRaw  = JSON.parse(JSON.stringify(dataRawCheck));
+      //Add question Data properties
+      
+          const attrOfTempRaw  = Object.keys(tempRaw[0]) // The properties of all elements in tempRaw are the same  => just need to get the first properties
+          console.log("Listed properties", attrOfTempRaw)
+
+          //Check if there are duplicate names between question
+          for (const quesName of tempName){
+            if (!attrOfTempRaw.includes(quesName.name))
+            {
+              tempRaw.map(el =>{
+                el[quesName.name] = null
+              })
+            }
+          }
+          
+          console.log("Temp data",tempRaw)
+
+    }
+
+ },[questionName]) //Only need to check questionName it is the last one to successfully change the state 
   /**
    * @summary Handle open and close Export Selection modal 
    */
@@ -56,7 +111,7 @@ const RawData = (props) => {
     setIsOpenExpModal(true);
   }
 
-
+console.log("Get raw Data",dataRawCheck)
   /**
    * @summary Handle open and close Change Interview Status modal 
    */
@@ -77,8 +132,20 @@ const RawData = (props) => {
     const response = await axios.get(URL_MODULE_4.URL_DATA_MODULE_4 + `?projectId=${projectId}&interviewId=${interviewId}`);
     console.log("GetRawData",response)
     let dataRawCheck = response.data;
-    getDataRawCheck(dataRawCheck);
+    
+    for(const rawData of dataRawCheck)
+    {
+      //Parse {String} kq into JSON
+      rawData.kq = JSON.parse(rawData.kq);
+      //Delete unnecessary attribute
+      delete rawData.tempcol;
+  }
+    setDataRawCheck(dataRawCheck);
   };
+  /**
+   * 
+   * @summary 
+   */
   /**
    * 
    * @summary This function is to get anwser data from database 
@@ -93,8 +160,9 @@ const RawData = (props) => {
     let json = JSON.parse(data.slice(1 , data.length - 1))
     console.log("RawData.js - getAnswerData", json)
     setQuestionData(json.pages)
+    getQuestionName(json.pages)
   }
-   console.log("RawData.js _ getQuestionData_ questionData  <state>",questionData)
+   
   /**
    *@summary The function getData for module_4
    *@param projectId
@@ -106,6 +174,22 @@ const RawData = (props) => {
     let dataMedia = response.data;
     setDataMedia(dataMedia);
   };
+/**
+ * @summary This function is to get filtered array of question column
+ * @param {JSON} questionData The question data get from server 
+ */
+
+  const getQuestionName = (questionData) =>{
+    let filteredArray = []
+    if(questionData !== undefined)
+      questionData.map(page => { 
+        if (page.elements !== undefined)
+        page.elements.map(el =>  filteredArray.push({name: el.name,type: el.type}))
+    });
+    filteredArray.splice(filteredArray.length -2,2)
+    console.log("Filtered array AFTER",filteredArray)
+    setQuestionName(filteredArray)
+  }
 
   /**
    * @summary The function handle data is cancelled
@@ -139,6 +223,13 @@ const RawData = (props) => {
         }
     
   }
+  /**
+   * @summary This function is to get the answers of all interviewers' data to fill into RaWDataCheck 
+   * 
+   */
+  const handleAnswerData = () => {
+  
+  } 
   return (
     <div className="raw-data">
       <div className="content-raw-data">
@@ -169,7 +260,7 @@ const RawData = (props) => {
           </div>
         </div>
         <div className="content-area">
-        <HeaderRawData questionData={questionData}/>
+
           <div className="item-1">
             <label for="first" className="first-label">
               Quota Counted Interviews
@@ -185,6 +276,7 @@ const RawData = (props) => {
                 onChangeOptionCounted(selectedCounted.target.value)
               }
               questionData={questionData}
+              questionName={questionName}
             />
           </div>
           <div className="item-2">
@@ -201,13 +293,14 @@ const RawData = (props) => {
               }
               onOpenCIStatModal={openCIStatModal}
               questionData={questionData}
+              questionName={questionName}
             />
           </div>
           <div className="item-3">
             <label for="third">Not Completed Interviews</label>
             <input type="checkbox" id="third" />
             <AiFillCaretRight className="arrow" />
-            <NotCompleted bodyNotCompleted={dataRawCheck}  questionData={questionData} />
+            <NotCompleted bodyNotCompleted={dataRawCheck} questionName={questionName} questionData={questionData} />
           </div>
         </div>
       </div>
