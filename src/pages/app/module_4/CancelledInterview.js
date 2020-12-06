@@ -18,7 +18,7 @@ const CancelledInterview = (props) => {
       bodyCancelled &&
       bodyCancelled.map(
         (
-          { interviewid, complete, curDate, Latitude, Longtitude, duration },
+          { interviewid, complete, curDate, Latitude, Longtitude, duration,  },
           index
         ) => {
           return (
@@ -38,7 +38,7 @@ const CancelledInterview = (props) => {
                     {status &&
                       status.map((key) => {
                         return <option>{key}</option>;
-                      })}
+                      })}                                                         
                   </select>
                 </td>
               ) : null}
@@ -80,7 +80,7 @@ const CancelledInterview = (props) => {
   return (
     <div className="tab-2">
       <table className="table-2" id="2000">
-        <HeaderRawData questionData={props.questionData} />
+        <HeaderRawData questionName={props.questionName} />
         <tbody>{renderBody()}</tbody>
       </table>
     </div>

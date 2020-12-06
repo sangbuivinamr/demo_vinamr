@@ -63,7 +63,7 @@ const NotCompleted = (props) => {
   return (
     <div className="tab-3">
       <table className="table-3" id="3000">
-        <HeaderRawData />
+        <HeaderRawData questionName={props.questionName} />
         <tbody>{renderBody()}</tbody>
       </table>
     </div>
