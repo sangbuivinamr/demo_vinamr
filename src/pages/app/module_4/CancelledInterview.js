@@ -23,7 +23,7 @@ const CancelledInterview = (props) => {
         ) => {
           return (
             <tr key={index} className="body-counted">
-              {complete === "Completed" ? <td>{interviewid}</td> : null}
+              {complete === "Completed" ? <td>{null}</td> : null}
               {complete === "Completed" ? <td>{complete}</td> : null}
               {complete === "Completed" ? (
                 <td>

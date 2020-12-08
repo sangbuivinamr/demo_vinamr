@@ -43,42 +43,52 @@ const RawData = (props) => {
    *@return void
    */
   useEffect(() => {
-    console.log("First useEffect")
-    getRawData("0558");
-    console.log(" RawData.js - useEffect - rawDataCheck",dataRawCheck)
-    getMedia("0558");
-    console.log("Done GET")
-    getQuestionData("0558");
-    console.log("RawData.js _ getQuestionData_ questionData",questionData)
-    // let tempRawData = JSON.parse(JSON.stringify(URL_MODULE_4.TEMP_RAW_DATA));
+    // console.log("First useEffect")
+    // getRawData("0558");
+    // console.log(" RawData.js - useEffect - rawDataCheck",dataRawCheck)
+    // getMedia("0558");
+    // console.log("Done GET")
+    // getQuestionData("0558");
+    // console.log("RawData.js _ getQuestionData_ questionData",questionData)
+    let tempRawData = JSON.parse(JSON.stringify(URL_MODULE_4.TEMP_RAW_DATA));
     
-    // for(const rawData of tempRawData)
-    // {
-    //   //Parse {String} kq into JSON
-    //   rawData.kq = JSON.parse(rawData.kq);
-    //   //Delete unnecessary attribute
-    //   delete rawData.tempcol;
+    for(const rawData of tempRawData)
+    {
+      //Parse {String} kq into JSON
+      rawData.kq = JSON.parse(rawData.kq);
+      //Delete unnecessary properties
+      delete rawData.tempcol;
 
 
-    // }
-    // console.log("useEffect tempRawData",tempRawData)
-    // setDataRawCheck(tempRawData)
-    // const response = URL_MODULE_4.TEMP_INTERVIEW;
-    // getQuestionName(response)
-    // setQuestionData(response)
+    }
+    console.log("useEffect tempRawData",tempRawData)
+    setDataRawCheck(tempRawData)
+    const response = URL_MODULE_4.TEMP_INTERVIEW;
+    getQuestionName(response)
+    setQuestionData(response)
    
   }, []);
 
   /**
-   * @summary This second useEffect is to filter neccesary data from 3 different JSONs
-   * @step First, add more questionName.name as properties to each element of rawDataCheck
-   * Second, set value of all the new properties due to attribute {kq} of each element of dataRawCheck
-   * NOTE: each questionName.name has different type => Need to handle different cases
+   * @summary This second useEffect is to filter neccesary data from 3 different JSONs when all of them are successfully set
+  
    */
  useEffect(() => {
    console.log("Second useEffect", questionData,questionName,dataRawCheck);
     if(questionName !== undefined && questionData !== undefined && dataRawCheck !== undefined){
-      let tempName = JSON.parse(JSON.stringify(questionName)); //stringify and parse to deep copy JSON, avoid unattended change to state
+      handleAnswerData();
+    }
+
+ },[questionName]) //Only need to check questionName it is the last one to successfully change the state 
+
+/**
+ * @summary This function is to fill of the answers from interviewers to the rawDataCheck
+ * First, add more questionName.name as properties to each element of rawDataCheck
+ * Second, set value of all the new properties due to attribute {kq} of each element of dataRawCheck
+ * NOTE: each questionName.name has different type => Need to handle different cases
+ */
+const handleAnswerData =() => {
+  let tempName = JSON.parse(JSON.stringify(questionName)); //stringify and parse to deep copy JSON, avoid unattended change to state
       let tempData  = JSON.parse(JSON.stringify(questionData));
       let tempRaw  = JSON.parse(JSON.stringify(dataRawCheck));
       //Add question Data properties
@@ -86,21 +96,111 @@ const RawData = (props) => {
           const attrOfTempRaw  = Object.keys(tempRaw[0]) // The properties of all elements in tempRaw are the same  => just need to get the first properties
           console.log("Listed properties", attrOfTempRaw)
 
-          //Check if there are duplicate names between question
           for (const quesName of tempName){
-            if (!attrOfTempRaw.includes(quesName.name))
+            
+          //Check if there are duplicate names between questions
+            if (!attrOfTempRaw.includes(quesName.name)) 
             {
               tempRaw.map(el =>{
                 el[quesName.name] = null
               })
             }
           }
-          
-          console.log("Temp data",tempRaw)
+          for (const rawData of tempRaw){
 
-    }
+            const propsOfRawData  = Object.keys(rawData.kq)
+            // console.log("handleAnswerData","RespBirth",typeOfQuestionName("RespBirth"))
+            for (const prop of propsOfRawData)
+            {   
+                rawData[prop] = getValueFromQuestionData( prop,typeOfQuestionName(prop),rawData.kq[prop]);
+            }
+          }
 
- },[questionName]) //Only need to check questionName it is the last one to successfully change the state 
+          for (let rawData of tempRaw)
+          {
+            delete rawData.kq;
+          }
+          setDataRawCheck(tempRaw)
+}
+/**
+ * @summary This function is to get the type of questionName 
+ */
+const typeOfQuestionName = (name) =>{
+  for (const question of questionName)
+{   
+   if (name === question.name)
+    return question.type;
+  }
+}
+/**
+ * @summary This function is to set values of all the quesitions into the properties of question Data
+ */
+const getValueFromQuestionData = (quesName,type,curData) =>{
+  //Each type of data will have different way to display
+  switch(type){
+    case "text":
+      {
+        console.log("case: text - curData",curData)
+        return curData;
+      }
+    
+    case "radiogroup": case "rating":
+      {
+        console.log("case rating or radiogroup", type)
+        for( const page of questionData) // each element of questionData array is a page, which contains questions
+        { if(page.elements !== undefined)  // Check whether page has "elements" props
+          for( const el of page.elements)
+          {
+            if( el.name === quesName)   //get to the right element that its value of "name" property is the same as quesName
+            {
+                for(const choice of el.choices) //Find the right choice to return the value
+                {
+                  if(choice.value === curData)    
+                  return choice.text; 
+                }
+            }
+          }
+        }
+        break;
+      }
+      case "multipletext":
+        { console.log("multipletext - curData",curData)
+          const propsOfCurData = Object.keys(curData) //Get all the props of curData
+          console.log("multipletext - propsOfCurData",propsOfCurData)
+          // We need to change "multipletext" to String
+          let tempString=""; 
+        
+         for( const prop of propsOfCurData)
+         {
+           tempString  += prop +" "+curData[prop]+" ";
+         }
+         return tempString  
+        }
+        case "matrix":
+          {
+            console.log("case matrix", type)
+            for( const page of questionData) // each element of questionData array is a page, which contains questions
+            { if(page.elements !== undefined)  // Check whether page has "elements" props
+              for( const el of page.elements)
+              { if(el.hasOwnProperty("columns"))
+                for (const col of el.columns)
+                if( col.value === curData)   //get to the right element that its value of "name" property is the same as quesName
+                {
+                   return col.text
+                }
+              }
+            }
+            break;
+          }
+        default:
+          {
+            console.log("case default")
+            return curData;
+          }
+         
+  }
+}
+
   /**
    * @summary Handle open and close Export Selection modal 
    */
@@ -222,13 +322,6 @@ console.log("Get raw Data",dataRawCheck)
         
         }
     
-  }
-  /**
-   * @summary This function is to get the answers of all interviewers' data to fill into RaWDataCheck 
-   * 
-   */
-  const handleAnswerData = () => {
-  
   } 
   return (
     <div className="raw-data">

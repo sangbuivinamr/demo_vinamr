@@ -8,6 +8,7 @@ import "./styles/CountedInterview.css";
 
 const CountedInterview = (props) => {
   const bodyCounted = props.bodyCounted;
+  console.log("CountedInterview",bodyCounted)
   const optionCounted = props.selectedCounted;
   const status = props.status;
   const onChangeOptionCounted = (optionCounted) => {
