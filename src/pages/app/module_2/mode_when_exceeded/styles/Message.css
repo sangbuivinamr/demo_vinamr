@@ -1,6 +1,6 @@
 @import "../../../styles/GlobalStyles.css";
 
-.message {
+.when-exceed--message {
     width: 300px;
     border-top: 2px solid #FCC216;
     border-bottom: 2px solid #FCC216;
@@ -12,20 +12,20 @@
     height: 250px;
 }
 
-.two-mess {
+.when-exceed--two-mess {
     display: flex;
     margin-left: 10px;
     margin-top: 10px;
 }
 
-.p-mess {
+.when-exceed--p-mess {
     font-family: var(--global-font-family);
     color: #ffd066;
     margin-right: 50px;
     font-weight: bold;
 }
 
-.check {
+.when-exceed--check {
     margin-top: 20px;
     margin-left: 10px;
     cursor: pointer;
@@ -33,12 +33,12 @@
     width: 15px;
 }
 
-.no-mess {
+.when-exceed--no-mess {
     font-family: var(--global-font-family);
     color: #4F3C06;
 }
 
-.notification-area {
+.when-exceed--notification-area {
     margin-top: -10px;
     width: 270px;
     height: 120px;
@@ -46,25 +46,18 @@
     resize: none;
     background-color: var(--global-background-color);
 }
-.notification-area::placeholder{
+.when-exceed--notification-area::placeholder{
     padding-left: 10px;
     padding-top: 5px;
     font-family: var(--global-font-family);
     font-weight: bold;
 }
-
-.notification {
-    margin-left: 15px;
-    font-size: 15px;
-    font-family: var(--global-font-family);
-}
-
-.button-mess {
+.when-exceed--button-mess {
     display: flex;
     justify-content: center;
 }
 
-.apply-mess {
+.when-exceed--apply-mess {
     background-color: #ffd066;
     margin-right: 10px;
     border-radius: 5px;
@@ -75,11 +68,11 @@
     color: white;
 }
 
-.apply-mess:hover {
+.when-exceed--apply-mess:hover {
     opacity: 0.75;
 }
 
-.apply-all-mess {
+.when-exceed--apply-all-mess {
     background-color: #ffd066;
     border-radius: 5px;
     height: 30px;
@@ -89,6 +82,6 @@
     color: white;
 }
 
-.apply-all-mess:hover {
+.when-exceed--apply-all-mess:hover {
     opacity: 0.75;
 }

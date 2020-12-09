@@ -38,11 +38,11 @@ const ActionExceeded = (props) => {
     props.onApplyAll(action);
   };
   return (
-    <div className = "action-exceeded">
-      <p className = "action-p"> Action when exceeded</p>
-      <div className = "jump-slide">
+    <div className = "when-exceed--action">
+      <p className = "when-exceed--action-p"> Action when exceeded</p>
+      <div className = "when-exceed--jump-slide">
         <select
-          className = "select-action"
+          className = "when-exceed--select-action"
           value = {selectedMode}
           onChange={(e) => {
             setChangePath(e.target.value)
@@ -56,9 +56,9 @@ const ActionExceeded = (props) => {
           <option value = "Continue Interview"> Continue Interview </option>
         </select>
         {selectedMode === "Jump to Slide" ? (
-          <div className = "code-exceeded">
+          <div>
             <input
-              className = "input-exceeded"
+              className = "when-exceed--input"
               value = {actionText}
               onChange = {(action) => {
                 onChangeAction(action);
@@ -69,9 +69,9 @@ const ActionExceeded = (props) => {
         ) : null}
       </div>
 
-      <div className="buttons">
+      <div className="when-exceed--buttons">
         <div
-          className="apply"
+          className="when-exceed--apply"
           onClick={() => {
             onApplyAction();
             selectAction(changePath);
@@ -80,7 +80,7 @@ const ActionExceeded = (props) => {
           Apply
         </div>
         <div
-          className="apply-all"
+          className="when-exceed--apply-all"
           onClick={(action) => onApplyAllAction(action)}
         >
           Apply to All

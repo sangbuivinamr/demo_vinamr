@@ -3,7 +3,7 @@
     outline: none;
     font-family: var(--global-font-family);
 }
-.header-left{
+.when-exceeded--header-left{
     border: 1px solid black;
     background-color:#ffd066;
     font-size: 15px;
@@ -12,7 +12,7 @@
     width: 10px;
     margin-top:20px;
 }
-.body-exceeded-left{
+.when-exceeded--body-exceeded-left{
     border: 1px solid black;
     font-family: var(--global-font-family);
     font-size: 15px;
@@ -20,7 +20,7 @@
     width: 10px;
     text-align: center;
 }
-.cell{
+.when-exceeded--cell{
     border: 1px solid black;
     width: 100px;
     max-width: 20px;
@@ -28,12 +28,12 @@
     cursor: pointer;
     overflow: hidden;
     text-overflow: ellipsis; 
-    /* color: red; */
+    text-align: center;
 }
-.cell:hover{
+.when-exceeded--cell:hover{
     background-color: #ffefcc;
 }
-.main-table{
+.when-exceeded--main-table{
     background-color: #f2f2f2;
     padding-top: 2%;
     margin-right: 30px;
@@ -44,7 +44,7 @@
     overflow-x: scroll;
     display:grid;
 }
-.main-table > table{
+.when-exceeded--main-table > table{
     border-spacing: 0px;
     border-collapse: collapse;
 }

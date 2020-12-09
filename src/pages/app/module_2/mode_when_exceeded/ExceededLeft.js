@@ -29,7 +29,7 @@ const ExceededLeft = (props) => {
     return <div></div>;
   }
   return (
-    <div className="main-table">
+    <div className="when-exceeded--main-table">
       <table>
         <thead>
           <tr>
