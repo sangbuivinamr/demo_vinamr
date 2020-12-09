@@ -32,7 +32,7 @@
   min-width: 50%;
   text-align: center;
 }
-.editing-table--cell {
+.cell {
   border: 1px solid black;
   min-width: 150px;
 
@@ -40,11 +40,6 @@
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: center;
-  border-collapse: collapse;
-}
-.editing-table--cell input {
-  border: none;
   text-align: center;
 }
 .main-editing-table {
@@ -80,4 +75,3 @@
   min-width: 10px;
   min-height: 20px;
 }
-

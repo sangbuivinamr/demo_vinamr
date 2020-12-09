@@ -18,7 +18,7 @@ import { QUOTA_MOVING_DIRECTION, TABLE_TYPE,  QUOTA_EDITING_TABLE} from "./confi
 
 
 const QuotaEditing = (props)=>{
-    const PROJECT_ID = '0560';
+    const PROJECT_ID = localStorage.getItem('currentprojectid');
     const [quotaData, setQuotaData] = useState(QUOTA_LABEL_SELECTION_DATA);
 
     const [quotaClickStatus, setQuotaClickStatus] = useState({

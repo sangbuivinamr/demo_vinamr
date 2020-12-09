@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import "./styles/EditingTable.css";
+import "./styles/EditingTableTracking.css";
 
 const EditingTableTracking = (props) => {
   let colTotalQuotas = [];
