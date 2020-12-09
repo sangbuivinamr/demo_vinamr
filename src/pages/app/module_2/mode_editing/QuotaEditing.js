@@ -837,6 +837,9 @@ const QuotaEditing = (props)=>{
                     >
                         Tracking
                     </option>
+                    <option value = 'interview'>
+                        Interview Preview
+                    </option>
                 </select>
                 <div className="title-add-to-btns">
                    

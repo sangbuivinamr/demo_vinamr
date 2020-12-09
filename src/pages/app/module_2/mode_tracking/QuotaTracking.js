@@ -144,6 +144,7 @@ const QuotaTracking = (props) => {
             <option value="editing">Editing</option>
             <option value="exceeded">When Exceeded</option>
             <option value="tracking">Tracking</option>
+            <option value = 'interview'>Interview Preview</option>
           </select>
         </div>
         <img
