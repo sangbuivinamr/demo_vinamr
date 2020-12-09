@@ -8,6 +8,7 @@ import "./styles/QuotaLabelSelection.css";
 import QuotaRow from "../../../../components/app/QuotaRow";
 
  const QuotaLabelSelection = (props) =>{
+     console.log("Quota Label Selection", props)
     const renderHeader = () => {
         let headerElement = ['Name', 'Expression']
 

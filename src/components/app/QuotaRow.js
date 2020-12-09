@@ -15,7 +15,7 @@ export default function QuotaRow(props){
     // quotaData: fixed data of the table
     // onChoosingQuota: onClick a row in the table
     // quotaClickStatus: status of the clicked row
-
+    console.log("Quota Data",props)
     return props.quotaData && props.quotaData.map(({ name, expression }) => {
         return (
             <tr
