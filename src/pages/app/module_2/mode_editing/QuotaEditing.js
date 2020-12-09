@@ -30,7 +30,7 @@ import {
 } from "./config";
 
 const QuotaEditing = (props) => {
-  const PROJECT_ID = "0560";
+  const PROJECT_ID = localStorage.getItem('currentprojectid');
   const [quotaData, setQuotaData] = useState(QUOTA_LABEL_SELECTION_DATA);
 
   const [quotaClickStatus, setQuotaClickStatus] = useState({

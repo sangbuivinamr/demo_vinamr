@@ -65,14 +65,16 @@ const QuotaExceeded = (props) => {
    * @return void
    */
   useEffect(() => {
-    getDataExceeded("1");
+    getDataExceeded(localStorage.getItem('currentprojectid'));
   }, []);
 
   const getDataExceeded = async (projectId) => {
     const response = await axios.get(
       URL_DATA_EXCEEDED + `?projectId=${projectId}`
     );
+
     let dataTable = response.data;
+    if(dataTable.message === 'no projectID matching') return;
     setDataExceeded(dataTable);
   };
 

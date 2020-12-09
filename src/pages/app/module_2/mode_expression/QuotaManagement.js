@@ -56,8 +56,8 @@ const QuotaManagement = (props)=>{
      * @return void
      */
     useEffect(()=>{
-        getDataInformation("1")
-        getDataExpression("0515",code)
+        getDataInformation(localStorage.getItem('currentprojectid'))
+        getDataExpression(localStorage.getItem('currentprojectid'),code)
     },[])
 
     
@@ -232,6 +232,7 @@ const QuotaManagement = (props)=>{
     const getDataInformation =async (projectId)=>{
         const response= await axios.get( URL_QUOTA_INFORMATION + `?projectId=${projectId}`)
         let unprocessedData = response.data;
+        if(response.data.message === 'nothing in database') return ;
         for(let i=0; i < unprocessedData.length ; i++ )
         {
             unprocessedData[i].id = i;
