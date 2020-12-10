@@ -21,36 +21,24 @@ const HeaderRawData = (props) => {
     "Latitude", 
     "Longitude",
     "Duration",
+    "SrvyID","SrvyName","FOID","FOName","Area","RespName","RespAddress",	"RespPhone"	,"RespGender","RespBirth","stt"
   ];
   //useEffect to re-render every time the props change
   useEffect(() =>{
     setQuestionName(props.questionName)
   },[props.questionName])
-
-
-  //Filter the the question from the question data
-
-  // if(questionData !== undefined)
-  //   questionData.map(page => {
-  //     let tempArray =[] 
-  //     if (page.elements !== undefined)
-  //     page.elements.map(el =>  filteredArray.push(el.name))
-  // });
-  // filteredArray.splice(filteredArray.length -2,2)
-  // console.log("HeaderRawData.js _ filterHeader _ filteredArray ",filteredArray)
-
   if (questionName !== undefined){
     for (const col of questionName)
+    if(!header.includes(col.name))
     header.push(col.name)
   }
-  
 
-  const isHeaderNeeded = ["InterviewID", "Completed", "EndTime", "Duration"];
+  const isNeededSelection = ["InterviewID", "Completed", "EndTime", "Duration"];
   const isStatus = ["Status"];
   const renderHeader = () => {
     return header.map((key, index) => {
       return (
-        <th className="element-header" key={index}>
+        <th className={isStatus.includes(key) ? "sticky-element-header" : "element-header"} key={index}>
           {key}
           {isStatus.includes(key) ? (
             <select className="select-option">
@@ -59,7 +47,7 @@ const HeaderRawData = (props) => {
                   return <option>{key}</option>;
                 })}
             </select>
-          ) : isHeaderNeeded.includes(key) ? (
+          ) : isNeededSelection.includes(key) ? (
             <select className="select-option">
               <option>test</option>
               <option>test</option>

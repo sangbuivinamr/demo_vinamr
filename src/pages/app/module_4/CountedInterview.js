@@ -7,29 +7,32 @@ import { Link } from "react-router-dom";
 import "./styles/CountedInterview.css";
 
 const CountedInterview = (props) => {
-  const bodyCounted = props.bodyCounted;
-  console.log("CountedInterview",bodyCounted)
+ 
   const optionCounted = props.selectedCounted;
   const status = props.status;
   const onChangeOptionCounted = (optionCounted) => {
     props.onChangeOptionCounted(optionCounted);
   };
+  let bodyCounted = JSON.parse(JSON.stringify( props.bodyCounted))
+  bodyCounted = bodyCounted.filter(row => row.complete === "Completed")
   const renderBody = () => {
     return (
       bodyCounted &&
       bodyCounted.map(
         (
-          { interviewid, complete, curDate, Latitude, Longtitude, duration,stt },
+          interviewInfo,
           index
         ) => {
+          const { interviewid, complete,status, curDate, Latitude,Longtitude, duration,projectid,RecordURL,...otherProps} =interviewInfo
+          const propsOfRest = Object.keys(otherProps) //The rest is the answer data needed to render
+          const restData = Object.entries(otherProps) 
+          console.log("Props of Rest",restData,propsOfRest)
           return (
             <tr key={index} className="body-counted">
-              {complete === "Completed" ? (
-                <td className={1 === 2 ? "x" : "y"}>{interviewid}</td>
-              ) : null}
-              {complete === "Completed" ? <td>{complete}</td> : null}
-              {complete === "Completed" ? (
-                <td>
+              <td>{interviewid}</td> 
+              <td>{complete}</td>
+               
+                <td className="module-4--sticky-status-td">
                   {optionCounted}
                   <select
                     className="select-option-body"
@@ -41,24 +44,24 @@ const CountedInterview = (props) => {
                     {status &&
                       status.map((key) => {
                         return <option>{key}</option>;
-                      })}
+                      })}                                                         
                   </select>
                 </td>
-              ) : null}
-              {complete === "Completed" ? <td>{curDate}</td> : null}
-              {complete === "Completed" ? (
+              
+              <td>{curDate}</td> 
+              
                 <td>
                   <Link
                     to={{
                       pathname: "/preview",
-                      state: { interviewid, complete,stt },
+                      state: { interviewid, complete },
                     }}
                   >
                     Link
                   </Link>
                 </td>
-              ) : null}
-              {complete === "Completed" ? (
+              
+              
                 <td>
                   {/* This link for photos */}
                   <Link
@@ -70,10 +73,19 @@ const CountedInterview = (props) => {
                     Link
                   </Link>
                 </td>
-              ) : null}
-              {complete === "Completed" ? <td>{Latitude}</td> : null}
-              {complete === "Completed" ? <td>{Longtitude}</td> : null}
-              {complete === "Completed" ? <td>{duration}</td> : null}
+               
+              <td>{Latitude}</td> 
+              <td>{Longtitude}</td> 
+              <td>{duration}</td> 
+              {(restData!== undefined) ? restData.map((cell,index) =>
+              { 
+                return( 
+                  <td>{
+                    (cell[1] !== null) ?
+                    String(cell[1]): null
+                    }</td>
+                )
+              }) : null}
             </tr>
           );
         }
@@ -83,7 +95,7 @@ const CountedInterview = (props) => {
 
   return (
     <div className="tab-1">
-      <table className="table-1" id="1000">
+      <table className="table-1">
         <HeaderRawData questionName = {props.questionName} />
         <tbody>{renderBody()}</tbody>
       </table>

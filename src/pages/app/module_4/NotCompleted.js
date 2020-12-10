@@ -12,7 +12,9 @@ import { Link } from "react-router-dom";
 import "./styles/NotCompleted.css";
 
 const NotCompleted = (props) => {
-  let bodyNotCompleted = props.bodyNotCompleted;
+  let bodyNotCompleted = JSON.parse(JSON.stringify(props.bodyNotCompleted));
+  bodyNotCompleted = bodyNotCompleted.filter(row => row.complete === "Not Completed")
+  console.log("NotCompleted.js - bodyNotCompleted",bodyNotCompleted)
   const renderBody = () => {
     return (
       bodyNotCompleted &&
@@ -62,7 +64,7 @@ const NotCompleted = (props) => {
   };
   return (
     <div className="tab-3">
-      <table className="table-3" id="3000">
+      <table className="table-3">
         <HeaderRawData questionName={props.questionName} />
         <tbody>{renderBody()}</tbody>
       </table>

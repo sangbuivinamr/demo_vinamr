@@ -11,7 +11,11 @@
   border-collapse: collapse;
 }
 .table-2 td {
-  border: 1px solid black;
+  border-right: 1px solid black;
+
+  border-bottom: 1px solid black;
+
+  border-left: 1px solid black;
 }
 .table-2 tbody {
   width: 300px;
@@ -22,4 +26,10 @@
   width: 20px;
   float: right;
   cursor: pointer;
+}
+.module-4--status-td {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  background-color: white;
 }

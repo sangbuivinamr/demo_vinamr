@@ -12,21 +12,27 @@ const CancelledInterview = (props) => {
   const onChangeOptionCancel = (optionCancel) => {
     props.onChangeOptionCancel(optionCancel);
   };
-  const bodyCancelled = props.bodyCancelled;
+  let bodyCancelled = JSON.parse(JSON.stringify(props.bodyCancelled));
+  bodyCancelled = bodyCancelled.filter(row => row.complete === "Not Completed")
+  console.log("CancelledInterview.js - bodyCancelled",bodyCancelled)
   const renderBody = () => {
     return (
       bodyCancelled &&
       bodyCancelled.map(
         (
-          { interviewid, complete, curDate, Latitude, Longtitude, duration,  },
+          interviewInfo,
           index
         ) => {
+          const { interviewid, complete,status, curDate, Latitude,Longtitude, duration,projectid,RecordURL,...otherProps} =interviewInfo
+          const propsOfRest = Object.keys(otherProps) //The rest is the answer data needed to render
+          const restData = Object.entries(otherProps) 
+          console.log("Props of Rest",restData,propsOfRest)
           return (
             <tr key={index} className="body-counted">
-              {complete === "Completed" ? <td>{null}</td> : null}
-              {complete === "Completed" ? <td>{complete}</td> : null}
-              {complete === "Completed" ? (
-                <td>
+              <td>{interviewid}</td> 
+              <td>{complete}</td>
+              
+                <td className="module-4--status-td">
                   {optionCancel}
                   <select
                     className="select-option-body"
@@ -41,9 +47,9 @@ const CancelledInterview = (props) => {
                       })}                                                         
                   </select>
                 </td>
-              ) : null}
-              {complete === "Completed" ? <td>{curDate}</td> : null}
-              {complete === "Completed" ? (
+              
+              <td>{curDate}</td> 
+              
                 <td>
                   <Link
                     to={{
@@ -54,8 +60,8 @@ const CancelledInterview = (props) => {
                     Link
                   </Link>
                 </td>
-              ) : null}
-              {complete === "Completed" ? (
+              
+              
                 <td>
                   {/* This link for photos */}
                   <Link
@@ -67,10 +73,19 @@ const CancelledInterview = (props) => {
                     Link
                   </Link>
                 </td>
-              ) : null}
-              {complete === "Completed" ? <td>{Latitude}</td> : null}
-              {complete === "Completed" ? <td>{Longtitude}</td> : null}
-              {complete === "Completed" ? <td>{duration}</td> : null}
+               
+              <td>{Latitude}</td> 
+              <td>{Longtitude}</td> 
+              <td>{duration}</td> 
+              {(restData!== undefined) ? restData.map((cell,index) =>
+              { 
+                return( 
+                  <td>{
+                    (cell[1] !== null) ?
+                    String(cell[1]): null
+                    }</td>
+                )
+              }) : null}
             </tr>
           );
         }
@@ -79,7 +94,7 @@ const CancelledInterview = (props) => {
   };
   return (
     <div className="tab-2">
-      <table className="table-2" id="2000">
+      <table className="table-2">
         <HeaderRawData questionName={props.questionName} />
         <tbody>{renderBody()}</tbody>
       </table>

@@ -58,7 +58,7 @@ const RawData = (props) => {
       rawData.kq = JSON.parse(rawData.kq);
       //Delete unnecessary properties
       delete rawData.tempcol;
-
+      rawData.status = null; 
 
     }
     console.log("useEffect tempRawData",tempRawData)
@@ -89,7 +89,6 @@ const RawData = (props) => {
  */
 const handleAnswerData =() => {
   let tempName = JSON.parse(JSON.stringify(questionName)); //stringify and parse to deep copy JSON, avoid unattended change to state
-      let tempData  = JSON.parse(JSON.stringify(questionData));
       let tempRaw  = JSON.parse(JSON.stringify(dataRawCheck));
       //Add question Data properties
       
@@ -101,9 +100,10 @@ const handleAnswerData =() => {
           //Check if there are duplicate names between questions
             if (!attrOfTempRaw.includes(quesName.name)) 
             {
-              tempRaw.map(el =>{
-                el[quesName.name] = null
+              tempRaw.map(row =>{
+                row[quesName.name] = null
               })
+              delete quesName.name;
             }
           }
           for (const rawData of tempRaw){
@@ -113,6 +113,8 @@ const handleAnswerData =() => {
             for (const prop of propsOfRawData)
             {   
                 rawData[prop] = getValueFromQuestionData( prop,typeOfQuestionName(prop),rawData.kq[prop]);
+                if(rawData[prop] === undefined) //handle undefined case 
+                rawData[prop] = null 
             }
           }
 
@@ -180,7 +182,7 @@ const getValueFromQuestionData = (quesName,type,curData) =>{
           {
             console.log("case matrix", type)
             for( const page of questionData) // each element of questionData array is a page, which contains questions
-            { if(page.elements !== undefined)  // Check whether page has "elements" props
+            { if(page.elements !== undefined)  // Check whether each page has "elements" props
               for( const el of page.elements)
               { if(el.hasOwnProperty("columns"))
                 for (const col of el.columns)
@@ -239,6 +241,7 @@ console.log("Get raw Data",dataRawCheck)
       rawData.kq = JSON.parse(rawData.kq);
       //Delete unnecessary attribute
       delete rawData.tempcol;
+      rawData.status = null; // TEMPORARY. The data from the database does not consists of status
   }
     setDataRawCheck(dataRawCheck);
   };
