@@ -1,19 +1,19 @@
 @import "../../styles/GlobalStyles.css";
-.tab-3 {
+.module-4--not-completed--tab-3 {
   background-color: white;
   width: 1467px;
   border: 3px solid var(--global-background-color);
   margin-left: 30px;
 }
-.tab-3 > table {
+.module-4--not-completed--tab-3 > table {
   border-spacing: 0px;
   width: 1450px;
   border-collapse: collapse;
 }
-.table-3 td {
+.module-4--not-completed--table-3 td {
   border: 1px solid black;
 }
-.table-3 tbody {
+.module-4--not-completed--table-3 tbody {
   width: 300px;
   text-align: center;
 }

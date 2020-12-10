@@ -1,33 +1,33 @@
 @import "../../styles/GlobalStyles.css";
-.tab-2 {
+.module-4--cancelled-interview--tab-2 {
   background-color: white;
   width: 1467px;
   border: 3px solid var(--global-background-color);
   margin-left: 30px;
 }
-.tab-2 > table {
+.module-4--cancelled-interview--tab-2 > table {
   border-spacing: 0px;
   width: 1450px;
   border-collapse: collapse;
 }
-.table-2 td {
+.module-4--cancelled-interview--table-2 td {
   border-right: 1px solid black;
 
   border-bottom: 1px solid black;
 
   border-left: 1px solid black;
 }
-.table-2 tbody {
+.module-4--cancelled-interview--table-2 tbody {
   width: 300px;
   text-align: center;
 }
-.select-option-body {
+.module-4--cancelled-interview--select-option-body {
   outline: none !important;
   width: 20px;
   float: right;
   cursor: pointer;
 }
-.module-4--status-td {
+.module-4--table--status-td {
   position: -webkit-sticky;
   position: sticky;
   left: 0;

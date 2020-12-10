@@ -8,7 +8,7 @@ import "./styles/CancelledInterview.css";
 
 const CancelledInterview = (props) => {
   let optionCancel = props.selectedCancel;
-  const status = props.status;
+  const statusChoices = props.status;
   const onChangeOptionCancel = (optionCancel) => {
     props.onChangeOptionCancel(optionCancel);
   };
@@ -28,21 +28,21 @@ const CancelledInterview = (props) => {
           const restData = Object.entries(otherProps) 
           console.log("Props of Rest",restData,propsOfRest)
           return (
-            <tr key={index} className="body-counted">
+            <tr key={index}>
               <td>{interviewid}</td> 
               <td>{complete}</td>
               
-                <td className="module-4--status-td">
+                <td className="module-4--table--status-td">
                   {optionCancel}
                   <select
-                    className="select-option-body"
+                    className="module-4--cancelled-interview--select-option-body"
                     value={optionCancel}
                     onChange={(optionCounted) =>
                       onChangeOptionCancel(optionCounted)
                     }
                   >
-                    {status &&
-                      status.map((key) => {
+                    {statusChoices &&
+                      statusChoices.map((key) => {
                         return <option>{key}</option>;
                       })}                                                         
                   </select>
@@ -93,8 +93,8 @@ const CancelledInterview = (props) => {
     );
   };
   return (
-    <div className="tab-2">
-      <table className="table-2">
+    <div className="module-4--cancelled-interview--tab-2">
+      <table className="module-4--cancelled-interview--table-2">
         <HeaderRawData questionName={props.questionName} />
         <tbody>{renderBody()}</tbody>
       </table>

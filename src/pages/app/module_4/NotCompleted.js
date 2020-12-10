@@ -9,7 +9,7 @@ import HeaderRawData from "../../../components/app/HeaderRawData";
 import { Link } from "react-router-dom";
 
 //Styles
-import "./styles/NotCompleted.css";
+import  "./styles/NotCompleted.css";
 
 const NotCompleted = (props) => {
   let bodyNotCompleted = JSON.parse(JSON.stringify(props.bodyNotCompleted));
@@ -24,7 +24,7 @@ const NotCompleted = (props) => {
           index
         ) => {
           return (
-            <tr key={index} className="body-counted">
+            <tr key={index} className="module-4--not-completed--table--tr">
               {complete === "Not Completed" ? <td>{interviewid}</td> : null}
               {complete === "Not Completed" ? <td>{complete}</td> : null}
               {complete === "Not Completed" ? <td> Terminate</td> : null}
@@ -63,8 +63,8 @@ const NotCompleted = (props) => {
     );
   };
   return (
-    <div className="tab-3">
-      <table className="table-3">
+    <div className="module-4--not-completed--tab-3">
+      <table className="module-4--not-completed--table-3">
         <HeaderRawData questionName={props.questionName} />
         <tbody>{renderBody()}</tbody>
       </table>

@@ -9,7 +9,7 @@ import "./styles/CountedInterview.css";
 const CountedInterview = (props) => {
  
   const optionCounted = props.selectedCounted;
-  const status = props.status;
+  const statusChoices = props.status;
   const onChangeOptionCounted = (optionCounted) => {
     props.onChangeOptionCounted(optionCounted);
   };
@@ -28,21 +28,21 @@ const CountedInterview = (props) => {
           const restData = Object.entries(otherProps) 
           console.log("Props of Rest",restData,propsOfRest)
           return (
-            <tr key={index} className="body-counted">
+            <tr key={index} className="module-4--counted-interview--table--tr">
               <td>{interviewid}</td> 
               <td>{complete}</td>
                
                 <td className="module-4--sticky-status-td">
                   {optionCounted}
                   <select
-                    className="select-option-body"
+                    className="module-4--counted-interview--select-option-body"
                     value={optionCounted}
                     onChange={(optionCounted) =>
                       onChangeOptionCounted(optionCounted)
                     }
                   >
-                    {status &&
-                      status.map((key) => {
+                    {statusChoices &&
+                      statusChoices.map((key) => {
                         return <option>{key}</option>;
                       })}                                                         
                   </select>
@@ -80,7 +80,7 @@ const CountedInterview = (props) => {
               {(restData!== undefined) ? restData.map((cell,index) =>
               { 
                 return( 
-                  <td>{
+                  <td key={index}>{
                     (cell[1] !== null) ?
                     String(cell[1]): null
                     }</td>
@@ -94,8 +94,8 @@ const CountedInterview = (props) => {
   };
 
   return (
-    <div className="tab-1">
-      <table className="table-1">
+    <div className="module-4--counted-interview--tab-1">
+      <table className="module-4--counted-interview--table-1">
         <HeaderRawData questionName = {props.questionName} />
         <tbody>{renderBody()}</tbody>
       </table>

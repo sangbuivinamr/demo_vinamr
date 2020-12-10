@@ -1,23 +1,23 @@
 @import "../../styles/GlobalStyles.css";
-.tab-1 {
+.module-4--counted-interview--tab-1 {
   background-color: white;
   width: 1467px;
   border: 3px solid var(--global-background-color);
   margin-left: 30px;
 }
-.tab-1 > table {
+.module-4--counted-interview--tab-1 > table {
   border-spacing: 0px;
   border-collapse: collapse;
   width: 1450px;
 }
-.table-1 td {
+.module-4--counted-interview--table-1 td {
   border: 1px solid black;
 }
-.table-1 tbody {
+.module-4--counted-interview--table-1 tbody {
   width: 300px;
   text-align: center;
 }
-.select-option-body {
+.module-4--counted-interview--select-option-body {
   outline: none !important;
   width: 20px;
   float: right;
