@@ -13,7 +13,7 @@ const CancelledInterview = (props) => {
     props.onChangeOptionCancel(optionCancel);
   };
   let bodyCancelled = JSON.parse(JSON.stringify(props.bodyCancelled));
-  bodyCancelled = bodyCancelled.filter(row => row.complete === "Not Completed")
+  bodyCancelled = bodyCancelled.filter(row => row.interviewStatus === "Cancel" && row.complete === "Not Completed")
   console.log("CancelledInterview.js - bodyCancelled",bodyCancelled)
   const renderBody = () => {
     return (
@@ -23,10 +23,9 @@ const CancelledInterview = (props) => {
           interviewInfo,
           index
         ) => {
-          const { interviewid, complete,status, curDate, Latitude,Longtitude, duration,projectid,RecordURL,...otherProps} =interviewInfo
+          const { interviewid, complete,interviewStatus,status,step,type,curDate, Latitude,Longtitude, duration,projectid,RecordURL,...otherProps} =interviewInfo
           const propsOfRest = Object.keys(otherProps) //The rest is the answer data needed to render
           const restData = Object.entries(otherProps) 
-          console.log("Props of Rest",restData,propsOfRest)
           return (
             <tr key={index}>
               <td>{interviewid}</td> 
@@ -34,11 +33,15 @@ const CancelledInterview = (props) => {
               
                 <td className="module-4--table--status-td">
                   {optionCancel}
+                  {String(interviewStatus + " - " + status + " – " + step + " – " + type)}
                   <select
                     className="module-4--cancelled-interview--select-option-body"
-                    value={optionCancel}
-                    onChange={(optionCounted) =>
+                    value= {String(interviewStatus + " - " + status + " – " + step + " – " + type)}
+                    onChange={(optionCounted) =>{
                       onChangeOptionCancel(optionCounted)
+                      console.log("Clicked")
+                    }
+                     
                     }
                   >
                     {statusChoices &&

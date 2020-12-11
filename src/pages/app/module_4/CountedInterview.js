@@ -23,10 +23,8 @@ const CountedInterview = (props) => {
           interviewInfo,
           index
         ) => {
-          const { interviewid, complete,status, curDate, Latitude,Longtitude, duration,projectid,RecordURL,...otherProps} =interviewInfo
-          const propsOfRest = Object.keys(otherProps) //The rest is the answer data needed to render
+          const { interviewid, complete,interviewStatus,status,step,type, curDate, Latitude,Longtitude, duration,projectid,RecordURL,...otherProps} =interviewInfo;
           const restData = Object.entries(otherProps) 
-          console.log("Props of Rest",restData,propsOfRest)
           return (
             <tr key={index} className="module-4--counted-interview--table--tr">
               <td>{interviewid}</td> 
@@ -34,6 +32,7 @@ const CountedInterview = (props) => {
                
                 <td className="module-4--sticky-status-td">
                   {optionCounted}
+                  {String(interviewStatus + " - " + status + " - " + step + " - " + type)}
                   <select
                     className="module-4--counted-interview--select-option-body"
                     value={optionCounted}

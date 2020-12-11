@@ -2,7 +2,7 @@ export const STATUS = [
   "Completed",
   "Send to QC - FW 1st Check",
   "Cancel - FW 1st Check",
-  "OK - Phone – PendQC(1) – Part-time",
+  "OK - Phone – PendQC(1) – Part-time", 
   "Cancel - Phone – PendQC(1) – Part-time",
   "Pending FW - Phone – PendQC(1) – Part-time",
   "Approve - Phone – PendQC(1) – Full-time",

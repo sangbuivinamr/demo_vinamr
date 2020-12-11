@@ -15,7 +15,7 @@ import CountedInterview from "./CountedInterview";
 import NotCompleted from "./NotCompleted";
 import SelectionExportModal from "../../../components/app/SelectionExportModal.js"
 import ChangeInterviewStatus from "../../../components/app/ChangeInterviewStatus.js"
-import ExportToCSV from "../../../components/app/ExportToCSV.js"
+import Module4Export from "../../../components/app/Module4Export.js"
 //Styles
 import "./styles/RawData.css";
 import { STATUS } from "../../../data/Status";
@@ -58,8 +58,11 @@ const RawData = (props) => {
       rawData.kq = JSON.parse(rawData.kq);
       //Delete unnecessary properties
       delete rawData.tempcol;
-      rawData.status = null; 
-
+      //Temporary create data to handle (As there is no {interviewStatus,status,step,type} data fetched from database )
+      rawData.interviewStatus = Math.random() < 0.5 ? "Cancel" : "OK"
+      rawData.status = Math.random() < 0.5 ? "Phone" : "Face"
+      rawData.step = Math.random() < 0.5 ? "PendQC(1)" : "PendQC(2)"
+      rawData.type = Math.random() < 0.5 ? "Part-time" : "Full-time"
     }
     console.log("useEffect tempRawData",tempRawData)
     setDataRawCheck(tempRawData)
@@ -93,23 +96,20 @@ const handleAnswerData =() => {
       //Add question Data properties
       
           const attrOfTempRaw  = Object.keys(tempRaw[0]) // The properties of all elements in tempRaw are the same  => just need to get the first properties
-          console.log("Listed properties", attrOfTempRaw)
-
+          console.log("handleAnswerData - before",tempRaw)
           for (const quesName of tempName){
-            
           //Check if there are duplicate names between questions
             if (!attrOfTempRaw.includes(quesName.name)) 
             {
               tempRaw.map(row =>{
-                row[quesName.name] = null
+                row[quesName.name] = null //add props and values to tempRaw 
               })
-              delete quesName.name;
-            }
+              delete quesName.name; //For later comparision: make sure tempName does not have any props the same as tempRaw 
+            }   
           }
           for (const rawData of tempRaw){
 
             const propsOfRawData  = Object.keys(rawData.kq)
-            // console.log("handleAnswerData","RespBirth",typeOfQuestionName("RespBirth"))
             for (const prop of propsOfRawData)
             {   
                 rawData[prop] = getValueFromQuestionData( prop,typeOfQuestionName(prop),rawData.kq[prop]);
@@ -122,6 +122,7 @@ const handleAnswerData =() => {
           {
             delete rawData.kq;
           }
+          console.log("handleAnswerData - after",tempRaw)
           setDataRawCheck(tempRaw)
 }
 /**
@@ -239,16 +240,17 @@ console.log("Get raw Data",dataRawCheck)
     {
       //Parse {String} kq into JSON
       rawData.kq = JSON.parse(rawData.kq);
-      //Delete unnecessary attribute
+      //Delete unnecessary properties
       delete rawData.tempcol;
-      rawData.status = null; // TEMPORARY. The data from the database does not consists of status
+       //TEMPORARILY create data to handle (As there is no {interviewStatus,status,step,type} data fetched from database )
+       rawData.interviewStatus = Math.random() < 0.5 ? "Cancel" : "OK"
+       rawData.status = Math.random() < 0.5 ? "Phone" : "Face"
+       rawData.step = Math.random() < 0.5 ? "PendQC(1)" : "PendQC(2)"
+       rawData.type = Math.random() < 0.5 ? "Part-time" : "Full-time"
   }
     setDataRawCheck(dataRawCheck);
   };
-  /**
-   * 
-   * @summary 
-   */
+  
   /**
    * 
    * @summary This function is to get anwser data from database 
@@ -324,8 +326,11 @@ console.log("Get raw Data",dataRawCheck)
         type: " Fulltime"
         
         }
-    
+  
   } 
+  const handleMoDule4Export = (type) =>{
+    Module4Export(dataRawCheck,type)
+  }
   return (
     <div className="raw-data">
       <div className="content-raw-data">
@@ -402,7 +407,7 @@ console.log("Get raw Data",dataRawCheck)
       </div>
       <SelectionExportModal isOpen={isOpenExpModal} 
       closeExpModal={closeExpModal}
-      ExportToCSV={() => ExportToCSV(dataRawCheck)}
+      Module4Export={handleMoDule4Export}
       />
       <ChangeInterviewStatus isOpen={isOpenCIStatModal} closeCIStatModal={closeCIStatModal}/>
       
