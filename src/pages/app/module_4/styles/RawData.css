@@ -1,142 +1,142 @@
 @import "../../styles/GlobalStyles.css";
-.raw-data{
-    background-color: var(--global-background-color) ;
-    height: 100%;
-    width: 100vw;
-    margin-top: -10px;
-    margin-left: -8px;
-    position: absolute;
-    /* display: grid; */
+.raw-data {
+  background-color: var(--global-background-color);
+  height: 100%;
+  width: 100vw;
+  margin-top: -10px;
+  margin-left: -8px;
+  position: absolute;
+  font-family: var(--global-font-family);
+  /* display: grid; */
 }
-.header{
-    margin-left: 30px;
-    font-family: Segoe UI;
+.header {
+  margin-left: 30px;
+  font-family: Segoe UI;
 }
-.text-list{
-    display: flex;
-    margin-left: 30px;
+.text-list {
+  display: flex;
+  margin-left: 30px;
 }
-.total{
-    color:#7a818c;
+.total {
+  color: #7a818c;
 }
-.cancel{
-    color: #A50010;
+.cancel {
+  color: #a50010;
 }
-.approved{
-    color: green;
+.approved {
+  color: green;
 }
-.p-w{
-    color: #8f2887;
+.p-w {
+  color: #8f2887;
 }
-.pending-qc-1{
-    color: #1f1d19;
+.pending-qc-1 {
+  color: #1f1d19;
 }
-.pending-qc-2{
-    color:#7a818c;
+.pending-qc-2 {
+  color: #7a818c;
 }
-.buttons-4{
-    margin-left: 600px;
+.buttons-4 {
+  margin-left: 600px;
 }
-.button-1{
-    height: 30px;
-    width: 100px;
-    margin-left: 800px;
-    background-color:#fcc216 ;
-    text-align: center;
-    border-radius: 5px;
-    padding-top: 5px;
-    cursor: pointer;
-    color:white;
+.button-1 {
+  height: 30px;
+  width: 100px;
+  margin-left: 800px;
+  background-color: #fcc216;
+  text-align: center;
+  border-radius: 5px;
+  padding-top: 5px;
+  cursor: pointer;
+  color: white;
 }
-.button-1:hover{
-    opacity: 0.75;
+.button-1:hover {
+  opacity: 0.75;
 }
-.content-area{
-    margin-top: 20px;
-    height: fit-content;
-    padding-top: 10px;
-    background-color: var(--global-background-color);
+.content-area {
+  margin-top: 20px;
+  height: fit-content;
+  padding-top: 10px;
+  background-color: var(--global-background-color);
 }
-.item-1 div, .item-1 input[type="checkbox"]{
-    display: none;
+.item-1 div,
+.item-1 input[type="checkbox"] {
+  display: none;
 }
-.item-1{
-    border-top: 2px dotted #4F3C06;
-    
+.item-1 {
+  border-top: 2px dotted #4f3c06;
 }
-.item-1 input:checked ~div{
-    background-color: white;
-    display: block;
-    overflow: scroll;
+.item-1 input:checked ~ div {
+  background-color: white;
+  display: block;
+  overflow: scroll;
 }
-.item-2 div, .item-2 input[type="checkbox"]{
-    overflow: scroll;
-    background-color: white;
-    display: none;
+.item-2 div,
+.item-2 input[type="checkbox"] {
+  overflow: scroll;
+  background-color: white;
+  display: none;
 }
-.item-2 input:checked ~div{
-    display: block;
+.item-2 input:checked ~ div {
+  display: block;
 }
-.item-2{
-    border-top: 2px dotted #4F3C06;
-    border-bottom: 2px dotted #4F3C06;
-
+.item-2 {
+  border-top: 2px dotted #4f3c06;
+  border-bottom: 2px dotted #4f3c06;
 }
-.item-3 div, .item-3 input[type="checkbox"]{
-    display: none;
-    overflow: scroll;
-    background-color: white;
-
+.item-3 div,
+.item-3 input[type="checkbox"] {
+  display: none;
+  overflow: scroll;
+  background-color: white;
 }
-.item-3 input:checked ~div{
-    display: block;
+.item-3 input:checked ~ div {
+  display: block;
 }
-.item-3{
-    border-bottom: 2px dotted #4F3C06;
+.item-3 {
+  border-bottom: 2px dotted #4f3c06;
 }
-.arrow{
-    margin-top: 0px;
-    width: 30px;
-    height: 30px;
-    color:#fcc216 ;
-    vertical-align: middle;
+.arrow {
+  margin-top: 0px;
+  width: 30px;
+  height: 30px;
+  color: #fcc216;
+  vertical-align: middle;
 }
 .item-1 input + .arrow {
-    transition: 0.3s;
-    transform: rotate(0deg);
+  transition: 0.3s;
+  transform: rotate(0deg);
 }
 .item-1 input:checked + .arrow {
-    transition: 0.3s;
-    transform: rotate(90deg);
+  transition: 0.3s;
+  transform: rotate(90deg);
 }
 .item-2 input + .arrow {
-    transition: 0.3s;
-    transform: rotate(0deg);
+  transition: 0.3s;
+  transform: rotate(0deg);
 }
 .item-2 input:checked + .arrow {
-    transition: 0.3s;
-    transform: rotate(90deg);
+  transition: 0.3s;
+  transform: rotate(90deg);
 }
 .item-3 input + .arrow {
-    transition: 0.3s;
-    transform: rotate(0deg);
+  transition: 0.3s;
+  transform: rotate(0deg);
 }
 .item-3 input:checked + .arrow {
-    transition: 0.3s;
-    transform: rotate(90deg);
+  transition: 0.3s;
+  transform: rotate(90deg);
 }
 
-
-label:hover{
-    cursor: pointer;
+label:hover {
+  cursor: pointer;
 }
-label{
-    width: 100% ;
-    position: relative;
-    color:#ca9a2d ; 
-    margin-left: 30px;
+label {
+  width: 100%;
+  position: relative;
+  color: #ca9a2d;
+  margin-left: 30px;
 }
-.input:checked + .arrow{
-    transform: rotate(90deg);
-    transition: 0.2s;
+.input:checked + .arrow {
+  transform: rotate(90deg);
+  transition: 0.2s;
 }

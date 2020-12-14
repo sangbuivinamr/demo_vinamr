@@ -1,19 +1,41 @@
 //Packages
-import React from "react";
+import React, {useEffect,useState} from "react";
 import HeaderRawData from "../../../components/app/HeaderRawData";
+import ChangeInterviewStatus from "../../../components/app/ChangeInterviewStatus"
 import { Link } from "react-router-dom";
 
 //Styles
 import "./styles/CountedInterview.css";
 
 const CountedInterview = (props) => {
- 
-  const optionCounted = props.selectedCounted;
+  const [isOpenCIStatModal, setIsOpenCIStatModal] = useState(false); // CIStat abbreviates for "Change Interview Status". 
+  
+  const [optionCounted,setOptionCounted] = useState(props.selectedCounted);
   const statusChoices = props.status;
+  useEffect(() => {
+    
+  console.log("CountedInterview - props changes",props.selectedCounted)
+    setOptionCounted(props.selectedCounted)
+  }, [props.selectedCounted])
+
+/**
+   * @summary Handle open and close Change Interview Status modal 
+   */
+  const closeCIStatModal =() =>{
+    setIsOpenCIStatModal(false);
+  }
+  const  openCIStatModal = () =>{
+    setIsOpenCIStatModal(true);
+  }
+  const handleStatusConfirmChange =() =>{
+    setIsOpenCIStatModal(false)
+  }
   const onChangeOptionCounted = (optionCounted) => {
+    openCIStatModal();
     props.onChangeOptionCounted(optionCounted);
   };
   let bodyCounted = JSON.parse(JSON.stringify( props.bodyCounted))
+  // bodyCounted = bodyCounted.filter(row => row.complete === "Completed" && row.interviewStatus !=="Cancel")
   bodyCounted = bodyCounted.filter(row => row.complete === "Completed")
   const renderBody = () => {
     return (
@@ -41,7 +63,7 @@ const CountedInterview = (props) => {
                     }
                   >
                     {statusChoices &&
-                      statusChoices.map((key) => {
+                      statusChoices.map((key) => {                                                
                         return <option>{key}</option>;
                       })}                                                         
                   </select>
@@ -93,12 +115,17 @@ const CountedInterview = (props) => {
   };
 
   return (
+    <>
     <div className="module-4--counted-interview--tab-1">
       <table className="module-4--counted-interview--table-1">
         <HeaderRawData questionName = {props.questionName} />
         <tbody>{renderBody()}</tbody>
       </table>
     </div>
+    <ChangeInterviewStatus isOpen={isOpenCIStatModal} closeCIStatModal={closeCIStatModal} onConfirmChange = {handleStatusConfirmChange} 
+    // onConfirmChange ={handleStatusConfirmChange}
+    />
+    </>
   );
 };
 export default CountedInterview;

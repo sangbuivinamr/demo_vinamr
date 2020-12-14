@@ -63,8 +63,11 @@ import * as XLSX from 'xlsx';
        
         return date+'_'+time;
           }
-
-    const fileName = `${exportData[0].projectid}_All Data_${getCurrentDate()}`;
+    let dataName =""
+    for (const type of exportTypes){
+      dataName += ""+ type+"_";
+    }
+    const fileName = `${exportData[0].projectid}_${dataName}_${getCurrentDate()}`;
     const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     const fileExtension = '.xlsx';
 

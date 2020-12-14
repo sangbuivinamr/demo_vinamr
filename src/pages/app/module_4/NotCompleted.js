@@ -20,16 +20,23 @@ const NotCompleted = (props) => {
       bodyNotCompleted &&
       bodyNotCompleted.map(
         (
-          { interviewid, complete, curDate, Latitude, Longtitude, duration },
+          interviewInfo,
           index
         ) => {
+          const { interviewid, complete,interviewStatus,status,step,type,curDate, Latitude,Longtitude, duration,projectid,RecordURL,...otherProps} =interviewInfo
+          const restData = Object.entries(otherProps) 
           return (
-            <tr key={index} className="module-4--not-completed--table--tr">
-              {complete === "Not Completed" ? <td>{interviewid}</td> : null}
-              {complete === "Not Completed" ? <td>{complete}</td> : null}
-              {complete === "Not Completed" ? <td> Terminate</td> : null}
-              {complete === "Not Completed" ? <td>{curDate}</td> : null}
-              {complete === "Not Completed" ? (
+            <tr key={index}>
+              <td>{interviewid}</td> 
+              <td>{complete}</td>
+              
+                <td className="module-4--table--status-td">
+                  {String(interviewStatus + " - " + status + " – " + step + " – " + type)}
+                 Terminate
+                </td>
+              
+              <td>{curDate}</td> 
+              
                 <td>
                   <Link
                     to={{
@@ -40,9 +47,10 @@ const NotCompleted = (props) => {
                     Link
                   </Link>
                 </td>
-              ) : null}
-              {complete === "Not Completed" ? (
+              
+              
                 <td>
+                  {/* This link for photos */}
                   <Link
                     to={{
                       pathname: "/preview",
@@ -52,10 +60,19 @@ const NotCompleted = (props) => {
                     Link
                   </Link>
                 </td>
-              ) : null}
-              {complete === "Not Completed" ? <td>{Latitude}</td> : null}
-              {complete === "Not Completed" ? <td>{Longtitude}</td> : null}
-              {complete === "Not Completed" ? <td>{duration}</td> : null}
+               
+              <td>{Latitude}</td> 
+              <td>{Longtitude}</td> 
+              <td>{duration}</td> 
+              {(restData!== undefined) ? restData.map((cell,index) =>
+              { 
+                return( 
+                  <td>{
+                    (cell[1] !== null) ?
+                    String(cell[1]): null
+                    }</td>
+                )
+              }) : null}
             </tr>
           );
         }
@@ -63,8 +80,8 @@ const NotCompleted = (props) => {
     );
   };
   return (
-    <div className="module-4--not-completed--tab-3">
-      <table className="module-4--not-completed--table-3">
+    <div className="module-4--cancelled-interview--tab-2">
+      <table className="module-4--cancelled-interview--table-2">
         <HeaderRawData questionName={props.questionName} />
         <tbody>{renderBody()}</tbody>
       </table>

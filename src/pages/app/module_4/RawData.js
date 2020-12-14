@@ -24,18 +24,17 @@ import { STATUS } from "../../../data/Status";
 import URL_MODULE_4 from "./config.js"
 const RawData = (props) => {
   const [dataRawCheck, setDataRawCheck] = useState([]);
-
+  const [isOpenCIStatModal, setIsOpenCIStatModal] = useState(false); // CIStat abbreviates for "Change Interview Status". 
   const [selectedCounted, setSelectedCounted] = useState();
-
   const [selectedCancel, setSelectedCancel] = useState();
 
   const [isOpenExpModal,setIsOpenExpModal] = useState(false);
-
-  const [isOpenCIStatModal, setIsOpenCIStatModal] = useState(false); // CIStat abbreviates for "Change Interview Status". 
+  
   
   const [dataMedia, setDataMedia] = useState();
   const [questionData, setQuestionData] = useState();
   const [questionName, setQuestionName] = useState();
+  const [confirmChangeSatus, setConfirmChangeStatus] = useState(false);
   console.log("----------------------------------------------------------------BEGINNING OF RENDERING----------------------------------------------------------------------------------------------")
   
   /**
@@ -242,11 +241,8 @@ console.log("Get raw Data",dataRawCheck)
       rawData.kq = JSON.parse(rawData.kq);
       //Delete unnecessary properties
       delete rawData.tempcol;
-       //TEMPORARILY create data to handle (As there is no {interviewStatus,status,step,type} data fetched from database )
-       rawData.interviewStatus = Math.random() < 0.5 ? "Cancel" : "OK"
-       rawData.status = Math.random() < 0.5 ? "Phone" : "Face"
-       rawData.step = Math.random() < 0.5 ? "PendQC(1)" : "PendQC(2)"
-       rawData.type = Math.random() < 0.5 ? "Part-time" : "Full-time"
+     
+      
   }
     setDataRawCheck(dataRawCheck);
   };
@@ -302,7 +298,14 @@ console.log("Get raw Data",dataRawCheck)
    * @return void
    */
   const onChangeOptionCounted = (selectedCounted) => {
-    setSelectedCounted(selectedCounted);
+    console.log("onChangeOptionCounted",confirmChangeSatus)
+    if(confirmChangeSatus === true)
+    {
+      setSelectedCounted(selectedCounted);
+      setConfirmChangeStatus(false);
+      setIsOpenCIStatModal(false)
+    }
+   
   };
   /**
    * @summary The function handle data is cancelled
@@ -310,6 +313,7 @@ console.log("Get raw Data",dataRawCheck)
    * @return void
    */
   const onChangeOptionCancel = (selectedCancel) => {
+    
     setSelectedCancel(selectedCancel);
   };
 
@@ -330,6 +334,10 @@ console.log("Get raw Data",dataRawCheck)
   } 
   const handleMoDule4Export = (type) =>{
     Module4Export(dataRawCheck,type)
+  }
+  const handleStatusConfirmChange =() =>{
+    setIsOpenCIStatModal(false)
+    setConfirmChangeStatus(true)
   }
   return (
     <div className="raw-data">
@@ -378,6 +386,7 @@ console.log("Get raw Data",dataRawCheck)
               }
               questionData={questionData}
               questionName={questionName}
+              openCIStatModal={openCIStatModal}
             />
           </div>
           <div className="item-2">
@@ -409,8 +418,7 @@ console.log("Get raw Data",dataRawCheck)
       closeExpModal={closeExpModal}
       Module4Export={handleMoDule4Export}
       />
-      <ChangeInterviewStatus isOpen={isOpenCIStatModal} closeCIStatModal={closeCIStatModal}/>
-      
+     
     </div>
   );
 };

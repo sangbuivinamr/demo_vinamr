@@ -1,20 +1,39 @@
 //Pakages
-import React from "react";
+import React,{useState} from "react";
 import HeaderRawData from "../../../components/app/HeaderRawData";
 import { Link } from "react-router-dom";
-
+import ChangeInterviewStatus from "../../../components/app/ChangeInterviewStatus"
 //Styles
 import "./styles/CancelledInterview.css";
 
 const CancelledInterview = (props) => {
-  let optionCancel = props.selectedCancel;
+  
+  let optionCancel = ""
   const statusChoices = props.status;
-  const onChangeOptionCancel = (optionCancel) => {
-    props.onChangeOptionCancel(optionCancel);
+  const onChangeOptionCancel = (e) => {
+    openCIStatModal();
+    optionCancel = e.target.value
   };
   let bodyCancelled = JSON.parse(JSON.stringify(props.bodyCancelled));
-  bodyCancelled = bodyCancelled.filter(row => row.interviewStatus === "Cancel" && row.complete === "Not Completed")
+  bodyCancelled = bodyCancelled.filter(row => row.interviewStatus === "Cancel")
   console.log("CancelledInterview.js - bodyCancelled",bodyCancelled)
+
+  const [isOpenCIStatModal, setIsOpenCIStatModal] = useState(false); // CIStat abbreviates for "Change Interview Status". 
+  
+/**
+   * @summary Handle open and close Change Interview Status modal 
+   */
+  const closeCIStatModal =() =>{
+    setIsOpenCIStatModal(false);
+  }
+  const  openCIStatModal = () =>{
+    setIsOpenCIStatModal(true);
+  }
+  const handleStatusConfirmChange =() =>{
+    setIsOpenCIStatModal(false)
+    console.log("Handle Status Confirm Change", optionCancel)
+    // props.changeRawDataStatus();
+  }
   const renderBody = () => {
     return (
       bodyCancelled &&
@@ -24,8 +43,7 @@ const CancelledInterview = (props) => {
           index
         ) => {
           const { interviewid, complete,interviewStatus,status,step,type,curDate, Latitude,Longtitude, duration,projectid,RecordURL,...otherProps} =interviewInfo
-          const propsOfRest = Object.keys(otherProps) //The rest is the answer data needed to render
-          const restData = Object.entries(otherProps) 
+          const otherPropsData = Object.entries(otherProps) 
           return (
             <tr key={index}>
               <td>{interviewid}</td> 
@@ -80,10 +98,10 @@ const CancelledInterview = (props) => {
               <td>{Latitude}</td> 
               <td>{Longtitude}</td> 
               <td>{duration}</td> 
-              {(restData!== undefined) ? restData.map((cell,index) =>
+              {(otherPropsData!== undefined) ? otherPropsData.map((cell,index) =>
               { 
                 return( 
-                  <td>{
+                  <td key={index}>{
                     (cell[1] !== null) ?
                     String(cell[1]): null
                     }</td>
@@ -96,12 +114,15 @@ const CancelledInterview = (props) => {
     );
   };
   return (
+    <>
     <div className="module-4--cancelled-interview--tab-2">
       <table className="module-4--cancelled-interview--table-2">
         <HeaderRawData questionName={props.questionName} />
         <tbody>{renderBody()}</tbody>
       </table>
     </div>
+    <ChangeInterviewStatus isOpen={isOpenCIStatModal} closeCIStatModal={closeCIStatModal} onConfirmChange = {handleStatusConfirmChange}/>
+    </>
   );
 };
 export default CancelledInterview;

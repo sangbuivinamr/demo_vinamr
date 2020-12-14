@@ -2,7 +2,7 @@
  * @summary This component is to render the Change Interview Status Confirmation Box
  */
 
-import React, {useEffect} from 'react';
+import React, {useState,useEffect} from 'react';
 import Modal from 'react-modal';
 import "./styles/ChangeInterviewStatus.css"
 const ChangeInterviewStatus = (props) => {
@@ -10,6 +10,7 @@ const ChangeInterviewStatus = (props) => {
     useEffect(() =>{
         Modal.setAppElement('body');
     },[])
+    const [confirmChange,setConfirmChange] = useState(false);
     return(
         <div className="module-4--selection-change-interview-status-div">
             <Modal isOpen={props.isOpen} className="module-4--change-interview-status-modal">

@@ -33,8 +33,10 @@ const HeaderRawData = (props) => {
     header.push(col.name)
   }
 
-  const isNeededSelection = ["InterviewID", "Completed", "EndTime", "Duration"];
+  // const isNeededSelection = ["InterviewID", "Completed", "EndTime", "Duration"];
+  const isNeededSelection =[]
   const isStatus = ["Status"];
+  
   const renderHeader = () => {
     return header.map((key, index) => {
       return (
