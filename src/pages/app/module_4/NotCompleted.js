@@ -14,7 +14,6 @@ import  "./styles/NotCompleted.css";
 const NotCompleted = (props) => {
   let bodyNotCompleted = JSON.parse(JSON.stringify(props.bodyNotCompleted));
   bodyNotCompleted = bodyNotCompleted.filter(row => row.complete === "Not Completed")
-  console.log("NotCompleted.js - bodyNotCompleted",bodyNotCompleted)
   const renderBody = () => {
     return (
       bodyNotCompleted &&

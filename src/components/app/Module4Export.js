@@ -3,9 +3,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 
  const Module4Export = (csvData,exportTypes) => {
-    console.log("Module4Export", csvData)
-    console.log("Module4Export - type",exportTypes)
-    let exportData = JSON.parse(JSON.stringify(csvData)) // parse and stringify to deep copy csvData
+     let exportData = JSON.parse(JSON.stringify(csvData)) // parse and stringify to deep copy csvData
      if(exportData === undefined || exportData.length === 0 ) {
         alert("Cannot export empty data")    
          return;

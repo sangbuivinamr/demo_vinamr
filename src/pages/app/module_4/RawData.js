@@ -43,7 +43,7 @@ const RawData = (props) => {
    */
   useEffect(() => {
     // console.log("First useEffect")
-    // getRawData("0558");
+    getRawData("0558");
     // console.log(" RawData.js - useEffect - rawDataCheck",dataRawCheck)
     // getMedia("0558");
     // console.log("Done GET")
@@ -63,8 +63,7 @@ const RawData = (props) => {
       rawData.step = Math.random() < 0.5 ? "PendQC(1)" : "PendQC(2)"
       rawData.type = Math.random() < 0.5 ? "Part-time" : "Full-time"
     }
-    console.log("useEffect tempRawData",tempRawData)
-    setDataRawCheck(tempRawData)
+   setDataRawCheck(tempRawData)
     const response = URL_MODULE_4.TEMP_INTERVIEW;
     getQuestionName(response)
     setQuestionData(response)
@@ -76,7 +75,6 @@ const RawData = (props) => {
   
    */
  useEffect(() => {
-   console.log("Second useEffect", questionData,questionName,dataRawCheck);
     if(questionName !== undefined && questionData !== undefined && dataRawCheck !== undefined){
       handleAnswerData();
     }
@@ -95,7 +93,6 @@ const handleAnswerData =() => {
       //Add question Data properties
       
           const attrOfTempRaw  = Object.keys(tempRaw[0]) // The properties of all elements in tempRaw are the same  => just need to get the first properties
-          console.log("handleAnswerData - before",tempRaw)
           for (const quesName of tempName){
           //Check if there are duplicate names between questions
             if (!attrOfTempRaw.includes(quesName.name)) 
@@ -121,7 +118,6 @@ const handleAnswerData =() => {
           {
             delete rawData.kq;
           }
-          console.log("handleAnswerData - after",tempRaw)
           setDataRawCheck(tempRaw)
 }
 /**
@@ -142,13 +138,11 @@ const getValueFromQuestionData = (quesName,type,curData) =>{
   switch(type){
     case "text":
       {
-        console.log("case: text - curData",curData)
         return curData;
       }
     
     case "radiogroup": case "rating":
       {
-        console.log("case rating or radiogroup", type)
         for( const page of questionData) // each element of questionData array is a page, which contains questions
         { if(page.elements !== undefined)  // Check whether page has "elements" props
           for( const el of page.elements)
@@ -166,9 +160,8 @@ const getValueFromQuestionData = (quesName,type,curData) =>{
         break;
       }
       case "multipletext":
-        { console.log("multipletext - curData",curData)
+        {
           const propsOfCurData = Object.keys(curData) //Get all the props of curData
-          console.log("multipletext - propsOfCurData",propsOfCurData)
           // We need to change "multipletext" to String
           let tempString=""; 
         
@@ -180,7 +173,6 @@ const getValueFromQuestionData = (quesName,type,curData) =>{
         }
         case "matrix":
           {
-            console.log("case matrix", type)
             for( const page of questionData) // each element of questionData array is a page, which contains questions
             { if(page.elements !== undefined)  // Check whether each page has "elements" props
               for( const el of page.elements)
@@ -196,7 +188,6 @@ const getValueFromQuestionData = (quesName,type,curData) =>{
           }
         default:
           {
-            console.log("case default")
             return curData;
           }
          
@@ -213,7 +204,6 @@ const getValueFromQuestionData = (quesName,type,curData) =>{
     setIsOpenExpModal(true);
   }
 
-console.log("Get raw Data",dataRawCheck)
   /**
    * @summary Handle open and close Change Interview Status modal 
    */
@@ -232,7 +222,6 @@ console.log("Get raw Data",dataRawCheck)
    */
   const getRawData = async (projectId,interviewId) => {
     const response = await axios.get(URL_MODULE_4.URL_DATA_MODULE_4 + `?projectId=${projectId}&interviewId=${interviewId}`);
-    console.log("GetRawData",response)
     let dataRawCheck = response.data;
     
     for(const rawData of dataRawCheck)
@@ -252,14 +241,12 @@ console.log("Get raw Data",dataRawCheck)
    * @summary This function is to get anwser data from database 
    */
   const getQuestionData = async (projectId) => {
-    console.log('asfsfslfkjsahfkj')
     const response = await axios.post(URL_MODULE_4.MODULE_4_QUESTION_DATA , {
       id: projectId
     })
     console.log(response.data)
     let data = response.data.json.surveyjson;
     let json = JSON.parse(data.slice(1 , data.length - 1))
-    console.log("RawData.js - getAnswerData", json)
     setQuestionData(json.pages)
     getQuestionName(json.pages)
   }
@@ -271,7 +258,6 @@ console.log("Get raw Data",dataRawCheck)
    */
   const getMedia = async (projectId) => {
     const response = await axios.get(URL_MODULE_4.URL_MEDIA + `?projectId=${projectId}`);
-    console.log("GetMedia",response)
     let dataMedia = response.data;
     setDataMedia(dataMedia);
   };
@@ -288,7 +274,6 @@ console.log("Get raw Data",dataRawCheck)
         page.elements.map(el =>  filteredArray.push({name: el.name,type: el.type}))
     });
     filteredArray.splice(filteredArray.length -2,2)
-    console.log("Filtered array AFTER",filteredArray)
     setQuestionName(filteredArray)
   }
 
@@ -298,7 +283,6 @@ console.log("Get raw Data",dataRawCheck)
    * @return void
    */
   const onChangeOptionCounted = (selectedCounted) => {
-    console.log("onChangeOptionCounted",confirmChangeSatus)
     if(confirmChangeSatus === true)
     {
       setSelectedCounted(selectedCounted);
@@ -342,40 +326,40 @@ console.log("Get raw Data",dataRawCheck)
   return (
     <div className="raw-data">
       <div className="content-raw-data">
-        <h1 className="header">{ dataRawCheck.length !==0 ? dataRawCheck[0].projectid :null}</h1>
-        <div className="text-list">
-          <p className="total">Total: {"905"} | </p>
-          <p className="total">Quota Counted Interviews: {"701"} | </p>
-          <p className="cancel">
+        <h1 className="raw-data--header">{ dataRawCheck.length !==0 ? dataRawCheck[0].projectid :null}</h1>
+        <div className="raw-data--text-list">
+          <p className="raw-data--total">Total: {"905"} | </p>
+          <p className="raw-data--total">Quota Counted Interviews: {"701"} | </p>
+          <p className="raw-data--cancel">
             Cancelled Interview: <strong>{"132"}</strong> |{" "}
           </p>
-          <p className="total">Not Completed Interviews: {"72"} | </p>
-          <p className="approved">
+          <p className="raw-data--total">Not Completed Interviews: {"72"} | </p>
+          <p className="raw-data--approved">
             Approved: <strong>{627 + 10}</strong> |{" "}
           </p>
-          <p className="p-w">
+          <p className="raw-data--p-w">
             Pending FW: <strong>{"60"}</strong> |{" "}
           </p>
-          <p className="pending-qc-1">
+          <p className="raw-data--pending-qc-1">
             Pending QC {"(1)"}: <strong>{"4"}</strong> |{" "}
           </p>
-          <p className="pending-qc-2">
+          <p className="raw-data--pending-qc-2">
             Pending QC {"(2)"}: <strong>{"10"}</strong>{" "}
           </p>
         </div>
-        <div className="buttons-4">
-          <div className="button-1" onClick={openExpModal}>
+        <div className="raw-data--buttons-4">
+          <div className="raw-data--button-1" onClick={openExpModal}>
             Export Data
           </div>
         </div>
-        <div className="content-area">
+        <div className="raw-data--content-area">
 
-          <div className="item-1">
-            <label for="first" className="first-label">
+          <div className="raw-data--item-1">
+            <label for="raw-data--first" className="raw-data--first-label">
               Quota Counted Interviews
             </label>
-            <input type="checkbox" id="first" />
-            <AiFillCaretRight className="arrow" />
+            <input type="checkbox" id="raw-data--first" />
+            <AiFillCaretRight className="raw-data--arrow" />
             <CountedInterview
               status={STATUS}
               bodyCounted={dataRawCheck}
@@ -389,10 +373,10 @@ console.log("Get raw Data",dataRawCheck)
               openCIStatModal={openCIStatModal}
             />
           </div>
-          <div className="item-2">
-            <label for="second">Cancelled Interviews</label>
-            <input type="checkbox" id="second" />
-            <AiFillCaretRight className="arrow" />
+          <div className="raw-data--item-2">
+            <label className = '' for="raw-data--second">Cancelled Interviews</label>
+            <input type="checkbox" id="raw-data--second" />
+            <AiFillCaretRight className="raw-data--arrow" />
             <CancelledInterview
               status={STATUS}
               selectedCancel={selectedCancel}
@@ -406,10 +390,10 @@ console.log("Get raw Data",dataRawCheck)
               questionName={questionName}
             />
           </div>
-          <div className="item-3">
-            <label for="third">Not Completed Interviews</label>
-            <input type="checkbox" id="third" />
-            <AiFillCaretRight className="arrow" />
+          <div className="raw-data--item-3">
+            <label for="raw-data--third">Not Completed Interviews</label>
+            <input type="checkbox" id="raw-data--third" />
+            <AiFillCaretRight className="raw-data--arrow" />
             <NotCompleted bodyNotCompleted={dataRawCheck} questionName={questionName} questionData={questionData} />
           </div>
         </div>

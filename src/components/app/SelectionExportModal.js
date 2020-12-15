@@ -10,7 +10,6 @@ import Modal from 'react-modal';
 import "./styles/SelectionExportModal.css";
 
 const SelectionExportModal  = (props) =>{
-    console.log("SELECTION EXPORT MODAL - RENDERING")
     const [exportSelection,setExportSelection] = useState([
         {id: "11111", value: "Quota Counted Interviews", checked: false },
         {id: "22222", value: "Cancelled Interviews", checked: false },
@@ -33,7 +32,6 @@ const SelectionExportModal  = (props) =>{
         if(selection.checked === true)
         selectedExportType.push(selection.value)
     }
-    console.log("Selection", selectedExportType)
     const handleCheckBox = (event) =>{
         const exTypeId = event.target.id
         const exType = event.target.value
@@ -71,11 +69,9 @@ const SelectionExportModal  = (props) =>{
             
         }
      
-        console.log("Temp selection",tempSelection)
         setExportSelection(tempSelection)
     }
-    console.log("Selection state",exportSelection)
-    return(
+   return(
             <div className="module-4--selection-export-modal-div">
                  <Modal isOpen ={props.isOpen} className="module-4--selection-export-modal">
             <h2>

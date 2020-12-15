@@ -16,7 +16,6 @@ const CancelledInterview = (props) => {
   };
   let bodyCancelled = JSON.parse(JSON.stringify(props.bodyCancelled));
   bodyCancelled = bodyCancelled.filter(row => row.interviewStatus === "Cancel")
-  console.log("CancelledInterview.js - bodyCancelled",bodyCancelled)
 
   const [isOpenCIStatModal, setIsOpenCIStatModal] = useState(false); // CIStat abbreviates for "Change Interview Status". 
   
@@ -31,7 +30,6 @@ const CancelledInterview = (props) => {
   }
   const handleStatusConfirmChange =() =>{
     setIsOpenCIStatModal(false)
-    console.log("Handle Status Confirm Change", optionCancel)
     // props.changeRawDataStatus();
   }
   const renderBody = () => {

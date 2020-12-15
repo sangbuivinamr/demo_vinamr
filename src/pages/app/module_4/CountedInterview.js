@@ -13,8 +13,6 @@ const CountedInterview = (props) => {
   const [optionCounted,setOptionCounted] = useState(props.selectedCounted);
   const statusChoices = props.status;
   useEffect(() => {
-    
-  console.log("CountedInterview - props changes",props.selectedCounted)
     setOptionCounted(props.selectedCounted)
   }, [props.selectedCounted])
 
