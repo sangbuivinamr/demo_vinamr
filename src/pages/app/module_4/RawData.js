@@ -25,7 +25,7 @@ import URL_MODULE_4 from "./config.js"
 const RawData = (props) => {
   const [dataRawCheck, setDataRawCheck] = useState([]);
   const [isOpenCIStatModal, setIsOpenCIStatModal] = useState(false); // CIStat abbreviates for "Change Interview Status". 
-  const [selectedCounted, setSelectedCounted] = useState();
+  const [ selectedCounted, setSelectedCounted] = useState();
   const [selectedCancel, setSelectedCancel] = useState();
 
   const [isOpenExpModal,setIsOpenExpModal] = useState(false);
@@ -49,24 +49,7 @@ const RawData = (props) => {
     // console.log("Done GET")
     getQuestionData(localStorage.getItem('currentprojectid'));
     // console.log("RawData.js _ getQuestionData_ questionData",questionData)
-    let tempRawData = JSON.parse(JSON.stringify(URL_MODULE_4.TEMP_RAW_DATA));
-    
-    for(const rawData of tempRawData)
-    {
-      //Parse {String} kq into JSON
-      rawData.kq = JSON.parse(rawData.kq);
-      //Delete unnecessary properties
-      delete rawData.tempcol;
-      //Temporary create data to handle (As there is no {interviewStatus,status,step,type} data fetched from database )
-      rawData.interviewStatus = Math.random() < 0.5 ? "Cancel" : "OK"
-      rawData.status = Math.random() < 0.5 ? "Phone" : "Face"
-      rawData.step = Math.random() < 0.5 ? "PendQC(1)" : "PendQC(2)"
-      rawData.type = Math.random() < 0.5 ? "Part-time" : "Full-time"
-    }
-   setDataRawCheck(tempRawData)
-    const response = URL_MODULE_4.TEMP_INTERVIEW;
-    getQuestionName(response)
-    setQuestionData(response)
+
    
   }, []);
 

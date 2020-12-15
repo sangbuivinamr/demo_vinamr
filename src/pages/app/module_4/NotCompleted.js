@@ -22,7 +22,7 @@ const NotCompleted = (props) => {
           interviewInfo,
           index
         ) => {
-          const { interviewid, complete,interviewStatus,status,step,type,curDate, Latitude,Longtitude, duration,projectid,RecordURL,...otherProps} =interviewInfo
+          const { interviewid, complete,interviewStatus,status,step,type,curDate, Latitude,Longtitude, duration,SrvyID,RecordURL,...otherProps} =interviewInfo
           const restData = Object.entries(otherProps) 
           return (
             <tr key={index}>
@@ -30,16 +30,15 @@ const NotCompleted = (props) => {
               <td>{complete}</td>
               
                 <td className="module-4--table--status-td">
-                  Not completed
+                  Not Completed
                 </td>
               
               <td>{curDate}</td> 
-              
-                <td>
+              <td>
                   <Link
                     to={{
                       pathname: "/preview",
-                      state: { interviewid, complete },
+                      state: { interviewid, SrvyID , mediaType : 'audio'},
                     }}
                   >
                     Link
@@ -52,7 +51,7 @@ const NotCompleted = (props) => {
                   <Link
                     to={{
                       pathname: "/preview",
-                      state: { interviewid, complete },
+                      state: { interviewid, SrvyID , mediaType: 'photo'},
                     }}
                   >
                     Link

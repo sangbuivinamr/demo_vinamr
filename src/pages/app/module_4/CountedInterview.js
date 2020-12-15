@@ -43,7 +43,7 @@ const CountedInterview = (props) => {
           interviewInfo,
           index
         ) => {
-          const { interviewid, complete,interviewStatus,status,step,type, curDate, Latitude,Longtitude, duration,projectid,RecordURL,...otherProps} =interviewInfo;
+          const { interviewid, complete,interviewStatus,status,step,type, curDate, Latitude,Longtitude, duration,SrvyID,RecordURL,...otherProps} =interviewInfo;
           const restData = Object.entries(otherProps) 
           return (
             <tr key={index} className="module-4--counted-interview--table--tr">
@@ -73,7 +73,7 @@ const CountedInterview = (props) => {
                   <Link
                     to={{
                       pathname: "/preview",
-                      state: { interviewid, complete },
+                      state: { interviewid, SrvyID , mediaType : 'audio'},
                     }}
                   >
                     Link
@@ -86,7 +86,7 @@ const CountedInterview = (props) => {
                   <Link
                     to={{
                       pathname: "/preview",
-                      state: { interviewid, complete },
+                      state: { interviewid, SrvyID , mediaType: 'photo'},
                     }}
                   >
                     Link

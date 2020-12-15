@@ -40,7 +40,7 @@ const CancelledInterview = (props) => {
           interviewInfo,
           index
         ) => {
-          const { interviewid, complete,interviewStatus,status,step,type,curDate, Latitude,Longtitude, duration,projectid,RecordURL,...otherProps} =interviewInfo
+          const { interviewid, complete,interviewStatus,status,step,type,curDate, Latitude,Longtitude, duration,SrvyID,RecordURL,...otherProps} =interviewInfo
           const otherPropsData = Object.entries(otherProps) 
           return (
             <tr key={index}>
@@ -69,11 +69,11 @@ const CancelledInterview = (props) => {
               
               <td>{curDate}</td> 
               
-                <td>
+              <td>
                   <Link
                     to={{
                       pathname: "/preview",
-                      state: { interviewid, complete },
+                      state: { interviewid, SrvyID , mediaType : 'audio'},
                     }}
                   >
                     Link
@@ -86,7 +86,7 @@ const CancelledInterview = (props) => {
                   <Link
                     to={{
                       pathname: "/preview",
-                      state: { interviewid, complete },
+                      state: { interviewid, SrvyID , mediaType: 'photo'},
                     }}
                   >
                     Link
