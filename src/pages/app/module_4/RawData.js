@@ -43,11 +43,11 @@ const RawData = (props) => {
    */
   useEffect(() => {
     // console.log("First useEffect")
-    getRawData("0558");
+    getRawData(localStorage.getItem('currentprojectid'));
     // console.log(" RawData.js - useEffect - rawDataCheck",dataRawCheck)
     // getMedia("0558");
     // console.log("Done GET")
-    // getQuestionData("0558");
+    getQuestionData(localStorage.getItem('currentprojectid'));
     // console.log("RawData.js _ getQuestionData_ questionData",questionData)
     let tempRawData = JSON.parse(JSON.stringify(URL_MODULE_4.TEMP_RAW_DATA));
     
@@ -223,7 +223,7 @@ const getValueFromQuestionData = (quesName,type,curData) =>{
   const getRawData = async (projectId,interviewId) => {
     const response = await axios.get(URL_MODULE_4.URL_DATA_MODULE_4 + `?projectId=${projectId}&interviewId=${interviewId}`);
     let dataRawCheck = response.data;
-    
+    console.log(dataRawCheck  )
     for(const rawData of dataRawCheck)
     {
       //Parse {String} kq into JSON

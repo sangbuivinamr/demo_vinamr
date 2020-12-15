@@ -30,8 +30,7 @@ const NotCompleted = (props) => {
               <td>{complete}</td>
               
                 <td className="module-4--table--status-td">
-                  {String(interviewStatus + " - " + status + " – " + step + " – " + type)}
-                 Terminate
+                  Not completed
                 </td>
               
               <td>{curDate}</td> 
