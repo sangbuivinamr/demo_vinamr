@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from "react";
 
-import "./styles/EditingTableTracking.css";
+import "./styles/EditingTable.css";
 
 const EditingTableTracking = (props) => {
+  console.log("props.editingTableData", props.editingTableData);
   let colTotalQuotas = [];
   let colTotal;
   let currentColTotalQuotas = [];
   let currentColTotal;
-  const [tableData, setTableData] = useState(props.editingTableData);
+  
+  const [tableData, setTableData] = useState();
+
+  React.useEffect(() => setTableData(props.editingTableData), [
+    props.editingTableData,
+  ]);
 
   //Rendering the header of the table
   const renderHeaderLayoutLeft = (table) => {
     return (
+      tableData &&
       table.colList &&
       table.colList.map((col) => {
         return <th className="header-left">{col.text}</th>;
@@ -23,7 +30,9 @@ const EditingTableTracking = (props) => {
     return (
       <tr>
         <td className="header-left-total">Total</td>
-        {table.colList &&
+
+        {tableData &&
+          table.colList &&
           table.colList.map((col, colIndex) => {
             colTotalQuotas.push(getColumnMaxQuotaTotalList(col["uniqueID"]));
             currentColTotalQuotas.push(
@@ -48,14 +57,16 @@ const EditingTableTracking = (props) => {
   };
 
   const getMaxQuotaList = (cellId, cellType) => {
+
+    console.log("tableData", tableData);
     let maxQuotaList = [];
     let currentMaxQuotaList = [];
+
     tableData.data.map((el) => {
-      if (el[cellType === "ROW" ? "row" : "column"] === cellId)
+      if (el[cellType === "ROW" ? "rowID" : "columnID"] === cellId)
         maxQuotaList.push(el["maxQuota"]);
       currentMaxQuotaList.push(el["current"]);
     });
-
     return {
       maxQuotaList,
       currentMaxQuotaList,
@@ -78,6 +89,8 @@ const EditingTableTracking = (props) => {
 
   const renderEditingBody = (table) => {
     return (
+
+      tableData &&
       table.rowList &&
       table.rowList.map((el, elIndex) => {
         return (
@@ -107,7 +120,11 @@ const EditingTableTracking = (props) => {
     );
   };
 
-  if (tableData.colList.length < 1 || tableData.rowList.length < 1) return null;
+  if (
+    props.editingTableData.colList.length < 1 ||
+    props.editingTableData.rowList.length < 1
+  )
+    return null;
   else
     return (
       <div className="main-table">
