@@ -9,7 +9,7 @@ export default function HeaderExceeded(props) {
     const headerExceeded =  props.dataHeader;
       return headerExceeded && headerExceeded.map(({text,uniqueID}) => {
         return (
-          <th className="header-left" key = {uniqueID}>
+          <th className="when-exceeded--header-left" key = {uniqueID}>
             {text}
           </th>
         );

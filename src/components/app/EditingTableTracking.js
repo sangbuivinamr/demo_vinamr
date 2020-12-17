@@ -8,6 +8,7 @@ const EditingTableTracking = (props) => {
   let colTotal;
   let currentColTotalQuotas = [];
   let currentColTotal;
+  
   const [tableData, setTableData] = useState();
 
   React.useEffect(() => setTableData(props.editingTableData), [
@@ -29,6 +30,7 @@ const EditingTableTracking = (props) => {
     return (
       <tr>
         <td className="header-left-total">Total</td>
+
         {tableData &&
           table.colList &&
           table.colList.map((col, colIndex) => {
@@ -55,6 +57,7 @@ const EditingTableTracking = (props) => {
   };
 
   const getMaxQuotaList = (cellId, cellType) => {
+
     console.log("tableData", tableData);
     let maxQuotaList = [];
     let currentMaxQuotaList = [];
@@ -64,12 +67,6 @@ const EditingTableTracking = (props) => {
         maxQuotaList.push(el["maxQuota"]);
       currentMaxQuotaList.push(el["current"]);
     });
-
-    console.log("fafdsadf", {
-      maxQuotaList,
-      currentMaxQuotaList,
-    });
-
     return {
       maxQuotaList,
       currentMaxQuotaList,
@@ -92,6 +89,7 @@ const EditingTableTracking = (props) => {
 
   const renderEditingBody = (table) => {
     return (
+
       tableData &&
       table.rowList &&
       table.rowList.map((el, elIndex) => {

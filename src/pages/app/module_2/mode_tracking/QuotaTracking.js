@@ -36,8 +36,7 @@ const QuotaTracking = (props) => {
   const getQuotaTable = React.useCallback(() => {
     const projectId = localStorage.getItem("currentprojectid");
     getQuotaTableTrackingMode(projectId).then((table) => {
-      console.log("table", table);
-      if (table.data.error) return;
+      if(Object.keys(table.data).includes('error')) return;
       setQuotaTable(table.data);
       setFetchedQuotaTable(true);
     });
@@ -144,6 +143,7 @@ const QuotaTracking = (props) => {
             <option value="editing">Editing</option>
             <option value="exceeded">When Exceeded</option>
             <option value="tracking">Tracking</option>
+            <option value = 'interview'>Interview Preview</option>
           </select>
         </div>
         <img

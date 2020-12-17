@@ -1,6 +1,6 @@
 @import '../../../styles/GlobalStyles.css';
 
-.action-exceeded {
+.when-exceed--action{
    margin-top: 0px;
    border: 2px solid #FCC216;
    display: grid;
@@ -11,18 +11,18 @@
    color: #cea649;
 }
 
-.action-p {
+.when-exceed--action-p {
    margin-left: -10px;
    margin-top: 10px;
    font-weight: bold;
    color: #FCC216;
 }
 
-.jump-slide {
+.when-exceed--jump-slide {
    display: flex;
 }
 
-.select-action {
+.when-exceed--select-action {
    height: 30px;
    width: 80%;
    background-color: rgb(77, 74, 74);
@@ -30,19 +30,19 @@
    cursor: pointer;
 }
 
-.input-exceeded {
+.when-exceed--input{
    width: 100px;
    margin-left: 10px;
    height: 25px;
    text-align: center;
 }
 
-.buttons {
+.when-exceed--buttons {
    display: flex;
    margin-top: 10px
 }
 
-.apply {
+.when-exceed--apply {
    background-color: #ffd066;
    color: white;
    border-radius: 5px;
@@ -53,11 +53,11 @@
    cursor: pointer;
 }
 
-.apply:hover {
+.when-exceed--apply:hover {
    opacity: 0.75;
 }
 
-.apply-all {
+.when-exceed--apply-all {
    background-color: #ffd066;
    border-radius: 5px;
    height: 30px;
@@ -67,6 +67,6 @@
    color: white;
 }
 
-.apply-all:hover {
+.when-exceed--apply-all:hover {
    opacity: 0.75;
 }

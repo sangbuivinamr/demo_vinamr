@@ -16,8 +16,9 @@
 }
 .exceeded > .h2-exceeded{
   color:#c69017;
-  margin-left: 30px;
-  margin-right:200px;
+  margin-left: 3em;
+  width: 20%;
+  
 }
 .exceeded > .up {
   margin-top: 20px;
@@ -41,7 +42,6 @@
   margin-top: 20px;
   border: 1px solid rgb(77, 74, 74);
   margin-left: 10px;
-  margin-right: 0px;
   text-align: center;
   width: 70px;
   height: 28px;
@@ -67,20 +67,17 @@
   color:#c69017;
 }
 
-.layouts{
+.when-exceed--layouts{
   margin-top: 130px;
-  margin-left: -25px;
-  width: 1200px;
-  height: 500px;
-  display: grid;
-  grid-template-columns: auto auto ;
-  grid-gap: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
-.layout-left{
-  resize: horizontal;
+.when-exceed--layout-left{
+  width: 63%;
   font-family: var(--global-font-family);
 }
-.layout-right{
+.when-exceed--layout-right{
   color: #4F3C06;
   white-space: nowrap;
   font-family: var(--global-font-family);

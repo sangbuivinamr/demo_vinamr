@@ -1,6 +1,11 @@
 @import "../../../styles/GlobalStyles.css";
-
-.quota-name{
+.when-exceed--name{
+    margin-left:10px;
+    color: #4F3C06; 
+    font-size: 15px;
+    font-family:var(--global-font-family) ;
+}
+.when-exceed--quota-name-area{
     border-top: 2px solid #FCC216;
     border-right: 2px solid #FCC216;
     border-left: 2px solid #FCC216;
@@ -8,16 +13,10 @@
     height: 80px;
     background-color: white;
 }
-.quota-name-p{
+.when-exceed--quota-name-p-area{
     margin-top: 10px;
     margin-left:10px;
     font-family:var(--global-font-family) ;
     color: #FCC216;
     font-weight: bold;
-}
-.name{
-    margin-left:10px;
-    color: #4F3C06; 
-    font-size: 15px;
-    font-family:var(--global-font-family) ;
 }

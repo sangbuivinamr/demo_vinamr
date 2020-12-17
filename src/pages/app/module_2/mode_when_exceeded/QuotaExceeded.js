@@ -10,8 +10,6 @@ import axios from "axios";
 //Styles
 import "./styles/QuotaExceeded.css";
 
-//Data
-import { QUOTA_OVERVIEW_DATA } from "../../../../data/testing-data";
 
 //Default URL
 const URL_DATA_EXCEEDED = "https://115.73.222.254:8000/quota/quotaExceeded";
@@ -20,19 +18,7 @@ const QuotaExceeded = (props) => {
   const forceUpdate = React.useCallback(() => updateState({}), []);
   //Initial States
 
-  const [quotaInput, setQuotaInput] = useState({
-    quota_index: null,
-    quota_label: "",
-    quota_expression: "",
-  });
-  const [quotaClickStatus, setQuotaClickStatus] = useState({
-    quotaLabel: "",
-    status: false,
-  });
   const [typeCar, setTypeCar] = useState("");
-  const [notification, setNotification] = useState({
-    notification: "",
-  });
   const [city, setCity] = useState("");
   const [selectedExceeded, setSelectedExceeded] = useState("exceeded"); // Initialize the state, so when the user navigate to this mode, the mode will have the mode is interview in the option
   const [clicked, setClicked] = useState(false);
@@ -43,12 +29,6 @@ const QuotaExceeded = (props) => {
   const [action, setAction] = useState();
   const [actionPlaceholder, setActionPlaceholder] = useState();
   const [actionExceeded, setActionExceeded] = useState();
-  const onCheckingNotAnyHighlightedQuota = () =>
-    quotaClickStatus.quotaLabel === "" && quotaClickStatus.status === false;
-  const onCheckingNotAnyInputtedQuota = () =>
-    quotaInput.quota_index === null &&
-    quotaInput.quota_label === "" &&
-    quotaInput.quota_expression === "";
 
   /**
    * @summary The function naviagte to another page
@@ -65,7 +45,7 @@ const QuotaExceeded = (props) => {
    * @return void
    */
   useEffect(() => {
-    getDataExceeded("1");
+    getDataExceeded(localStorage.getItem('currentprojectid'));
   }, []);
 
   const getDataExceeded = async (projectId) => {
@@ -73,6 +53,7 @@ const QuotaExceeded = (props) => {
       URL_DATA_EXCEEDED + `?projectId=${projectId}`
     );
     let dataTable = response.data;
+    if(dataTable.message === 'no projectID matching') return;
     setDataExceeded(dataTable);
   };
 
@@ -279,19 +260,16 @@ const QuotaExceeded = (props) => {
         </select>
         <h2 className="review">ACTION & MESAGES</h2>
       </div>
-      <div className="layouts">
-        <div className="layout-left">
+      <div className="when-exceed--layouts">
+        <div className="when-exceed--layout-left">
           <ExceededLeft
             dataExceeded={dataExceeded}
             onChoosingCell={(e, indexCell) => onChoosingCell(e, indexCell)}
             value={text}
             sendIndex={(indexCell) => sendIndex(indexCell)}
-            // setQuotaClickStatus={setQuotaClickStatus}
-            // onChoosingQuota={(e) => onChoosingQuota(e)}
-            // quotaClickStatus={quotaClickStatus}
           />
         </div>
-        <div className="layout-right">
+        <div className="when-exceed--layout-right">
           <div>
             <QuotaName dataCityTable={city} dataCarTable={typeCar} />
           </div>
@@ -325,16 +303,3 @@ const QuotaExceeded = (props) => {
 };
 
 export default QuotaExceeded;
-
-/**
- * TODO
- * @summary Make the selected (clicked) row to be highlighted
- * @param {string} exceededCell The cell of the current selected quota row
- */
-// const onChoosingQuota = (exceededCell) => {
-//   let newQuotaStatus = {
-//     quotaLabel: exceededCell,
-//     status: true,
-//   };
-//   setQuotaClickStatus(newQuotaStatus);
-// };

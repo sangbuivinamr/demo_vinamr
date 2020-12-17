@@ -17,7 +17,7 @@ const QuotaInteview = (props) => {
    * @summary Function useEffect
    */
   useEffect(() => {
-    getDataInterview("0560");
+    getDataInterview(localStorage.getItem('currentprojectid'));
   }, []);
 
   const getDataInterview = async (projectId) => {
