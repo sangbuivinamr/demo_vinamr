@@ -37,11 +37,11 @@ const QuotaTracking = (props) => {
     const projectId = localStorage.getItem("currentprojectid");
     getQuotaTableTrackingMode(projectId).then((table) => {
       console.log("table", table);
-      if(table.data.error == null || table.data.error) return;
+      if (table.data.error) return;
       setQuotaTable(table.data);
       setFetchedQuotaTable(true);
     });
-  });
+  }, [quotaTable]);
 
   React.useEffect(() => getQuotaTable(), []);
 
